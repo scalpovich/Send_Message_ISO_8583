@@ -1,0 +1,27 @@
+/* navigation */
+.navbar{
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    box-shadow: 0 .5rem .5rem rgb(0, 0, 0,.1)
+}
+
+.navbar-nav{
+    margin-left: auto;
+}
+.navbar-brand img{
+    height: 3rem;
+}
+.nav-item{
+    padding: .5rem;
+}
+.nav-link.active,
+.nav-link:hover{
+    color:black;
+}
+/* end navigation */
+
+/* main-content */
+.main-content{
+    padding: 40px 50px;
+}
