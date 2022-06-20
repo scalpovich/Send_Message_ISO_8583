@@ -4,9 +4,12 @@ import com.opw.financemesage.mapper.MapperDataElement;
 import com.opw.financemesage.models.DataElement;
 import com.opw.financemesage.util.DataElementLength;
 import com.opw.financemesage.util.DataElementType;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-
+@Configuration
 public class ConfigMapper {
+    @Bean
     public MapperDataElement configMaper(){
         MapperDataElement m = new MapperDataElement();
         m.getDataElement()

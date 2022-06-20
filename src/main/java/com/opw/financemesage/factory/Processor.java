@@ -5,7 +5,9 @@ import com.opw.financemesage.mapper.MapperDataElement;
 import com.opw.financemesage.models.DataElement;
 import com.opw.financemesage.models.MessageISO;
 import com.opw.financemesage.util.DataElementLength;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Processor {
     private static final Integer HEADER_LENGTH = 4;
     private static final Integer MTI_LENGTH = 4;
@@ -13,7 +15,7 @@ public class Processor {
     private static MapperDataElement map;
     private static Processor instance;
 
-    public static Processor getInstance(MapperDataElement map) {
+    public  Processor getInstance(MapperDataElement map) {
         if (instance == null) {
             instance = new Processor();
         }
@@ -92,42 +94,42 @@ public class Processor {
         return builder.toString();
     }
 
-    public static void main(String[] args) {
-        String message = "026802007ABA448128E0D0021697040932704448260100000000100000000000100000000524085210000000015371571552100524052460110210006970468279704093270444826=290150057100000050754500000001AB                                              BNV 704704704DB0B60B3204663F5016AAcB6wDcYKtpWwAA";
-        ConfigMapper config = new ConfigMapper();
-        Processor test = Processor.getInstance(config.configMaper());
-        MessageISO messageISO = test.parsMessage(message);
-        messageISO.parsElement();
-
-        MessageISO messageISO1 = new MessageISO();
-
-        messageISO1.setMti("0200");
-        messageISO1.getDataElementContent().put(2, "9704093270444826");
-        messageISO1.getDataElementContent().put(3, "010000");
-        messageISO1.getDataElementContent().put(4, "000010000000");
-        messageISO1.getDataElementContent().put(5, "000010000000");
-        messageISO1.getDataElementContent().put(7, "0524085210");
-        messageISO1.getDataElementContent().put(9, "00000001");
-        messageISO1.getDataElementContent().put(11, "537157");
-        messageISO1.getDataElementContent().put(12, "155210");
-        messageISO1.getDataElementContent().put(13, "0524");
-        messageISO1.getDataElementContent().put(15, "0524");
-        messageISO1.getDataElementContent().put(18, "6011");
-        messageISO1.getDataElementContent().put(22, "021");
-        messageISO1.getDataElementContent().put(25, "00");
-        messageISO1.getDataElementContent().put(32, "970468");
-        messageISO1.getDataElementContent().put(35, "9704093270444826=2901500571");
-        messageISO1.getDataElementContent().put(37, "000000507545");
-        messageISO1.getDataElementContent().put(41, "00000001");
-        messageISO1.getDataElementContent().put(42, "AB             ");
-        messageISO1.getDataElementContent().put(43, "                                 BNV 704");
-        messageISO1.getDataElementContent().put(49, "704");
-        messageISO1.getDataElementContent().put(50, "704");
-        messageISO1.getDataElementContent().put(52, "DB0B60B3204663F5");
-        messageISO1.getDataElementContent().put(63, "AAcB6wDcYKtpWwAA");
-
-
-        String newMessage = test.buildMessage(messageISO1);
-        System.out.println(newMessage);
-    }
+//    public static void main(String[] args) {
+//        String message = "026802007ABA448128E0D0021697040932704448260100000000100000000000100000000524085210000000015371571552100524052460110210006970468279704093270444826=290150057100000050754500000001AB                                              BNV 704704704DB0B60B3204663F5016AAcB6wDcYKtpWwAA";
+//        ConfigMapper config = new ConfigMapper();
+//        Processor test = Processor.getInstance(config.configMaper());
+//        MessageISO messageISO = test.parsMessage(message);
+//        messageISO.parsElement();
+//
+//        MessageISO messageISO1 = new MessageISO();
+//
+//        messageISO1.setMti("0200");
+//        messageISO1.getDataElementContent().put(2, "9704093270444826");
+//        messageISO1.getDataElementContent().put(3, "010000");
+//        messageISO1.getDataElementContent().put(4, "000010000000");
+//        messageISO1.getDataElementContent().put(5, "000010000000");
+//        messageISO1.getDataElementContent().put(7, "0524085210");
+//        messageISO1.getDataElementContent().put(9, "00000001");
+//        messageISO1.getDataElementContent().put(11, "537157");
+//        messageISO1.getDataElementContent().put(12, "155210");
+//        messageISO1.getDataElementContent().put(13, "0524");
+//        messageISO1.getDataElementContent().put(15, "0524");
+//        messageISO1.getDataElementContent().put(18, "6011");
+//        messageISO1.getDataElementContent().put(22, "021");
+//        messageISO1.getDataElementContent().put(25, "00");
+//        messageISO1.getDataElementContent().put(32, "970468");
+//        messageISO1.getDataElementContent().put(35, "9704093270444826=2901500571");
+//        messageISO1.getDataElementContent().put(37, "000000507545");
+//        messageISO1.getDataElementContent().put(41, "00000001");
+//        messageISO1.getDataElementContent().put(42, "AB             ");
+//        messageISO1.getDataElementContent().put(43, "                                 BNV 704");
+//        messageISO1.getDataElementContent().put(49, "704");
+//        messageISO1.getDataElementContent().put(50, "704");
+//        messageISO1.getDataElementContent().put(52, "DB0B60B3204663F5");
+//        messageISO1.getDataElementContent().put(63, "AAcB6wDcYKtpWwAA");
+//
+//
+//        String newMessage = test.buildMessage(messageISO1);
+//        System.out.println(newMessage);
+//    }
 }

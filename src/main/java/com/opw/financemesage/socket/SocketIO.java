@@ -1,50 +1,50 @@
 package com.opw.financemesage.socket;
 
 import com.opw.financemesage.models.MessageISO;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
-@Repository
+@Configuration
 public class SocketIO {
     private Socket socket;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
+    private BufferedReader input;
+    private BufferedWriter output;
 
     public SocketIO(){
         try {
             this.socket = new Socket("way4", 1234);
-            this.input = new ObjectInputStream(socket.getInputStream());
-            this.output = new ObjectOutputStream(socket.getOutputStream());
+            this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         }
         catch (IOException e){
             closeElements(socket, input, output);
         }
     }
 
-    public void sendMessage(MessageISO messageISO){
+    public void sendMessage(String message){
         try{
-                output.writeObject(messageISO);
+            output.write(message);
+            output.flush();
         }catch (IOException e){
             e.printStackTrace();
         }
         closeElements(socket,input,output);
     }
 
-    public MessageISO getMessage(){
-        MessageISO messageISO;
+    public String getMessage(){
+        String messageRes = null;
         try{
-            messageISO = (MessageISO) input.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+            messageRes =  input.readLine();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         closeElements(socket,input,output);
-        return messageISO;
+        return messageRes;
     }
 
-    public void closeElements(Socket socket, ObjectInputStream input,ObjectOutputStream output){
+    public void closeElements(Socket socket, BufferedReader input,BufferedWriter output){
         try{
             if (socket != null)
                 socket.close();
