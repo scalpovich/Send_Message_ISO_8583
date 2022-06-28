@@ -1,5 +1,7 @@
 package com.opw.financemesage.util;
 
+import org.apache.tomcat.jni.Time;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,10 +10,10 @@ import java.util.TimeZone;
 public enum DataElementType {
     NUMERIC,
     ALPHA,
-    DATE6,
     DATE14,
     DATE12,
     DATE10,
+    DATE6,
     DATE4,
     DATE_EXP,
     TIME,
@@ -33,7 +35,7 @@ public enum DataElementType {
         } else if (this == DATE12) {
             sdf = new SimpleDateFormat("yyMMddHHmmss");
         } else if (this == DATE14) {
-            sdf = new SimpleDateFormat("YYYYMMddHHmmss");
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         } else if (this == DATE6) {
             sdf = new SimpleDateFormat("yyMMdd");
         } else {
@@ -107,5 +109,5 @@ public enum DataElementType {
         throw new IllegalArgumentException("Cannot format number as " + this);
 
     }
-
+    
 }
