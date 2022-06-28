@@ -94,8 +94,10 @@ public class MessageISO {
     }
 
     public void parsElement (){
-        for(Integer key : dataElementContent.keySet()){
-            System.out.println(key +":"+dataElementContent.get(key));
+        for (int i = 1; i <= overralBitMap.length(); i++){
+            if (overralBitMap.charAt(i-1) == '1'){
+                System.out.println(i +":"+dataElementContent.get(i));
+            }
         }
     }
 

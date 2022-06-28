@@ -1,15 +1,16 @@
 package com.opw.financemesage.controllers;
 
 import com.opw.financemesage.models.MessageISO;
-import com.opw.financemesage.services.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+
+@Controller
 public class ControllerBalance {
-    @Autowired
-    MessageService messageService;
-
+    @RequestMapping("/balance")
+    public String index () {
+        return "balance/balance";
+    }
     MessageISO sendMessage(){
         return null;
     }
