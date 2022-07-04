@@ -64,6 +64,7 @@ public class Convert {
         }
         if (bitmap.lastIndexOf("1")>64){
             bitmap.setCharAt(0,'1');
+            messageISO.setContainSecondaryBitMap(true);
         }else{
             return bitmap.substring(0,64).toString();
         }

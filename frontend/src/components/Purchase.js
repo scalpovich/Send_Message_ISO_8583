@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Container, Paper, TextField, Button } from '@mui/material';
 
+
 export default function Purchase() {
   const paperStyle = { padding: '20px 20px', width: 600, margin: "20px auto" }
   const textFiledStyle = { margin: '10px 0px' }
 
+  let field = [{ id: 0, value: "0200" }]
 
-  let field = []
+  
 
   const onlyNumberKey = (event) => {
     if (!/[0-9]/.test(event.key)) {
@@ -20,19 +22,42 @@ export default function Purchase() {
     }
   }
 
+  // const handleClick = (e) => {
+  //   e.preventDefault()
+  //   for (let i = 0; i < 129; i++) {
+  //     let id = "PC-" + i.toString();
+  //     if (document.body.contains(document.getElementById(id))) {
+  //       field[i] = document.getElementById(id).value
+  //     }
+  //   }
+  //   console.log(field)
+  // }
+
+
+
   const handleClick = (e) => {
     e.preventDefault()
     for (let i = 0; i < 129; i++) {
       let id = "PC-" + i.toString();
-      if (document.body.contains(document.getElementById(id)) && !(document.getElementById(id).value === undefined)) {
-        field[i] = document.getElementById(id).value
+      if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
+        let ele = { id: i, value: document.getElementById(id).value.toString() }
+        field.push(ele)
 
       }
     }
-    console.log(field.type)
+
+    console.log((JSON.stringify(field)))
+
+    fetch("http://localhost:8080/purchase/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(field)
+    }).then(() => {
+      field = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
+      
+    })
+
   }
-
-
 
   return (
     <Container>
@@ -49,7 +74,6 @@ export default function Purchase() {
 
           inputProps={{ maxLength: 19 }}
           required
-          value={field[2]}
 
         />
 
@@ -104,12 +128,11 @@ export default function Purchase() {
         <TextField
           style={textFiledStyle}
           id="PC-12"
-          label="Time, Local Transaction"
+          label="Time, Local Transaction (hhmmss)"
           variant="outlined"
           fullWidth
-          type="time"
-          inputProps={{ step: 2 }}
-          InputLabelProps={{ shrink: true, }}
+          type="text"
+          inputProps={{ maxLength: 6, minLength: 6 }}
           required
         />
 
@@ -128,11 +151,11 @@ export default function Purchase() {
         <TextField
           style={textFiledStyle}
           id="PC-14"
-          label="Expiration Date"
+          label="Expiration Date (YYMM)"
           variant="outlined"
           fullWidth
-          InputLabelProps={{ shrink: true, }}
-          type="month"
+          inputProps={{ maxLength: 4, minLength: 4 }}
+          type="text"
         />
 
         <TextField
@@ -333,7 +356,14 @@ export default function Purchase() {
         />
 
 
-        <Button style={{marginTop: '15px', width: '50%'}} type="submit" variant="contained" onClick={handleClick}>Submit</Button>
+        <Button
+          style={{ marginTop: '15px', width: '50%' }}
+          type="submit" variant="contained"
+          onClick={handleClick}
+          href="/sign-in"
+        >
+          Submit
+        </Button>
       </Paper>
     </Container>
   );

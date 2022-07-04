@@ -44,7 +44,6 @@ public class Processor {
 
         // get field ISO in message
         for(int i = 2; i <= m.getOverralBitMap().length(); i++){
-
             if (!m.hasField(i-1)){
                 continue;
             }
@@ -55,6 +54,7 @@ public class Processor {
                 currentPosition += de.getLength();
             }
             if (DataElementLength.VARIABLE.equals(de.getLengthType())){
+
                 int length = Integer.parseInt(message.substring(currentPosition, currentPosition+de.getPrefixLength()));
                 currentPosition += de.getPrefixLength();
                 String data = message.substring(currentPosition, currentPosition+length);
@@ -90,7 +90,12 @@ public class Processor {
                 builder.append(data);
             }
         }
-        return builder.toString();
+        String header = String.valueOf(builder.length());
+        while (header.length()<4){
+            header = "0" + header;
+        }
+        messageISO.setHeader(header);
+        return header + builder.toString();
     }
 
 }
