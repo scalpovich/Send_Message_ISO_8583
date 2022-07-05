@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Container, Paper, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Purchase() {
@@ -7,8 +8,7 @@ export default function Purchase() {
   const textFiledStyle = { margin: '10px 0px' }
 
   let field = [{ id: 0, value: "0200" }]
-
-  
+  const navigate = useNavigate();
 
   const onlyNumberKey = (event) => {
     if (!/[0-9]/.test(event.key)) {
@@ -55,7 +55,11 @@ export default function Purchase() {
     }).then(() => {
       field = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
       
-    })
+    }).then(
+      () => {
+        navigate('/result');
+      }
+    )
 
   }
 
@@ -360,7 +364,6 @@ export default function Purchase() {
           style={{ marginTop: '15px', width: '50%' }}
           type="submit" variant="contained"
           onClick={handleClick}
-          href="/sign-in"
         >
           Submit
         </Button>
