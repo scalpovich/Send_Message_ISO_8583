@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Navbar from "./Navbar";
 import { useEffect, useState } from 'react';
 import { Container, Paper, TextField, Button } from '@mui/material';
 
@@ -19,21 +20,25 @@ export default function Result() {
     }, [])
 
     return (
-        <Container>
-            <h1>Result</h1>
+        <>
+            <Navbar />
+            <Container>
+                <h1>Result</h1>
 
-            <Paper elevation={3} style={paperStyle}>
+                <Paper elevation={3} style={paperStyle}>
 
-                {elements.map(element => (
-                    <Paper elevation={6} style={{ margin: "10px", padding: "15px", textAlign: "left" }} key={element.id}>
-                        Id: {element.id}<br />
-                        Value: {element.value}<br />
-                    </Paper>
-                ))
-                }
+                    {elements.map(element => (
+                        <Paper elevation={6} style={{ margin: "10px", padding: "15px", textAlign: "left" }} key={element.id}>
+                            Id: {element.id}<br />
+                            Value: {element.value}<br />
+                        </Paper>
+                    ))
+                    }
 
 
-            </Paper>
-        </Container>
+                </Paper>
+            </Container>
+        </>
+
     );
 }
