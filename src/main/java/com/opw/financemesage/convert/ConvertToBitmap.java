@@ -95,4 +95,10 @@ public class ConvertToBitmap {
         }
         return hex;
     }
+
+    public static void main(String[] args) {
+        ConvertToBitmap convert = new ConvertToBitmap();
+        String cv = convert.hexToBinary("7ABA40010A80C402");
+        System.out.println(cv);
+    }
 }

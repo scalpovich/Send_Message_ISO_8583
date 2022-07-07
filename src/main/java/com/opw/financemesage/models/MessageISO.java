@@ -17,8 +17,8 @@ public class MessageISO {
     private String overralBitMap;
     Map<Integer, String> dataElementContent = new HashMap<>();
 
-    @Autowired
-    ConvertToBitmap convert;
+    // loi o day--------------------------=============================
+    ConvertToBitmap convert = new ConvertToBitmap();
 
     public boolean hasSecondaryBitMap(char bit){
         if (bit == '1'){

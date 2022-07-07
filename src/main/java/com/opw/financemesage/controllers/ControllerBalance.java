@@ -19,8 +19,7 @@ public class ControllerBalance {
     private DTO dto;
 
    @PostMapping("/post")
-    public List<DataReceive> sendMessage(@RequestBody List<DataReceive> data) {
-       messageService.sendMessage(data);
+    public String sendMessage(@RequestBody List<DataReceive> data) {
        return messageService.sendMessage(data);
     }
 
