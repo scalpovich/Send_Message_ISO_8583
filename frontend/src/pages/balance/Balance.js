@@ -1,15 +1,14 @@
 import * as React from 'react';
+import {Box, Button,} from '@mui/material';
 import Navbar from '../../components/Navbar';
-import {Container, Paper, TextField, Button, Box} from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 
+export default function Balance() {
 
-export default function Purchase() {
-    const paperStyle = {padding: '20px 20px', width: 200, margin: "20px auto"}
-    const textFiledStyle = {margin: '30px 30px'}
-
-    let field = [{id: 0, value: "0200"}]
+    const textFiledStyle = {margin: '30px 30px'};
     const navigate = useNavigate();
+    let field = [{id: 1, value: "0200"}];
 
     const onlyNumberKey = (event) => {
         if (!/[0-9]/.test(event.key)) {
@@ -25,22 +24,18 @@ export default function Purchase() {
 
     const handleClick = (e) => {
         e.preventDefault()
-        for (let i = 0; i < 129; i++) {
+        for (let i = 2; i <= 128; i++) {
             let id = "PC-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = {id: i, value: document.getElementById(id).value.toString()}
                 field.push(ele)
-
             }
         }
 
-        fetch("http://localhost:8080/purchase/post", {
+        fetch("http://localhost:8080/balance/post", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(field)
-        }).then(() => {
-            field = [{id: 0, value: "0200"}, {id: 1, value: "1"}]
-
         }).then(
             () => {
                 navigate('/result');
@@ -52,7 +47,8 @@ export default function Purchase() {
     return (
         <>
             <Navbar/>
-            <h1>Purchase</h1>
+            <h1 style={{margin: '15px 15px'}}
+            >Balance</h1>
             <Box
                 component="form"
                 sx={{
@@ -65,7 +61,7 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-2"
-                        label="Primary Account Number"
+                        label="F-2"
                         variant="outlined"
                         type="text"
                         inputProps={{maxLength: 19}}
@@ -75,7 +71,7 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-3"
-                        label="Processing Code"
+                        label="F-3"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -87,7 +83,7 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-4"
-                        label="Transaction Amount"
+                        label="F-4"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -99,7 +95,7 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-7"
-                        label="Transmission Date and Time (MMDDhhmmss)"
+                        label="F-7"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -111,7 +107,7 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-11"
-                        label="System Trace Audit Number"
+                        label="F-11"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -125,56 +121,56 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-12"
-                        label="Time, Local Transaction (hhmmss)"
+                        label="F-12"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 6, minLength: 6}}
+                        // inputProps={{maxLength: 6, minLength: 6}}
                         required
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-13"
-                        label="Date, Local Transaction (MMDD)"
+                        label="F-13"
                         variant="outlined"
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 4, minLength: 4}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 4, minLength: 4}}
                         required
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-14"
-                        label="Expiration Date (YYMM)"
+                        label="F-14"
                         variant="outlined"
                         fullWidth
-                        inputProps={{maxLength: 4, minLength: 4}}
+                        // inputProps={{maxLength: 4, minLength: 4}}
                         type="text"
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-18"
-                        label="Merchant Type"
+                        label="F-18"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 4, minLength: 4}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 4, minLength: 4}}
                         required
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-19"
-                        label="Accepting Institution Country code"
+                        label="F-19"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 3, minLength: 3}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 3, minLength: 3}}
                     />
                 </div>
 
@@ -182,58 +178,58 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-22"
-                        label="Point of Service Entry Mode Code"
+                        label="F-22"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 3, minLength: 3}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 3, minLength: 3}}
                         required
                     />
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-22"
-                        label="Card Sequence Number"
+                        id="PC-23"
+                        label="F-23"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 3, minLength: 3}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 3, minLength: 3}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-25"
-                        label="Point of Service Condition Code"
+                        label="F-25"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 2, minLength: 2}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 2, minLength: 2}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-32"
-                        label="Accepting Institution Identification Code"
+                        label="F-32"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 11}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 11}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-35"
-                        label="Track 2 data"
+                        label="F-35"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 37}}
+                        // inputProps={{maxLength: 37}}
                     />
                 </div>
 
@@ -241,55 +237,55 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-36"
-                        label="Track 3 data"
+                        label="F-36"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 104}}
+                        // inputProps={{maxLength: 104}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-37"
-                        label="Retrieval Reference Number"
+                        label="F-37"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        inputProps={{maxLength: 12, minLength: 12}}
+                        // inputProps={{maxLength: 12, minLength: 12}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-41"
-                        label="Card Acceptor Terminal Identification"
+                        label="F-41"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        inputProps={{maxLength: 8, minLength: 8}}
+                        // inputProps={{maxLength: 8, minLength: 8}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-42"
-                        label="Card Acceptor Identification Code"
+                        label="F-42"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        inputProps={{maxLength: 15, minLength: 15}}
+                        // inputProps={{maxLength: 15, minLength: 15}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-43"
-                        label="Card Acceptor Name and Location"
+                        label="F-43"
                         variant="outlined"
                         fullWidth
                         required
                         type="text"
-                        inputProps={{maxLength: 40, minLength: 40}}
+                        // inputProps={{maxLength: 40, minLength: 40}}
                     />
                 </div>
 
@@ -297,69 +293,69 @@ export default function Purchase() {
                     <TextField
                         style={textFiledStyle}
                         id="PC-45"
-                        label="Track 1 data"
+                        label="F45"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 79}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-49"
-                        label="Transaction Currency Code"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 3, minLength: 3}}
+                        // inputProps={{maxLength: 79}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-52"
-                        label=" Pin Data"
+                        label="F-52"
                         variant="outlined"
                         fullWidth
+                        required
                         type="text"
-                        inputProps={{maxLength: 16, minLength: 16}}
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 3, minLength: 3}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-55"
-                        label="Chip Data"
+                        label="F-55"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        onKeyPress={onlyBinaryKey}
-                        inputProps={{maxLength: 255}}
+                        // inputProps={{maxLength: 16, minLength: 16}}
                     />
 
                     <TextField
                         style={textFiledStyle}
                         id="PC-60"
-                        label="User defined field"
+                        label="F-60"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 60}}
+                        // onKeyPress={onlyBinaryKey}
+                        // inputProps={{maxLength: 255}}
                     />
-                </div>
 
-
-                <div>
                     <TextField
                         style={textFiledStyle}
                         id="PC-128"
-                        label="Message Authentication Code"
+                        label="F-128"
                         variant="outlined"
                         fullWidth
                         type="text"
-                        inputProps={{maxLength: 16, minLength: 16}}
+                        //inputProps={{maxLength: 60}}
                     />
                 </div>
+
+
+                {/*<div>*/}
+                {/*    <TextField*/}
+                {/*        style={textFiledStyle}*/}
+                {/*        id="PC-128"*/}
+                {/*        label="Message Authentication Code"*/}
+                {/*        variant="outlined"*/}
+                {/*        fullWidth*/}
+                {/*        type="text"*/}
+                {/*        inputProps={{maxLength: 16, minLength: 16}}*/}
+                {/*    />*/}
+                {/*</div>*/}
 
 
                 <div>
@@ -372,8 +368,6 @@ export default function Purchase() {
                     </Button>
                 </div>
             </Box>
-
         </>
-
     );
 }

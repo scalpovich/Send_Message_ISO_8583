@@ -24,7 +24,6 @@ public class Processor {
     public MessageISO parsMessage(String message){
         int currentPosition = 0;
 
-
         MessageISO m = new MessageISO();
 
         m.setHeader(message.substring(0,HEADER_LENGTH));
@@ -97,5 +96,6 @@ public class Processor {
         messageISO.setHeader(header);
         return header + builder.toString();
     }
+
 
 }

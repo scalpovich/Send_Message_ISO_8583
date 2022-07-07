@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Navbar from "./Navbar";
 import { useEffect, useState } from 'react';
-import { Container, Paper, TextField, Button } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 
 export default function Result() {
     const paperStyle = { padding: '50px 20px', width: 600, margin: "20px auto" }
@@ -10,12 +10,9 @@ export default function Result() {
         fetch("http://localhost:8080/purchase/get")
             .then(res => res.json())
             .then((result) => {
-                console.log(result)
                 setElements(result);
-            }
-            ).then(() => {
+            }).then(() => {
                 // console.log(elements)
-                
               })
     }, [])
 
@@ -34,11 +31,8 @@ export default function Result() {
                         </Paper>
                     ))
                     }
-
-
                 </Paper>
             </Container>
         </>
-
     );
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.coyote.http11.Constants.a;
+
 
 @RestController
 @RequestMapping("/purchase")
@@ -18,17 +20,19 @@ public class ControllerPurchase {
     @Autowired
     private MessageService ms;
     @PostMapping("/post")
-    public String add(@RequestBody List<DataReceive> data){
+    public String add(@RequestBody List<DataReceive> datas){
+        for (int i = 0; i < datas.size(); i++){
+            System.out.println(datas.get(i).getId());
+        }
 //        for(int i=0; i< data.size(); i++){
 //            System.out.println(data.get(i).getId() + " " + data.get(i).getValue());
 //        }
-        ms.buildMessage(data);
+//        ms.buildMessage(data);
         return "New message added";
     }
 
     @GetMapping("/get")
     public List<DataReceive> list(){
-        return ms.getMessage();
+        return null;
     }
-
 }

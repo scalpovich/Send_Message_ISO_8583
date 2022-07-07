@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import logo from '../assets/image/Logo.webp'
 import '../styles/Navbar.css'
-function Navbar() {
+
+const Navbar =() => {
     return (
         <>
             <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -14,7 +15,7 @@ function Navbar() {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                            <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdown-1" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,8 +33,8 @@ function Navbar() {
                                     Quick Transaction
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Balance</a></li>
-                                    <li><a class="dropdown-item" href="#">Purchase</a></li>
+                                    <li><a class="dropdown-item" href="/Balance">Balance</a></li>
+                                    <li><a class="dropdown-item" href="/Purchase">Purchase</a></li>
                                     <li><a class="dropdown-item" href="#">Withdraw</a></li>
                                     <li><a class="dropdown-item" href="#">Transfer</a></li>
                                     <li><a class="dropdown-item" href="#">Change PIN</a></li>
@@ -47,6 +48,8 @@ function Navbar() {
             </nav>
         </>
     )
+
 }
+
 
 export default Navbar
