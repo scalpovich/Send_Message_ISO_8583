@@ -32,6 +32,7 @@ public class Processor {
         m.setMti(message.substring(currentPosition, currentPosition+MTI_LENGTH));
         currentPosition += MTI_LENGTH;
 
+//        String ab = message.substring(currentPosition, currentPosition+BITMAP_LENGTH);
         m.setPrimaryBitMap(message.substring(currentPosition, currentPosition+BITMAP_LENGTH));
         currentPosition += BITMAP_LENGTH;
 
@@ -97,5 +98,10 @@ public class Processor {
         return header + builder.toString();
     }
 
+    public static void main(String[] args) {
+        Processor processor = new Processor();
+        String message = "020802107ABA40010A80C4021697040932704448260100000000100000000000100000000524085210000000015371571552100524052460110697046800000050754594000000017047040400000000000000000000000000000000000000000016AAcB6wDcYKtpWwAA";
+        MessageISO messageISO = processor.parsMessage(message);
+    }
 
 }

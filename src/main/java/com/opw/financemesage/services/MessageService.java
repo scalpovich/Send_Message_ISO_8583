@@ -6,6 +6,6 @@ import java.util.List;
 
 
 public interface MessageService {
-    void sendMessage(List<DataReceive> data);
+    List<DataReceive> sendMessage(List<DataReceive> data);
     List<DataReceive> getMesssage();
 }

@@ -21,18 +21,12 @@ public class ControllerPurchase {
     private MessageService ms;
     @PostMapping("/post")
     public String add(@RequestBody List<DataReceive> datas){
-        for (int i = 0; i < datas.size(); i++){
-            System.out.println(datas.get(i).getId());
-        }
-//        for(int i=0; i< data.size(); i++){
-//            System.out.println(data.get(i).getId() + " " + data.get(i).getValue());
-//        }
-//        ms.buildMessage(data);
+        ms.sendMessage(datas);
         return "New message added";
     }
 
     @GetMapping("/get")
     public List<DataReceive> list(){
-        return null;
+        return ms.getMesssage();
     }
 }

@@ -28,15 +28,21 @@ public class ImplMessageService implements MessageService {
     private Processor processor;
 
     @Override
-    public void sendMessage(List<DataReceive> data) {
+    public List<DataReceive> sendMessage(List<DataReceive> data) {
         try {
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
             String mesageISO = processor.buildMessage(messageISO);
             socketIO.sendMessage(mesageISO);
+            String message = socketIO.getMessage();
+            System.out.println(message);
+            MessageISO messageISO1 = processor.parsMessage(message);
+            List<DataReceive> res = dto.messageToData(messageISO1);
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

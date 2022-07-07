@@ -19,9 +19,9 @@ public class ControllerBalance {
     private DTO dto;
 
    @PostMapping("/post")
-    public String sendMessage(@RequestBody List<DataReceive> data) {
+    public List<DataReceive> sendMessage(@RequestBody List<DataReceive> data) {
        messageService.sendMessage(data);
-       return "New message added";
+       return messageService.sendMessage(data);
     }
 
     @GetMapping("/get")
