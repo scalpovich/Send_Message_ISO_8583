@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {Box, Button,} from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent ,DialogContentText ,DialogTitle } from '@mui/material';
 import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 
 export default function Balance() {
 
-    const textFiledStyle = {margin: '30px 30px'};
-    const navigate = useNavigate();
-    let field = [{id: 1, value: "0200"}];
+    const [open, setOpen] = React.useState(false);
+    const[response,setResponse]=useState('')
+    const textFiledStyle = { margin: '30px 30px' };
+    let field = [{ id: 1, value: "0200" }];
 
     const onlyNumberKey = (event) => {
         if (!/[0-9]/.test(event.key)) {
@@ -27,32 +29,36 @@ export default function Balance() {
         for (let i = 2; i <= 128; i++) {
             let id = "PC-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
-                let ele = {id: i, value: document.getElementById(id).value.toString()}
+                let ele = { id: i, value: document.getElementById(id).value.toString() }
                 field.push(ele)
             }
         }
 
         fetch("http://localhost:8080/balance/post", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(field)
-        }).then(
-            () => {
-                navigate('/result');
-            }
-        )
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result.message)
+                    setResponse(result.message)
+                    setOpen(true);
+                })
+
+        field = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
 
     }
 
     return (
         <>
-            <Navbar/>
-            <h1 style={{margin: '15px 15px'}}
+            <Navbar />
+            <h1 style={{ margin: '15px 15px' }}
             >Balance</h1>
             <Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': {m: 1, width: '25ch'},
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
                 }}
                 noValidate
                 autoComplete="off"
@@ -64,7 +70,7 @@ export default function Balance() {
                         label="F-2"
                         variant="outlined"
                         type="text"
-                        inputProps={{maxLength: 19}}
+                        inputProps={{ maxLength: 19 }}
                         required
                     />
 
@@ -76,7 +82,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 6, minLength: 6}}
+                        inputProps={{ maxLength: 6, minLength: 6 }}
                         required
                     />
 
@@ -88,7 +94,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 12, minLength: 12}}
+                        inputProps={{ maxLength: 12, minLength: 12 }}
                         required
                     />
 
@@ -100,7 +106,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 10, minLength: 10}}
+                        inputProps={{ maxLength: 10, minLength: 10 }}
                         required
                     />
 
@@ -112,7 +118,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{maxLength: 6, minLength: 6}}
+                        inputProps={{ maxLength: 6, minLength: 6 }}
                         required
                     />
                 </div>
@@ -169,8 +175,8 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 3, minLength: 3}}
+                    // onKeyPress={onlyNumberKey}
+                    // inputProps={{maxLength: 3, minLength: 3}}
                     />
                 </div>
 
@@ -194,8 +200,8 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 3, minLength: 3}}
+                    // onKeyPress={onlyNumberKey}
+                    // inputProps={{maxLength: 3, minLength: 3}}
                     />
 
                     <TextField
@@ -206,8 +212,8 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 2, minLength: 2}}
+                    // onKeyPress={onlyNumberKey}
+                    // inputProps={{maxLength: 2, minLength: 2}}
                     />
 
                     <TextField
@@ -218,8 +224,8 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 11}}
+                    // onKeyPress={onlyNumberKey}
+                    // inputProps={{maxLength: 11}}
                     />
 
                     <TextField
@@ -229,7 +235,7 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // inputProps={{maxLength: 37}}
+                    // inputProps={{maxLength: 37}}
                     />
                 </div>
 
@@ -241,7 +247,7 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // inputProps={{maxLength: 104}}
+                    // inputProps={{maxLength: 104}}
                     />
 
                     <TextField
@@ -252,7 +258,7 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // inputProps={{maxLength: 12, minLength: 12}}
+                    // inputProps={{maxLength: 12, minLength: 12}}
                     />
 
                     <TextField
@@ -263,7 +269,7 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // inputProps={{maxLength: 8, minLength: 8}}
+                    // inputProps={{maxLength: 8, minLength: 8}}
                     />
 
                     <TextField
@@ -274,7 +280,7 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // inputProps={{maxLength: 15, minLength: 15}}
+                    // inputProps={{maxLength: 15, minLength: 15}}
                     />
 
                     <TextField
@@ -285,7 +291,7 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // inputProps={{maxLength: 40, minLength: 40}}
+                    // inputProps={{maxLength: 40, minLength: 40}}
                     />
                 </div>
 
@@ -297,7 +303,7 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // inputProps={{maxLength: 79}}
+                    // inputProps={{maxLength: 79}}
                     />
 
                     <TextField
@@ -308,8 +314,8 @@ export default function Balance() {
                         fullWidth
                         required
                         type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 3, minLength: 3}}
+                    // onKeyPress={onlyNumberKey}
+                    // inputProps={{maxLength: 3, minLength: 3}}
                     />
 
                     <TextField
@@ -319,7 +325,7 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // inputProps={{maxLength: 16, minLength: 16}}
+                    // inputProps={{maxLength: 16, minLength: 16}}
                     />
 
                     <TextField
@@ -329,8 +335,8 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        // onKeyPress={onlyBinaryKey}
-                        // inputProps={{maxLength: 255}}
+                    // onKeyPress={onlyBinaryKey}
+                    // inputProps={{maxLength: 255}}
                     />
 
                     <TextField
@@ -340,7 +346,7 @@ export default function Balance() {
                         variant="outlined"
                         fullWidth
                         type="text"
-                        //inputProps={{maxLength: 60}}
+                    //inputProps={{maxLength: 60}}
                     />
                 </div>
 
@@ -360,12 +366,29 @@ export default function Balance() {
 
                 <div>
                     <Button
-                        style={{margin: '15px 15px', width: '20%'}}
+                        style={{ margin: '15px 15px', width: '20%' }}
                         type="submit" variant="contained"
                         onClick={handleClick}
                     >
                         Submit
                     </Button>
+
+                    <Dialog
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {response}
+                        </DialogTitle>
+                        
+                        <DialogActions>
+                            <Button onClick={() => setOpen(false)} autoFocus>
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
             </Box>
         </>

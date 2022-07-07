@@ -39,7 +39,7 @@ public class ImplMessageService implements MessageService {
             String mesageISO = processor.buildMessage(messageISO);
             socketIO.sendMessage(mesageISO);
             String message = processor.parsMessage(socketIO.getMessage()).getDataElementContent().get(39);
-            return readRespondCode.read(message);
+            return String.format("{\"message\" : \"%s\"}",readRespondCode.read(message));
         } catch (Exception e) {
             e.printStackTrace();
         }

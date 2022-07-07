@@ -18,7 +18,6 @@ export default function Result() {
 
     return (
         <>
-            <Navbar />
             <Container>
                 <h1>Result</h1>
 
