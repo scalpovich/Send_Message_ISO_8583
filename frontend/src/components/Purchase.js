@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Container, Paper, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import {getField} from "./Field"
 
 
 export default function Purchase() {
-  console.log(getField())
   const paperStyle = { padding: '20px 20px', width: 600, margin: "20px auto" }
   const textFiledStyle = { margin: '10px 0px' }
 
