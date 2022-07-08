@@ -289,6 +289,69 @@ public class ConfigMapper {
                         .setLengthType(DataElementLength.VARIABLE)
                         .setType(DataElementType.LLLVAR)
                 );
+        m.getDataElement()
+                .put(70, new DataElement()
+                        .setNumber(70)
+                        .setLength(3)
+                        .setLengthType(DataElementLength.FIXED)
+                        .setType(DataElementType.NUMERIC)
+                );
+        m.getDataElement()
+                .put(90, new DataElement()
+                        .setNumber(90)
+                        .setLength(42)
+                        .setLengthType(DataElementLength.FIXED)
+                        .setType(DataElementType.NUMERIC)
+                );
+        m.getDataElement()
+                .put(100, new DataElement()
+                        .setNumber(100)
+                        .setPrefixLength(2)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLVAR)
+                );
+        m.getDataElement()
+                .put(102, new DataElement()
+                        .setNumber(102)
+                        .setPrefixLength(2)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLVAR)
+                );
+        m.getDataElement()
+                .put(103,new DataElement()
+                        .setNumber(103)
+                        .setPrefixLength(2)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLVAR)
+                );
+        m.getDataElement()
+                .put(104, new DataElement()
+                        .setNumber(104)
+                        .setPrefixLength(3)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLLVAR)
+                );
+        m.getDataElement()
+                .put(105, new DataElement()
+                        .setNumber(105)
+                        .setPrefixLength(3)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLLVAR)
+                );
+        m.getDataElement()
+                .put(120, new DataElement()
+                        .setNumber(120)
+                        .setPrefixLength(3)
+                        .setLengthType(DataElementLength.VARIABLE)
+                        .setType(DataElementType.LLLVAR)
+                );
+        m.getDataElement()
+                .put(128, new DataElement()
+                        .setNumber(128)
+                        .setLength(16)
+                        .setLengthType(DataElementLength.FIXED)
+                        .setType(DataElementType.NUMERIC)
+                );
         return m;
 
     }

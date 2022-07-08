@@ -25,7 +25,9 @@ public class SocketIO {
 
     public void sendMessage(String message){
         try{
+            System.out.println("send message");
             output.println(message);
+            System.out.println("Message sended");
         }catch (Exception e){
             e.printStackTrace();
             closeElements(socket, input,output);
@@ -36,10 +38,14 @@ public class SocketIO {
         String messageRes = null;
         try{
             messageRes =  input.readLine();
+            System.out.println("message reiceved");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        closeElements(socket,input,output);
+        if (!socket.isConnected()){
+            closeElements(socket,input,output);
+        }
+        System.out.println(socket.isConnected());
         return messageRes;
     }
 
