@@ -20,6 +20,8 @@ public class ControllerBalance {
 
    @PostMapping("/post")
     public String sendMessage(@RequestBody List<DataReceive> data) {
+       for(int i=0; i<data.size(); i++)
+           System.out.println(data.get(i).getId() + data.get(i).getValue());
        return messageService.sendMessage(data);
     }
 

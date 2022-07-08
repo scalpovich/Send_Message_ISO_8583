@@ -65,7 +65,7 @@ export default function Balance() {
     const handleClick = (e) => {
         e.preventDefault()
         for (let i = 0; i < 129; i++) {
-            let id = "PC-" + i.toString();
+            let id = "BL-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = { id: i, value: document.getElementById(id).value.toString() }
                 fieldValue.push(ele)
@@ -106,7 +106,7 @@ export default function Balance() {
                     <TextField
                         style={textFiledStyle}
                         key={mapField.get(element.id).id}
-                        id={"PC-" + mapField.get(element.id).id.toString}
+                        id={"BL-" + element.id.toString()}
                         label={mapField.get(element.id).name}
                         variant="outlined"
                         inputProps={{ maxLength: mapField.get(element.id).length }}
