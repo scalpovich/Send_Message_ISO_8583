@@ -1,4 +1,3 @@
-export default function getField(){
 const field = []
 field.push({
     id: 2,
@@ -13,22 +12,6 @@ field.push({
     name: "Processing Code",
     variable: false,
     length: 6,
-    type: "n"
-})
-
-field.push({
-    id: 3,
-    name: "Processing Code",
-    variable: false,
-    length: 6,
-    type: "n"
-})
-
-field.push({
-    id: 4,
-    name: "Transaction Amount",
-    variable: false,
-    length: 12,
     type: "n"
 })
 
@@ -400,6 +383,8 @@ field.push({
     type: "an"
 })
 
-return field
-
-}
+export const mapField = new Map(
+    field.map(object => {
+      return [object.id, object];
+    }),
+  );

@@ -1,4 +1,3 @@
-import React, {useState} from 'react'
 import logo from '../assets/image/Logo.webp'
 import '../styles/Navbar.css'
 
