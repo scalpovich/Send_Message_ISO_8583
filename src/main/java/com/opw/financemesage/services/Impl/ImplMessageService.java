@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -36,10 +37,14 @@ public class ImplMessageService implements MessageService {
         try {
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
-            String mesageISO = processor.buildMessage(messageISO);
-            socketIO.sendMessage(mesageISO);
-            String message = processor.parsMessage(socketIO.getMessage()).getDataElementContent().get(39);
-            return String.format("{\"message\" : \"%s\"}",readRespondCode.read(message));
+            String messageSended = processor.buildMessage(messageISO);
+            System.out.println(messageSended);
+//            System.out.println();
+            socketIO.sendMessage(messageSended);
+            String messageReceiv = socketIO.getMessage();
+            System.out.println(messageReceiv);
+            String readResponseCode = processor.parsMessage(messageReceiv).getDataElementContent().get(39);
+            return String.format("{\"message\" : \"%s\"}",readRespondCode.read(readResponseCode));
         } catch (Exception e) {
             e.printStackTrace();
         }

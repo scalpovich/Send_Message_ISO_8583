@@ -45,14 +45,10 @@ export default function Balance() {
                     setResponse(result.message)
                     setOpen(true);
                 })
-
-        field = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
-
     }
 
     return (
         <>
-            <Navbar />
             <h1 style={{ margin: '15px 15px' }}
             >Balance</h1>
             <Box
@@ -82,7 +78,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{ maxLength: 6, minLength: 6 }}
+                        // inputProps={{ maxLength: 6, minLength: 6 }}
                         required
                     />
 
@@ -94,7 +90,19 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{ maxLength: 12, minLength: 12 }}
+                        // inputProps={{ maxLength: 12, minLength: 12 }}
+                        required
+                    />
+
+                    <TextField
+                        style={textFiledStyle}
+                        id="PC-5"
+                        label="F-5"
+                        variant="outlined"
+                        fullWidth
+                        type="text"
+                        onKeyPress={onlyNumberKey}
+                        // inputProps={{ maxLength: 10, minLength: 10 }}
                         required
                     />
 
@@ -106,19 +114,7 @@ export default function Balance() {
                         fullWidth
                         type="text"
                         onKeyPress={onlyNumberKey}
-                        inputProps={{ maxLength: 10, minLength: 10 }}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-11"
-                        label="F-11"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        inputProps={{ maxLength: 6, minLength: 6 }}
+                        // inputProps={{ maxLength: 6, minLength: 6 }}
                         required
                     />
                 </div>
@@ -126,8 +122,8 @@ export default function Balance() {
                 <div>
                     <TextField
                         style={textFiledStyle}
-                        id="PC-12"
-                        label="F-12"
+                        id="PC-9"
+                        label="F-9"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -137,30 +133,30 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
+                        id="PC-11"
+                        label="F-11"
+                        variant="outlined"
+                        type="text"
+                        // onKeyPress={onlyNumberKey}
+                        // inputProps={{maxLength: 4, minLength: 4}}
+                        required
+                    />
+
+                    <TextField
+                        style={textFiledStyle}
+                        id="PC-12"
+                        label="F-12"
+                        variant="outlined"
+                        fullWidth
+                        // inputProps={{maxLength: 4, minLength: 4}}
+                        type="text"
+                    />
+
+                    <TextField
+                        style={textFiledStyle}
                         id="PC-13"
                         label="F-13"
                         variant="outlined"
-                        type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 4, minLength: 4}}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-14"
-                        label="F-14"
-                        variant="outlined"
-                        fullWidth
-                        // inputProps={{maxLength: 4, minLength: 4}}
-                        type="text"
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-18"
-                        label="F-18"
-                        variant="outlined"
                         fullWidth
                         type="text"
                         // onKeyPress={onlyNumberKey}
@@ -170,8 +166,8 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-19"
-                        label="F-19"
+                        id="PC-15"
+                        label="F-15"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -183,8 +179,8 @@ export default function Balance() {
                 <div>
                     <TextField
                         style={textFiledStyle}
-                        id="PC-22"
-                        label="F-22"
+                        id="PC-18"
+                        label="F-18"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -195,8 +191,8 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-23"
-                        label="F-23"
+                        id="PC-22"
+                        label="F-22"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -298,8 +294,8 @@ export default function Balance() {
                 <div>
                     <TextField
                         style={textFiledStyle}
-                        id="PC-45"
-                        label="F45"
+                        id="PC-49"
+                        label="F49"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -308,8 +304,8 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-52"
-                        label="F-52"
+                        id="PC-50"
+                        label="F-50"
                         variant="outlined"
                         fullWidth
                         required
@@ -320,8 +316,8 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-55"
-                        label="F-55"
+                        id="PC-52"
+                        label="F-52"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -330,8 +326,8 @@ export default function Balance() {
 
                     <TextField
                         style={textFiledStyle}
-                        id="PC-60"
-                        label="F-60"
+                        id="PC-63"
+                        label="F-63"
                         variant="outlined"
                         fullWidth
                         type="text"
