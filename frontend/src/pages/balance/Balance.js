@@ -1,16 +1,47 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent ,DialogContentText ,DialogTitle } from '@mui/material';
-import Navbar from '../../components/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Container } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { mapField } from '../../components/Field';
 
 export default function Balance() {
 
     const [open, setOpen] = React.useState(false);
-    const[response,setResponse]=useState('')
-    const textFiledStyle = { margin: '30px 30px' };
-    let field = [{ id: 1, value: "0200" }];
+    const [response, setResponse] = useState('')
+
+    const elements = [
+        { id: 2, required: true },
+        { id: 3, required: true },
+        { id: 4, required: true },
+        { id: 7, required: true },
+        { id: 11, required: true },
+        { id: 12, required: true },
+        { id: 13, required: true },
+        { id: 14, required: false },
+        { id: 18, required: true },
+        { id: 19, required: false },
+        { id: 22, required: true },
+        { id: 23, required: false },
+        { id: 25, required: true },
+        { id: 32, required: true },
+        { id: 35, required: false },
+        { id: 36, required: false },
+        { id: 37, required: true },
+        { id: 41, required: true },
+        { id: 42, required: true },
+        { id: 43, required: true },
+        { id: 45, required: false },
+        { id: 49, required: true },
+        { id: 52, required: false },
+        { id: 55, required: false },
+        { id: 60, required: false },
+        { id: 128, required: false },
+
+    ]
+
+    const textFiledStyle = { margin: '10px 30px' }
+
+    let fieldValue = [{ id: 0, value: "0200" }]
 
     const onlyNumberKey = (event) => {
         if (!/[0-9]/.test(event.key)) {
@@ -24,20 +55,29 @@ export default function Balance() {
         }
     }
 
+    const typeField = (event, type) => {
+        if (type === "n")
+            onlyNumberKey(event)
+        if (type === "b")
+            onlyBinaryKey(event)
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
-        for (let i = 2; i <= 128; i++) {
+        for (let i = 0; i < 129; i++) {
             let id = "PC-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = { id: i, value: document.getElementById(id).value.toString() }
-                field.push(ele)
+                fieldValue.push(ele)
+
             }
         }
 
+        console.log(console.log(fieldValue))
         fetch("http://localhost:8080/balance/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(field)
+            body: JSON.stringify(fieldValue)
         }).then(res => res.json())
             .then(
                 (result) => {
@@ -45,324 +85,40 @@ export default function Balance() {
                     setResponse(result.message)
                     setOpen(true);
                 })
+        fieldValue = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
     }
 
     return (
-        <>
-            <h1 style={{ margin: '15px 15px' }}
-            >Balance</h1>
+        <Container >
+
+            <h1>Balance</h1>
+
             <Box
                 component="form"
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
                 }}
                 noValidate
-                autoComplete="off"
+                autoComplete="on"
             >
-                <div>
+
+                {elements.map(element => (
                     <TextField
                         style={textFiledStyle}
-                        id="PC-2"
-                        label="F-2"
+                        key={mapField.get(element.id).id}
+                        id={"PC-" + mapField.get(element.id).id.toString}
+                        label={mapField.get(element.id).name}
                         variant="outlined"
-                        type="text"
-                        inputProps={{ maxLength: 19 }}
-                        required
+                        inputProps={{ maxLength: mapField.get(element.id).length }}
+                        onKeyPress={event => typeField(event, mapField.get(element.id).type)}
+                        required={element.required}
                     />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-3"
-                        label="F-3"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        // inputProps={{ maxLength: 6, minLength: 6 }}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-4"
-                        label="F-4"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        // inputProps={{ maxLength: 12, minLength: 12 }}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-5"
-                        label="F-5"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        // inputProps={{ maxLength: 10, minLength: 10 }}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-7"
-                        label="F-7"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        onKeyPress={onlyNumberKey}
-                        // inputProps={{ maxLength: 6, minLength: 6 }}
-                        required
-                    />
-                </div>
-
-                <div>
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-9"
-                        label="F-9"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        // inputProps={{maxLength: 6, minLength: 6}}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-11"
-                        label="F-11"
-                        variant="outlined"
-                        type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 4, minLength: 4}}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-12"
-                        label="F-12"
-                        variant="outlined"
-                        fullWidth
-                        // inputProps={{maxLength: 4, minLength: 4}}
-                        type="text"
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-13"
-                        label="F-13"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 4, minLength: 4}}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-15"
-                        label="F-15"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // onKeyPress={onlyNumberKey}
-                    // inputProps={{maxLength: 3, minLength: 3}}
-                    />
-                </div>
-
-                <div>
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-18"
-                        label="F-18"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        // onKeyPress={onlyNumberKey}
-                        // inputProps={{maxLength: 3, minLength: 3}}
-                        required
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-22"
-                        label="F-22"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // onKeyPress={onlyNumberKey}
-                    // inputProps={{maxLength: 3, minLength: 3}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-25"
-                        label="F-25"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // onKeyPress={onlyNumberKey}
-                    // inputProps={{maxLength: 2, minLength: 2}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-32"
-                        label="F-32"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // onKeyPress={onlyNumberKey}
-                    // inputProps={{maxLength: 11}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-35"
-                        label="F-35"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // inputProps={{maxLength: 37}}
-                    />
-                </div>
-
-                <div>
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-36"
-                        label="F-36"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // inputProps={{maxLength: 104}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-37"
-                        label="F-37"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // inputProps={{maxLength: 12, minLength: 12}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-41"
-                        label="F-41"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // inputProps={{maxLength: 8, minLength: 8}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-42"
-                        label="F-42"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // inputProps={{maxLength: 15, minLength: 15}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-43"
-                        label="F-43"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // inputProps={{maxLength: 40, minLength: 40}}
-                    />
-                </div>
-
-                <div>
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-49"
-                        label="F49"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // inputProps={{maxLength: 79}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-50"
-                        label="F-50"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        type="text"
-                    // onKeyPress={onlyNumberKey}
-                    // inputProps={{maxLength: 3, minLength: 3}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-52"
-                        label="F-52"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // inputProps={{maxLength: 16, minLength: 16}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-63"
-                        label="F-63"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    // onKeyPress={onlyBinaryKey}
-                    // inputProps={{maxLength: 255}}
-                    />
-
-                    <TextField
-                        style={textFiledStyle}
-                        id="PC-128"
-                        label="F-128"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                    //inputProps={{maxLength: 60}}
-                    />
-                </div>
-
-
-                {/*<div>*/}
-                {/*    <TextField*/}
-                {/*        style={textFiledStyle}*/}
-                {/*        id="PC-128"*/}
-                {/*        label="Message Authentication Code"*/}
-                {/*        variant="outlined"*/}
-                {/*        fullWidth*/}
-                {/*        type="text"*/}
-                {/*        inputProps={{maxLength: 16, minLength: 16}}*/}
-                {/*    />*/}
-                {/*</div>*/}
-
+                ))
+                }
 
                 <div>
                     <Button
-                        style={{ margin: '15px 15px', width: '20%' }}
+                        style={{ margin: '15px 15px', width: '40%' }}
                         type="submit" variant="contained"
                         onClick={handleClick}
                     >
@@ -378,7 +134,7 @@ export default function Balance() {
                         <DialogTitle id="alert-dialog-title">
                             {response}
                         </DialogTitle>
-                        
+
                         <DialogActions>
                             <Button onClick={() => setOpen(false)} autoFocus>
                                 OK
@@ -386,7 +142,10 @@ export default function Balance() {
                         </DialogActions>
                     </Dialog>
                 </div>
+
             </Box>
-        </>
+
+
+        </Container>
     );
 }
