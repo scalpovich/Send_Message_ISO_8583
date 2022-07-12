@@ -63,8 +63,8 @@ public class MessageISO {
     }
 
     public void setPrimaryBitMap(String primaryBitMap) {
-        this.overralBitMap = convert.hexToBinary(primaryBitMap);
         this.primaryBitMap = primaryBitMap;
+        this.overralBitMap = convert.hexToBinary(primaryBitMap);
     }
 
     public String getSecondaryBitMap() {
@@ -75,8 +75,8 @@ public class MessageISO {
     }
 
     public void setSecondaryBitMap(String secondaryBitMap) {
-        this.overralBitMap = convert.hexToBinary(secondaryBitMap);
         this.secondaryBitMap = secondaryBitMap;
+        this.overralBitMap += convert.hexToBinary(secondaryBitMap);
     }
 
     public String getOverralBitMap() {
@@ -93,5 +93,11 @@ public class MessageISO {
 
     public void setDataElement(Map<Integer, String> dataElement) {
         this.dataElementContent = dataElement;
+    }
+
+    public void printDataElement (){
+        for (Integer key : this.dataElementContent.keySet()){
+            System.out.println(key +" "+ this.dataElementContent.get(key));
+        }
     }
 }

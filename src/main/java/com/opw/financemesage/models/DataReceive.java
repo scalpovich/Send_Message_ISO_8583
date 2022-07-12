@@ -2,8 +2,8 @@ package com.opw.financemesage.models;
 
 // Data receive from frontend
 
-public class DataReceive {
-    private int id;
+public class DataReceive implements Comparable<DataReceive>{
+    private Integer id;
     private String value;
 
     public DataReceive(int id, String value) {
@@ -11,7 +11,7 @@ public class DataReceive {
         this.value = value;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -25,5 +25,11 @@ public class DataReceive {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+
+    @Override
+    public int compareTo(DataReceive o) {
+        return this.getId().compareTo(o.getId());
     }
 }

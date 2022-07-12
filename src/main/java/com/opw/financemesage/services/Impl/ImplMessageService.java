@@ -20,8 +20,10 @@ public class ImplMessageService implements MessageService {
 
     @Autowired
     private DTO dto;
+
     @Autowired
     private SocketIO socketIO;
+
 
     @Autowired
     private MapperDataElement mapperDataElement;
