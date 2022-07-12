@@ -45,8 +45,14 @@ public class ImplMessageService implements MessageService {
             socketIO.sendMessage(messageSended);
             String messageReceiv = socketIO.getMessage();
             System.out.println(messageReceiv);
-            String readResponseCode = processor.parsMessage(messageReceiv).getDataElementContent().get(39);
-            return String.format("{\"message\" : \"%s\"}",readRespondCode.read(readResponseCode));
+            MessageISO temp = processor.parsMessage(messageReceiv);
+            System.out.println(temp.getSecondaryBitMap());
+//            for(Integer count: temp.getDataElementContent().keySet()){
+//                System.out.println(count + " "+ temp.getDataElementContent().get(count));
+//            }
+            String readResponseCode = temp.getDataElementContent().get(39);
+            System.out.println(readResponseCode);
+            return String.format("{\"message\" : \"Response code: %s %s\"}",readResponseCode,readRespondCode.read(readResponseCode));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
 
-export default function Balance() {
+export default function Withdraw() {
 
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
@@ -13,7 +13,10 @@ export default function Balance() {
         { id: 2, required: true },
         { id: 3, required: true },
         { id: 4, required: true },
+        { id: 7, required: true },
         { id: 11, required: true },
+        { id: 12, required: true },
+        { id: 13, required: true },
         { id: 14, required: false },
         { id: 18, required: true },
         { id: 19, required: false },
@@ -21,16 +24,14 @@ export default function Balance() {
         { id: 23, required: false },
         { id: 25, required: true },
         { id: 32, required: true },
-        { id: 35, required: false },
-        { id: 36, required: false },
+        { id: 35, required: true },
         { id: 37, required: true },
         { id: 41, required: true },
         { id: 42, required: true },
         { id: 43, required: true },
         { id: 45, required: false },
         { id: 49, required: true },
-        { id: 52, required: false },
-        { id: 55, required: false },
+        { id: 52, required: true },
         { id: 60, required: false },
         { id: 128, required: false },
 
@@ -88,7 +89,7 @@ export default function Balance() {
     return (
         <Container >
 
-            <h1>Balance</h1>
+            <h1>Withdraw</h1>
 
             <Box
                 component="form"
@@ -104,9 +105,7 @@ export default function Balance() {
                         style={textFiledStyle}
                         key={mapField.get(element.id).id}
                         id={"BL-" + element.id.toString()}
-
                         label={element.id.toString()+mapField.get(element.id).name}
-
                         variant="outlined"
                         inputProps={{ maxLength: mapField.get(element.id).length }}
                         onKeyPress={event => typeField(event, mapField.get(element.id).type)}
