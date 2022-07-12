@@ -1,5 +1,6 @@
 package com.opw.financemesage.factory;
 
+import com.opw.financemesage.convert.ConvertToBitmap;
 import com.opw.financemesage.mapper.MapperDataElement;
 import com.opw.financemesage.models.DataElement;
 import com.opw.financemesage.models.MessageISO;
@@ -37,7 +38,8 @@ public class Processor {
         currentPosition += BITMAP_LENGTH;
 
         // check has second bitmap
-        if(m.hasSecondaryBitMap(m.getPrimaryBitMap().charAt(0))){
+        System.out.println(m.getOverralBitMap().charAt(0));
+        if(m.hasSecondaryBitMap(m.getOverralBitMap().charAt(0))){
             m.setSecondaryBitMap(message.substring(currentPosition, currentPosition+BITMAP_LENGTH));
             currentPosition += BITMAP_LENGTH;
         }

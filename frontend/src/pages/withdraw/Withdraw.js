@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
 
-export default function Balance() {
+export default function Withdraw() {
 
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
@@ -24,16 +24,14 @@ export default function Balance() {
         { id: 23, required: false },
         { id: 25, required: true },
         { id: 32, required: true },
-        { id: 35, required: false },
-        { id: 36, required: false },
+        { id: 35, required: true },
         { id: 37, required: true },
         { id: 41, required: true },
         { id: 42, required: true },
         { id: 43, required: true },
         { id: 45, required: false },
         { id: 49, required: true },
-        { id: 52, required: false },
-        { id: 55, required: false },
+        { id: 52, required: true },
         { id: 60, required: false },
         { id: 128, required: false },
 
@@ -85,13 +83,13 @@ export default function Balance() {
                     setResponse(result.message)
                     setOpen(true);
                 })
-        fieldValue = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
+        fieldValue = [{ id: 0, value: "0200" }]
     }
 
     return (
         <Container >
 
-            <h1>Balance</h1>
+            <h1>Withdraw</h1>
 
             <Box
                 component="form"
