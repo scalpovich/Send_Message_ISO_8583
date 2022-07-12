@@ -2,6 +2,7 @@ package com.opw.financemesage.controllers;
 
 import com.opw.financemesage.convert.DTO;
 import com.opw.financemesage.models.DataReceive;
+import com.opw.financemesage.services.Impl.MessageBalanceService;
 import com.opw.financemesage.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +14,16 @@ import java.util.List;
 @CrossOrigin
 public class ControllerBalance {
 
+
+    private MessageBalanceService messageBalanceService;
     @Autowired
-    private MessageService messageService;
-    @Autowired
-    private DTO dto;
+    public ControllerBalance (MessageBalanceService messageBalanceService){
+        this.messageBalanceService = messageBalanceService;
+    }
 
    @PostMapping("/post")
     public String sendMessage(@RequestBody List<DataReceive> data) {
-       for(int i=0; i<data.size(); i++)
-           System.out.println(data.get(i).getId() + data.get(i).getValue());
-       return messageService.sendMessage(data);
+       return messageBalanceService.send(data);
     }
 
-    @GetMapping("/get")
-    public List<DataReceive> list(){
-       return messageService.getMesssage();
-    }
 }

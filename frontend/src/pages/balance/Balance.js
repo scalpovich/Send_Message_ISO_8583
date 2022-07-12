@@ -13,10 +13,7 @@ export default function Balance() {
         { id: 2, required: true },
         { id: 3, required: true },
         { id: 4, required: true },
-        { id: 7, required: true },
         { id: 11, required: true },
-        { id: 12, required: true },
-        { id: 13, required: true },
         { id: 14, required: false },
         { id: 18, required: true },
         { id: 19, required: false },
@@ -85,7 +82,7 @@ export default function Balance() {
                     setResponse(result.message)
                     setOpen(true);
                 })
-        fieldValue = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
+        fieldValue = [{ id: 0, value: "0200" }]
     }
 
     return (
@@ -107,7 +104,7 @@ export default function Balance() {
                         style={textFiledStyle}
                         key={mapField.get(element.id).id}
                         id={"BL-" + element.id.toString()}
-                        label={mapField.get(element.id).name}
+                        label={mapField.get(element.id).id + mapField.get(element.id).name}
                         variant="outlined"
                         inputProps={{ maxLength: mapField.get(element.id).length }}
                         onKeyPress={event => typeField(event, mapField.get(element.id).type)}

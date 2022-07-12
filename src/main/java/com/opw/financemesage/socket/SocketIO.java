@@ -25,9 +25,9 @@ public class SocketIO {
 
     public void sendMessage(String message){
         try{
-            System.out.println("send message");
+            System.out.println("Send message");
             output.println(message);
-            System.out.println("Message sended");
+            System.out.println("Message sented");
         }catch (Exception e){
             e.printStackTrace();
             closeElements(socket, input,output);
@@ -38,7 +38,7 @@ public class SocketIO {
         String messageRes = null;
         try{
             messageRes =  input.readLine();
-            System.out.println("message reiceved");
+            System.out.println("Message reiceved");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -51,13 +51,16 @@ public class ConvertToBitmap {
         return binary;
     }
 
-    public String decToBinary(MessageISO messageISO){
+    public String binaryFromElement(MessageISO messageISO){
         StringBuffer bitmap = new StringBuffer();
         int lenght = 128;
 
         for (int i = 1 ; i <= lenght; i++ ){
             if(messageISO.getDataElementContent().containsKey(i)){
                 bitmap.append('1');
+                if(i == 38){
+                    System.out.println(i);
+                }
                 continue;
             }
             bitmap.append('0');
@@ -72,7 +75,7 @@ public class ConvertToBitmap {
 
     public String biToHex(MessageISO messageISO){
         String hex = "";
-        String bi= decToBinary(messageISO);
+        String bi= binaryFromElement(messageISO);
         HashMap<String, Character> hashMap = new HashMap<>();
         hashMap.put("0000",'0');
         hashMap.put("0001",'1');
