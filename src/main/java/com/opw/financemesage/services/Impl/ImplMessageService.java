@@ -12,18 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 
 @Service
 public class ImplMessageService implements MessageService {
 
     @Autowired
+    private SocketIO socketIO;
+    @Autowired
     private DTO dto;
-
-
-
-
 
     @Autowired
     private MapperDataElement mapperDataElement;
@@ -41,50 +37,21 @@ public class ImplMessageService implements MessageService {
             processor.getInstance(mapperDataElement);
             String messageSended = processor.buildMessage(messageISO);
             System.out.println(messageSended);
-//            System.out.println();
-//            socketIO.sendMessage(messageSended);
-            String messageReceiv = "";//socketIO.getMessage();
-            System.out.println(messageReceiv);
-            MessageISO temp = processor.parsMessage(messageReceiv);
-            System.out.println(temp.getSecondaryBitMap());
-//            for(Integer count: temp.getDataElementContent().keySet()){
-//                System.out.println(count + " "+ temp.getDataElementContent().get(count));
-//            }
-            String readResponseCode = temp.getDataElementContent().get(39);
-            System.out.println(readResponseCode);
-            return String.format("{\"message\" : \"Response code: %s %s\"}",readResponseCode,readRespondCode.read(readResponseCode));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    @Override
-    public List<DataReceive> getMesssage() {
-        MessageISO messageISO = processor.parsMessage("socketIO.getMessage()");
-        List<DataReceive> data = dto.messageToData(messageISO);
-        return data;
-    }
-
-    public String sendRawMessage(String data) {
-        try {
-            System.out.println("message gui: " + data);
-            SocketIO socketIO = new SocketIO();
-            socketIO.sendMessage(data);
+            socketIO.sendMessage(messageSended);
             String messageReceiv = socketIO.getMessage();
-            System.out.println("message nhan: " + messageReceiv);
-            processor.getInstance(mapperDataElement);
+            if (messageReceiv == null) {
+                System.out.println("k nhận được tin từ Way4");
+                return null;
+            }
+
             MessageISO temp = processor.parsMessage(messageReceiv);
-            System.out.println(temp.getSecondaryBitMap());
-//            for(Integer count: temp.getDataElementContent().keySet()){
-//                System.out.println(count + " "+ temp.getDataElementContent().get(count));
-//            }
             String readResponseCode = temp.getDataElementContent().get(39);
-            System.out.println(readResponseCode);
-            return String.format("{\"message\" : \"Response code: %s %s\"}",readResponseCode,readRespondCode.read(readResponseCode));
+            return String.format("{\"message\" : \"Response code: %s %s\"}", readResponseCode, readRespondCode.read(readResponseCode));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

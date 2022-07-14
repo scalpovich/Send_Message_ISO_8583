@@ -1,9 +1,5 @@
 package com.opw.financemesage.factory;
 
-
-
-import com.opw.financemesage.config.ConfigMapper;
-
 import com.opw.financemesage.mapper.MapperDataElement;
 import com.opw.financemesage.models.DataElement;
 import com.opw.financemesage.models.MessageISO;
@@ -64,7 +60,6 @@ public class Processor {
                 m.getDataElementContent().put(i, data);
                 currentPosition += length;
             }
-
         }
         return m;
     }
@@ -99,16 +94,6 @@ public class Processor {
         }
         messageISO.setHeader(header);
         return header + builder.toString();
-    }
-
-    public static void main(String[] args) {
-        ConfigMapper mapperDataElement = new ConfigMapper();
-        Processor processor = new Processor();
-        processor.getInstance(mapperDataElement.configMaper());
-        String message = "026802007ABA448128E0D0021697040932704448260100000000100000000000100000000524085210000000015371571552100524052460110210006970468279704093270444826=290150057100000050754500000001AB                                              BNV 704704704DB0B60B3204663F5016AAcB6wDcYKtpWwAA";
-        MessageISO messageISO = processor.parsMessage(message);
-        String newMessge = processor.buildMessage(messageISO);
-        System.out.println(newMessge);
     }
 
 }

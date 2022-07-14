@@ -154,14 +154,6 @@ export default function Purchase() {
         }
 
         <div>
-          <Button
-            style={{ margin: '15px 15px', width: '20%' }}
-            type="submit" variant="contained"
-            onClick={handleClick}
-          >
-            Submit
-          </Button>
-
           <Dialog
             open={loading}
             aria-labelledby="alert-dialog-title"

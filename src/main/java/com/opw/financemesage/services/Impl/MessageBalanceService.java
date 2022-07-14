@@ -24,5 +24,4 @@ public class MessageBalanceService extends ImplMessageService {
         Collections.sort(data, compareById);
         return this.sendMessage(data);
     }
-
 }
