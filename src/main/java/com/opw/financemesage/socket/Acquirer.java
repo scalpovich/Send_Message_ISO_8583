@@ -2,6 +2,7 @@ package com.opw.financemesage.socket;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Acquirer {
     private Socket socket;
@@ -35,9 +36,10 @@ public class Acquirer {
         try {
              resMessage =  reader.readLine();
         } catch (IOException e) {
+            closeEverything(socket,reader,writer);
             throw new RuntimeException(e);
         }
-        closeEverything(socket,reader,writer);
+
         return resMessage;
     }
 
@@ -69,10 +71,15 @@ public class Acquirer {
 
         // Pass the socket and give the client a username.
         Acquirer client = new Acquirer(socket);
-        String message = "026802007ABA448128E0D0021697040932704448260100000000100000000000100000000524085210000000015371571552100524052460110210006970468279704093270444826=290150057100000050754500000001AB                                              BNV 704704704DB0B60B3204663F5016AAcB6wDcYKtpWwAA";
+        String message = "026802007ABA448128E0D0021697040900320033123000000000100000000000100000001126042633000000019206601126331126112660110210006970495279704090032003312=550650098200000457636400000001AB                                              BNV 704704704546694DDEC17E7CD016AAcBVwGgYaBiLAAE";
         // Infinite loop to read and send messages.
-        client.sendMessage(message);
-        System.out.println(client.getMessage());
+        Scanner input = new Scanner(System.in);
+        while(true){
+            String nhap = input.next();
+            client.sendMessage(message);
+            System.out.println("sented");
+            System.out.println(client.getMessage());
+        }
 
     }
 }

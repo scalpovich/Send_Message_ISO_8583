@@ -24,7 +24,6 @@ public class HandleAcquirer implements  Runnable{
     public void run() {
         String request;
         SocketIO socketIO = new SocketIO();
-        // Continue to listen for messages while a connection with the client is still established.
             try {
                 request = reader.readLine();
                 socketIO.sendMessage(request);
@@ -33,13 +32,7 @@ public class HandleAcquirer implements  Runnable{
                 // Close everything gracefully.
                 closeEverything(socket, reader, writer);
             }
-        closeEverything(socket, reader, writer);
     }
-
-
-
-    // If the client disconnects for any reason remove them from the list so a message isn't sent down a broken connection.
-
 
     // Helper method to close everything so you don't have to repeat yourself.
     public void closeEverything(Socket socket, BufferedReader reader, PrintWriter writer) {

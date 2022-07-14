@@ -34,7 +34,7 @@ const Navbar =() => {
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a className="dropdown-item" href="/Balance">Balance</a></li>
                                     <li><a className="dropdown-item" href="/Purchase">Purchase</a></li>
-                                    <li><a className="dropdown-item" href="#">Withdraw</a></li>
+                                    <li><a className="dropdown-item" href="/Withdraw">Withdraw</a></li>
                                     <li><a className="dropdown-item" href="#">Transfer</a></li>
                                     <li><a className="dropdown-item" href="#">Change PIN</a></li>
                                 </ul>
