@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, TextField, Button, Box, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { Container, TextField, Button, Box, Dialog, DialogActions, DialogTitle, CircularProgress } from '@mui/material';
 import { mapField } from '../../components/Field';
 import { useState } from 'react';
 
@@ -8,6 +8,11 @@ export default function Purchase() {
 
   const [open, setOpen] = React.useState(false);
   const [response, setResponse] = useState('')
+  const [errorArray, setErrorArray] = useState([])
+  const [isError, setIsError] = useState([])
+  const [loading, setLoading] = React.useState(false);
+  var subErrorArray = []
+  var subIsError = []
 
   const elements = [
     { id: 2, required: true },
@@ -65,6 +70,34 @@ export default function Purchase() {
 
   const handleClick = (e) => {
     e.preventDefault()
+
+    let isValid = true
+
+    for (let i = 0; i < elements.length; i++) {
+      let e = document.getElementById("WD-" + elements[i].id.toString())
+      if (elements[i].required === true && e.value.toString() === "") {
+        subErrorArray[elements[i].id] = "This field can't be empty"
+        setErrorArray(subErrorArray)
+        subIsError[elements[i].id] = true
+        setIsError(subIsError)
+        isValid = false
+        continue
+      }
+
+      let eProp = mapField.get(elements[i].id)
+      if (eProp.variable === false && e.value.toString().length < eProp.length) {
+        subErrorArray[elements[i].id] = `This field requires ${eProp.length} characters`
+        setErrorArray(subErrorArray)
+        subIsError[elements[i].id] = true
+        setIsError(subIsError)
+        isValid = false
+        continue
+      }
+    }
+
+    if (!isValid)
+      return
+
     for (let i = 0; i < 129; i++) {
       let id = "PC-" + i.toString();
       if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
@@ -74,19 +107,20 @@ export default function Purchase() {
       }
     }
 
-    console.log("Try to fix")
-    fetch("http://localhost:8080/purchase/post", {
+    console.log(console.log(fieldValue))
+    setLoading(true)
+    fetch("http://localhost:8080/balance/post", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fieldValue)
     }).then(res => res.json())
       .then(
         (result) => {
-          console.log(result.message)
+          setLoading(false)
           setResponse(result.message)
           setOpen(true);
         })
-    fieldValue = [{ id: 0, value: "0200" }, { id: 1, value: "1" }]
+    fieldValue = [{ id: 0, value: "0200" }]
   }
 
   return (
@@ -113,6 +147,8 @@ export default function Purchase() {
             inputProps={{ maxLength: mapField.get(element.id).length }}
             onKeyPress={event => typeField(event, mapField.get(element.id).type)}
             required={element.required}
+            helperText={errorArray[element.id]}
+            error={isError[element.id]}
           />
         ))
         }
@@ -125,6 +161,19 @@ export default function Purchase() {
           >
             Submit
           </Button>
+
+          <Dialog
+            open={loading}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <Box style={{ height: '150px', width: '200px', display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+
+              <CircularProgress />
+
+            </Box>
+          </Dialog>
 
           <Dialog
             open={open}
@@ -145,14 +194,6 @@ export default function Purchase() {
         </div>
 
       </Box>
-
-      <Button
-        style={{ marginTop: '15px', width: '50%' }}
-        type="submit" variant="contained"
-        onClick={handleClick}
-      >
-        Submit
-      </Button>
     </Container>
   );
 }

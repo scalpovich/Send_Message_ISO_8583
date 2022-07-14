@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogTitle, Container } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
@@ -8,6 +8,11 @@ export default function Balance() {
 
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
+    const [errorArray, setErrorArray] = useState([])
+    const [isError, setIsError] = useState([])
+    const [loading, setLoading] = React.useState(false);
+    var subErrorArray = []
+    var subIsError = []
 
     const elements = [
         { id: 2, required: true },
@@ -61,6 +66,34 @@ export default function Balance() {
 
     const handleClick = (e) => {
         e.preventDefault()
+
+        let isValid = true
+
+        for(let i = 0; i<elements.length; i++){
+            let e= document.getElementById("WD-" + elements[i].id.toString())
+            if(elements[i].required === true && e.value.toString() === ""){
+                subErrorArray[elements[i].id] = "This field can't be empty"
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)            
+                isValid = false
+                continue
+            }
+
+            let eProp = mapField.get(elements[i].id)
+            if(eProp.variable === false && e.value.toString().length < eProp.length ){
+                subErrorArray[elements[i].id] = `This field requires ${eProp.length} characters`
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)            
+                isValid = false
+                continue
+            }
+        }
+
+        if(!isValid)
+            return
+
         for (let i = 0; i < 129; i++) {
             let id = "BL-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
@@ -71,6 +104,7 @@ export default function Balance() {
         }
 
         console.log(console.log(fieldValue))
+        setLoading(true)
         fetch("http://localhost:8080/balance/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -78,7 +112,7 @@ export default function Balance() {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result.message)
+                    setLoading(false)
                     setResponse(result.message)
                     setOpen(true);
                 })
@@ -111,6 +145,8 @@ export default function Balance() {
                         inputProps={{ maxLength: mapField.get(element.id).length }}
                         onKeyPress={event => typeField(event, mapField.get(element.id).type)}
                         required={element.required}
+                        helperText={errorArray[element.id]}
+                        error={isError[element.id]}
                     />
                 ))
                 }
@@ -123,6 +159,19 @@ export default function Balance() {
                     >
                         Submit
                     </Button>
+
+                    <Dialog
+                        open={loading}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <Box style={{height: '150px' ,  width: '200px', display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        
+                            
+                            <CircularProgress/>
+                                
+                        </Box>
+                    </Dialog>
 
                     <Dialog
                         open={open}
