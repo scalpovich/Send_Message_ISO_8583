@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogTitle, Container } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
@@ -9,14 +9,19 @@ export default function Withdraw() {
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
 
+    const [errorArray, setErrorArray] = useState([])
+    const [isError, setIsError] = useState([])
+    const [loading, setLoading] = React.useState(false);
+    var subErrorArray = []
+    var subIsError = []
+
+    var messageUpdate = ""
+
     const elements = [
         { id: 2, required: true },
         { id: 3, required: true },
         { id: 4, required: true },
-        { id: 7, required: true },
         { id: 11, required: true },
-        { id: 12, required: true },
-        { id: 13, required: true },
         { id: 14, required: false },
         { id: 18, required: true },
         { id: 19, required: false },
@@ -60,10 +65,69 @@ export default function Withdraw() {
             onlyBinaryKey(event)
     }
 
+    const updateMessage = (e) => {
+
+        let files = e.target.files;
+        let reader = new FileReader()
+        reader.readAsText(files[0])
+
+        reader.onload = (e) => {
+            if (e.target.result.length > 0) {
+                messageUpdate = e.target.result
+            }
+        }
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
+
+        if (messageUpdate.length > 0) {
+            setLoading(true)
+            let rawMessage = { id: -1 ,value: messageUpdate }
+            console.log(rawMessage)
+            fetch("http://localhost:8080/balance/postRawMessage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(rawMessage)
+            }).then(res => res.json())
+                .then(
+                    (result) => {
+                        setLoading(false)
+                        setResponse(result.message)
+                        setOpen(true);
+                    })
+            return
+        }
+
+        let isValid = true
+
+        for (let i = 0; i < elements.length; i++) {
+            let e = document.getElementById("WD-" + elements[i].id.toString())
+            if (elements[i].required === true && e.value.toString() === "") {
+                subErrorArray[elements[i].id] = "This field can't be empty"
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)
+                isValid = false
+                continue
+            }
+
+            let eProp = mapField.get(elements[i].id)
+            if (e.value.toString() !== "" && eProp.variable === false && e.value.toString().length < eProp.length) {
+                subErrorArray[elements[i].id] = `This field requires ${eProp.length} characters`
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)
+                isValid = false
+                continue
+            }
+        }
+
+        if (!isValid)
+            return
+
         for (let i = 0; i < 129; i++) {
-            let id = "BL-" + i.toString();
+            let id = "WD-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = { id: i, value: document.getElementById(id).value.toString() }
                 fieldValue.push(ele)
@@ -72,6 +136,7 @@ export default function Withdraw() {
         }
 
         console.log(console.log(fieldValue))
+        setLoading(true)
         fetch("http://localhost:8080/balance/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -79,7 +144,7 @@ export default function Withdraw() {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result.message)
+                    setLoading(false)
                     setResponse(result.message)
                     setOpen(true);
                 })
@@ -104,15 +169,22 @@ export default function Withdraw() {
                     <TextField
                         style={textFiledStyle}
                         key={mapField.get(element.id).id}
-                        id={"BL-" + element.id.toString()}
-                        label={element.id.toString()+mapField.get(element.id).name}
+                        id={"WD-" + element.id.toString()}
+                        label={element.id.toString() + mapField.get(element.id).name}
                         variant="outlined"
                         inputProps={{ maxLength: mapField.get(element.id).length }}
                         onKeyPress={event => typeField(event, mapField.get(element.id).type)}
                         required={element.required}
+                        helperText={errorArray[element.id]}
+                        error={isError[element.id]}
                     />
                 ))
                 }
+
+                <div style={{ textAlign: "left" }}>
+                    <h3>Update message</h3>
+                    <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
+                </div>
 
                 <div>
                     <Button
@@ -122,6 +194,13 @@ export default function Withdraw() {
                     >
                         Submit
                     </Button>
+
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={loading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
 
                     <Dialog
                         open={open}
