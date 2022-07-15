@@ -135,7 +135,7 @@ export default function Withdraw() {
             }
         }
 
-        console.log(console.log(fieldValue))
+        console.log(JSON.stringify(fieldValue))
         setLoading(true)
         fetch("http://localhost:8080/balance/post", {
             method: "POST",
@@ -198,6 +198,7 @@ export default function Withdraw() {
                     <Backdrop
                         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                         open={loading}
+                        onClick={() => setLoading(false)}
                     >
                         <CircularProgress color="inherit" />
                     </Backdrop>
