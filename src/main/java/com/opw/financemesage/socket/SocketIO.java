@@ -15,7 +15,6 @@ public class SocketIO {
     public SocketIO() {
         try {
             this.socket = new Socket("10.145.48.94", 40007);
-            this.socket.setSoTimeout(50000);
             this.output = new PrintWriter(socket.getOutputStream(),true);
             this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
@@ -47,7 +46,7 @@ public class SocketIO {
             char[] result = new char[300];
             input.read(result);
             respond = new String(result);
-
+//            respond = input.readLine();
             System.out.println(respond);
             System.out.println(socket.isConnected());
             return respond;
