@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress } from '@mui/material';
+import {Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
@@ -13,6 +13,8 @@ export default function Balance() {
     const [loading, setLoading] = React.useState(false);
     var subErrorArray = []
     var subIsError = []
+
+    var messageUpdate = ""
 
     const elements = [
         { id: 2, required: true },
@@ -64,38 +66,69 @@ export default function Balance() {
             onlyBinaryKey(event)
     }
 
+    const updateMessage = (e) => {
+
+        let files = e.target.files;
+        let reader = new FileReader()
+        reader.readAsText(files[0])
+
+        reader.onload = (e) => {
+            if (e.target.result.length > 0) {
+                messageUpdate = e.target.result
+            }
+        }
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
 
+        if (messageUpdate.length > 0) {
+            setLoading(true)
+            let rawMessage = { id: -1 ,value: messageUpdate }
+            console.log(rawMessage)
+            fetch("http://localhost:8080/balance/postRawMessage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(rawMessage)
+            }).then(res => res.json())
+                .then(
+                    (result) => {
+                        setLoading(false)
+                        setResponse(result.message)
+                        setOpen(true);
+                    })
+            return
+        }
+
         let isValid = true
 
-        for(let i = 0; i<elements.length; i++){
-            let e= document.getElementById("WD-" + elements[i].id.toString())
-            if(elements[i].required === true && e.value.toString() === ""){
+        for (let i = 0; i < elements.length; i++) {
+            let e = document.getElementById("WD-" + elements[i].id.toString())
+            if (elements[i].required === true && e.value.toString() === "") {
                 subErrorArray[elements[i].id] = "This field can't be empty"
                 setErrorArray(subErrorArray)
                 subIsError[elements[i].id] = true
-                setIsError(subIsError)            
+                setIsError(subIsError)
                 isValid = false
                 continue
             }
 
             let eProp = mapField.get(elements[i].id)
-            if(eProp.variable === false && e.value.toString().length < eProp.length ){
+            if (e.value.toString() !== "" && eProp.variable === false && e.value.toString().length < eProp.length) {
                 subErrorArray[elements[i].id] = `This field requires ${eProp.length} characters`
                 setErrorArray(subErrorArray)
                 subIsError[elements[i].id] = true
-                setIsError(subIsError)            
+                setIsError(subIsError)
                 isValid = false
                 continue
             }
         }
 
-        if(!isValid)
+        if (!isValid)
             return
 
         for (let i = 0; i < 129; i++) {
-            let id = "BL-" + i.toString();
+            let id = "WD-" + i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = { id: i, value: document.getElementById(id).value.toString() }
                 fieldValue.push(ele)
@@ -137,10 +170,8 @@ export default function Balance() {
                     <TextField
                         style={textFiledStyle}
                         key={mapField.get(element.id).id}
-                        id={"BL-" + element.id.toString()}
-
-                        label={element.id.toString()+mapField.get(element.id).name}
-
+                        id={"WD-" + element.id.toString()}
+                        label={element.id.toString() + mapField.get(element.id).name}
                         variant="outlined"
                         inputProps={{ maxLength: mapField.get(element.id).length }}
                         onKeyPress={event => typeField(event, mapField.get(element.id).type)}
@@ -151,6 +182,11 @@ export default function Balance() {
                 ))
                 }
 
+                <div style={{ textAlign: "left" }}>
+                    <h3>Update message</h3>
+                    <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
+                </div>
+
                 <div>
                     <Button
                         style={{ margin: '15px 15px', width: '40%' }}
@@ -160,18 +196,12 @@ export default function Balance() {
                         Submit
                     </Button>
 
-                    <Dialog
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                         open={loading}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
                     >
-                        <Box style={{height: '150px' ,  width: '200px', display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        
-                            
-                            <CircularProgress/>
-                                
-                        </Box>
-                    </Dialog>
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
 
                     <Dialog
                         open={open}

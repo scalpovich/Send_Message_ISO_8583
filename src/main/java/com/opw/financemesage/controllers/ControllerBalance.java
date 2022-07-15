@@ -23,9 +23,9 @@ public class ControllerBalance {
        return messageBalanceService.send(data);
     }
 
-    @PostMapping("/postRawMessage")
-    public String sendMessage(@RequestBody DataReceive data) {
-        return messageBalanceService.sendRawMessage(data.getValue());
-    }
+//    @PostMapping("/postRawMessage")
+//    public String sendMessage(@RequestBody DataReceive data) {
+//        return messageBalanceService.sendRawMessage(data.getValue());
+//    }
 
 }
