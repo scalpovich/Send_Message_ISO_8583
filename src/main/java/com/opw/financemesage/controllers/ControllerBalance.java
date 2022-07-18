@@ -6,20 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/balance")
 @CrossOrigin
 public class ControllerBalance {
-
-    private MessageBalanceService messageBalanceService;
     @Autowired
-    public ControllerBalance (MessageBalanceService messageBalanceService){
-        this.messageBalanceService = messageBalanceService;
-    }
+    private MessageBalanceService messageBalanceService;
+
 
    @PostMapping("/post")
-    public String sendMessage(@RequestBody List<DataReceive> data) {
+    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
        return messageBalanceService.send(data);
     }
 

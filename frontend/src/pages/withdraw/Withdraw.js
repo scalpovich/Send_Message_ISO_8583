@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
@@ -46,6 +46,12 @@ export default function Withdraw() {
 
     let fieldValue = [{ id: 0, value: "0200" }]
 
+    // const setWidth = (name, length) => {
+    //     // if (name > 20 || length > 20)
+    //     //     return 4
+    //     return 3
+    // }
+
     const onlyNumberKey = (event) => {
         if (!/[0-9]/.test(event.key)) {
             event.preventDefault();
@@ -83,7 +89,7 @@ export default function Withdraw() {
 
         if (messageUpdate.length > 0) {
             setLoading(true)
-            let rawMessage = { id: -1 ,value: messageUpdate }
+            let rawMessage = { id: -1, value: messageUpdate }
             console.log(rawMessage)
             fetch("http://localhost:8080/balance/postRawMessage", {
                 method: "POST",
@@ -154,32 +160,37 @@ export default function Withdraw() {
     return (
         <Container >
 
-            <h1>Withdraw</h1>
+            <h1 style={{marginTop : "20px"}}>Withdraw</h1>
 
             <Box
                 component="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
+                // sx={{
+                //     '& .MuiTextField-root': { m: 1/*, width: '25ch'*/ },
+                // }}
                 noValidate
                 autoComplete="on"
             >
+                <Grid container spacing={2} >
 
-                {elements.map(element => (
-                    <TextField
-                        style={textFiledStyle}
-                        key={mapField.get(element.id).id}
-                        id={"WD-" + element.id.toString()}
-                        label={element.id.toString() + mapField.get(element.id).name}
-                        variant="outlined"
-                        inputProps={{ maxLength: mapField.get(element.id).length }}
-                        onKeyPress={event => typeField(event, mapField.get(element.id).type)}
-                        required={element.required}
-                        helperText={errorArray[element.id]}
-                        error={isError[element.id]}
-                    />
-                ))
-                }
+                    {elements.map(element => (
+                        <Grid item xs={3}>
+                            <TextField
+                                style={textFiledStyle}
+                                key={mapField.get(element.id).id}
+                                id={"WD-" + element.id.toString()}
+                                label={element.id.toString() + mapField.get(element.id).name}
+                                variant="outlined"
+                                inputProps={{ maxLength: mapField.get(element.id).length }}
+                                onKeyPress={event => typeField(event, mapField.get(element.id).type)}
+                                required={element.required}
+                                helperText={errorArray[element.id]}
+                                error={isError[element.id]}
+                                fullWidth
+                            />
+                        </Grid>
+                    ))
+                    }
+                </Grid>
 
                 <div style={{ textAlign: "left" }}>
                     <h3>Update message</h3>

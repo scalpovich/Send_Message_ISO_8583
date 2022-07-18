@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 @Configuration
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 public class AsyncConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncConfiguration.class);
@@ -21,7 +21,7 @@ public class AsyncConfiguration {
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("CarThread-");
+        executor.setThreadNamePrefix("MessageThread-");
         executor.initialize();
         return executor;
     }
