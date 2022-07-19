@@ -13,12 +13,12 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class MessageBalanceService extends ImplMessageService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBalanceService.class);
-    private int count = 1;
+//    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBalanceService.class);
+//    private int count = 1;
     @Async
     public CompletableFuture<String> send (List<DataReceive> data) throws Exception{
-        LOGGER.info("Processing request {}", count++);
-        Thread.sleep(5000);
+//        LOGGER.info("Processing request {}", count++);
+//        Thread.sleep(5000);
         Date date = new Date();
         data.add(new DataReceive(7,DataElementType.DATE10.format(date, TimeZone.getTimeZone("GMT"))));
         data.add(new DataReceive(12,DataElementType.TIME.format(date, TimeZone.getTimeZone("GMT"))));

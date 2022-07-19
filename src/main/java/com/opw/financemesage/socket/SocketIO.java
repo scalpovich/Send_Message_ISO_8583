@@ -1,5 +1,6 @@
 package com.opw.financemesage.socket;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -25,11 +26,11 @@ public class SocketIO {
 
     public void sendMessage(String message) {
         try {
-            System.out.println("Send message");
+//            System.out.println("Send message");
             if (socket.isConnected()){
-                output.print(message);
+                output.println(message);
                 output.flush();
-                System.out.println("Message sent");
+//                System.out.println("Message sent");
             }else {
                 System.out.println("Fail");
             }
@@ -40,15 +41,17 @@ public class SocketIO {
     }
 
     public String getMessage() {
-        System.out.println("reading");
+//        System.out.println("reading");
         try {
             String respond = "";
-            char[] result = new char[300];
+            char[] result = new char[600];
             input.read(result);
             respond = new String(result);
+
 //            respond = input.readLine();
-            System.out.println(respond);
-            System.out.println(socket.isConnected());
+            System.out.println(result[0] == 0);
+//            System.out.println("Message response: " + respond);
+
             return respond;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -91,4 +94,5 @@ public class SocketIO {
     public void setOutput(PrintWriter output) {
         this.output = output;
     }
+
 }

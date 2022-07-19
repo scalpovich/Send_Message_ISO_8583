@@ -8,9 +8,12 @@ import com.opw.financemesage.models.MessageISO;
 import com.opw.financemesage.services.MessageService;
 import com.opw.financemesage.socket.SocketIO;
 import com.opw.financemesage.util.ReadRespondCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.Socket;
 import java.util.*;
 
 @Service
@@ -30,23 +33,33 @@ public class ImplMessageService implements MessageService {
     @Autowired
     private ReadRespondCode readRespondCode;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImplMessageService.class);
+    private int count = 0;
+
     @Override
     public String sendMessage(List<DataReceive> data) {
         try {
+            System.out.println();
+            LOGGER.info("Processing request {}", count+++1);
+//            Thread.sleep(5000);
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
             String messageSended = processor.buildMessage(messageISO);
-            System.out.println(messageSended);
+            System.out.println("Message receive " + count + ": " +  messageSended);
 
             socketIO.sendMessage(messageSended);
             String messageReceiv = socketIO.getMessage();
-            if (messageReceiv == null) {
-                System.out.println("k nhận được tin từ Way4");
-                return null;
+
+            System.out.println("Message response " + count + ": " +  messageReceiv);
+
+            if (messageReceiv.charAt(0) == 0) {
+                socketIO = new SocketIO();
+                sendMessage(data);
             }
 
             MessageISO temp = processor.parsMessage(messageReceiv);
             String readResponseCode = temp.getDataElementContent().get(39);
+
             return String.format("{\"message\" : \"Response code: %s %s\"}", readResponseCode, readRespondCode.read(readResponseCode));
         } catch (Exception e) {
             e.printStackTrace();
