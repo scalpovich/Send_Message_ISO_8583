@@ -34,27 +34,28 @@ public class ImplMessageService implements MessageService {
     private ReadRespondCode readRespondCode;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImplMessageService.class);
-    private int count = 0;
+    private int count = 1;
 
     @Override
     public String sendMessage(List<DataReceive> data) {
         try {
             System.out.println();
-            LOGGER.info("Processing request {}", count+++1);
-//            Thread.sleep(5000);
+            int recentNumb = count++;
+            LOGGER.info("Processing request {}", recentNumb);
+            Thread.sleep(5000);
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
             String messageSended = processor.buildMessage(messageISO);
-            System.out.println("Message receive " + count + ": " +  messageSended);
+            System.out.println("Message receive " + recentNumb + ": " +  messageSended);
 
             socketIO.sendMessage(messageSended);
             String messageReceiv = socketIO.getMessage();
 
-            System.out.println("Message response " + count + ": " +  messageReceiv);
+            System.out.println("Message response " + recentNumb + ": " +  messageReceiv);
 
             if (messageReceiv.charAt(0) == 0) {
                 socketIO = new SocketIO();
-                sendMessage(data);
+                return sendMessage(data);
             }
 
             MessageISO temp = processor.parsMessage(messageReceiv);

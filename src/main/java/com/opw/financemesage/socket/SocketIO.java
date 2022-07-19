@@ -28,7 +28,7 @@ public class SocketIO {
         try {
 //            System.out.println("Send message");
             if (socket.isConnected()){
-                output.println(message);
+                output.print(message);
                 output.flush();
 //                System.out.println("Message sent");
             }else {
@@ -49,7 +49,7 @@ public class SocketIO {
             respond = new String(result);
 
 //            respond = input.readLine();
-            System.out.println(result[0] == 0);
+
 //            System.out.println("Message response: " + respond);
 
             return respond;
