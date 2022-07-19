@@ -42,7 +42,7 @@ public class ImplMessageService implements MessageService {
             System.out.println();
             int recentNumb = count++;
             LOGGER.info("Processing request {}", recentNumb);
-            Thread.sleep(5000);
+//            Thread.sleep(5000);
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
             String messageSended = processor.buildMessage(messageISO);
