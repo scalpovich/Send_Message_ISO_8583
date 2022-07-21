@@ -45,10 +45,12 @@ public class ImplMessageService implements MessageService {
 //            Thread.sleep(5000);
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
-            String messageSended = processor.buildMessage(messageISO);
-            System.out.println("Message receive " + recentNumb + ": " +  messageSended);
 
-            socketIO.sendMessage(messageSended);
+            String messageSend = processor.buildMessage(messageISO);
+            System.out.println("Message receive " + recentNumb + ": " +  messageSend);
+
+
+            socketIO.sendMessage(messageSend);
             String messageReceiv = socketIO.getMessage();
 
             System.out.println("Message response " + recentNumb + ": " +  messageReceiv);
@@ -67,5 +69,4 @@ public class ImplMessageService implements MessageService {
         }
         return null;
     }
-
 }
