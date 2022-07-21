@@ -21,8 +21,8 @@ const Navbar =() => {
                                     Transaction
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Single Transaction</a></li>
-                                    <li><a className="dropdown-item" href="#">Batch Transaction</a></li>
+                                    <li><a className="dropdown-item" href="/SingleTransaction">Single Transaction</a></li>
+                                    <li><a className="dropdown-item" href="/BatchTransaction">Batch Transaction</a></li>
                                     <li><a className="dropdown-item" href="#">Something else</a></li>
                                 </ul>
                             </li>

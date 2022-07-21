@@ -14,7 +14,7 @@ export default function Balance() {
     var subErrorArray = []
     var subIsError = []
 
-    var messageUpdate = ""
+    var messageUpdate = "";
 
     const elements = [
         { id: 2, required: true },
@@ -132,7 +132,6 @@ export default function Balance() {
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = { id: i, value: document.getElementById(id).value.toString() }
                 fieldValue.push(ele)
-
             }
         }
 
@@ -154,9 +153,7 @@ export default function Balance() {
 
     return (
         <Container >
-
             <h1>Balance</h1>
-
             <Box
                 component="form"
                 sx={{

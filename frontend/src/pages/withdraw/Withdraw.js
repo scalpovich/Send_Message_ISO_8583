@@ -231,10 +231,7 @@ export default function Withdraw() {
                         </DialogActions>
                     </Dialog>
                 </div>
-
             </Box>
-
-
         </Container>
     );
 }

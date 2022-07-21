@@ -22,6 +22,7 @@ public class DTO {
 
     public List<DataReceive> messageToData(MessageISO messageISO){
         List<DataReceive> data = new ArrayList<>();
+        data.add(new DataReceive(1,messageISO.getMti()));
         for (Integer key : messageISO.getDataElementContent().keySet()){
             data.add(new DataReceive(key, messageISO.getDataElementContent().get(key)));
         }

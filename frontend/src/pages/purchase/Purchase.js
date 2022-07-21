@@ -13,7 +13,6 @@ import {
 import { mapField } from '../../components/Field';
 import { useState } from 'react';
 
-
 export default function Purchase() {
 
   const [open, setOpen] = React.useState(false);
@@ -23,7 +22,6 @@ export default function Purchase() {
   const [loading, setLoading] = React.useState(false);
   var subErrorArray = []
   var subIsError = []
-
   var messageUpdate = ""
 
   const elements = [
@@ -146,7 +144,6 @@ export default function Purchase() {
       if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
         let ele = { id: i, value: document.getElementById(id).value.toString() }
         fieldValue.push(ele)
-
       }
     }
 
@@ -170,7 +167,6 @@ export default function Purchase() {
       <Container >
 
         <h1>Purchase</h1>
-
         <Box
             component="form"
             sx={{
@@ -179,7 +175,6 @@ export default function Purchase() {
             noValidate
             autoComplete="on"
         >
-
           {elements.map(element => (
               <TextField
                   style={textFiledStyle}
@@ -234,7 +229,6 @@ export default function Purchase() {
               </DialogActions>
             </Dialog>
           </div>
-
         </Box>
       </Container>
   );
