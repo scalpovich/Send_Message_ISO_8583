@@ -1,7 +1,6 @@
 package com.opw.financemesage.services.Impl;
 
 import com.opw.financemesage.models.DataReceive;
-import com.opw.financemesage.socket.SocketIO;
 import com.opw.financemesage.util.DataElementType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -10,13 +9,14 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MessagePurchaseService extends ImplMessageService{
+public class MessageWithdrawService extends ImplMessageService {
+
     @Async
-    public CompletableFuture<String> send(List<DataReceive> data){
+    public CompletableFuture<String> send (List<DataReceive> data){
         Date date = new Date();
         data.add(new DataReceive(7, DataElementType.DATE10.format(date, TimeZone.getTimeZone("GMT"))));
-        data.add(new DataReceive(12,DataElementType.TIME.format(date, TimeZone.getTimeZone("GMT+7"))));
-        data.add(new DataReceive(13, DataElementType.DATE4.format(date,TimeZone.getTimeZone("GMT+7"))));
+        data.add(new DataReceive(12,DataElementType.TIME.format(date, TimeZone.getTimeZone("GMT"))));
+        data.add(new DataReceive(13, DataElementType.DATE4.format(date,TimeZone.getTimeZone("GMT"))));
         Comparator<DataReceive> compareById = new Comparator<DataReceive>() {
             @Override
             public int compare(DataReceive o1, DataReceive o2) {
@@ -26,4 +26,5 @@ public class MessagePurchaseService extends ImplMessageService{
         Collections.sort(data, compareById);
         return CompletableFuture.completedFuture(this.sendMessage(data));
     }
+
 }

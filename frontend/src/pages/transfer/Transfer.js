@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { mapField } from '../../components/Field';
 
-export default function Withdraw() {
+export default function Transfer() {
 
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
@@ -23,7 +23,6 @@ export default function Withdraw() {
         { id: 11, required: true },
         { id: 14, required: false },
         { id: 18, required: true },
-        { id: 19, required: false },
         { id: 22, required: true },
         { id: 23, required: false },
         { id: 25, required: true },
@@ -35,10 +34,11 @@ export default function Withdraw() {
         { id: 42, required: true },
         { id: 43, required: true },
         { id: 45, required: false },
+        { id: 48, required: false},
         { id: 49, required: true },
         { id: 52, required: true },
         { id: 55, required: false },
-        { id: 60, required: false },
+        { id: 103, required: true },
         { id: 128, required: false },
 
     ]
@@ -86,7 +86,7 @@ export default function Withdraw() {
             setLoading(true)
             let rawMessage = { id: -1 ,value: messageUpdate }
             console.log(rawMessage)
-            fetch("http://localhost:8080/balance/postRawMessage", {
+            fetch("http://localhost:8080/transfer/postRawMessage", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(rawMessage)
@@ -137,7 +137,7 @@ export default function Withdraw() {
 
         console.log(console.log(fieldValue))
         setLoading(true)
-        fetch("http://localhost:8080/withdraw/post", {
+        fetch("http://localhost:8080/transfer/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
@@ -153,7 +153,7 @@ export default function Withdraw() {
 
     return (
         <Container >
-            <h1>WithDraw</h1>
+            <h1>Transfer</h1>
             <Box
                 component="form"
                 sx={{

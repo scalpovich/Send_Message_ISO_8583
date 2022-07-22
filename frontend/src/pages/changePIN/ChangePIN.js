@@ -1,10 +1,19 @@
 import * as React from 'react';
-import {Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop} from '@mui/material';
-import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import {
+    Container,
+    TextField,
+    Button,
+    Box,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    CircularProgress,
+    Backdrop
+} from '@mui/material';
 import { mapField } from '../../components/Field';
+import { useState } from 'react';
 
-export default function Withdraw() {
+export default function ChangePIN() {
 
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState('')
@@ -13,8 +22,7 @@ export default function Withdraw() {
     const [loading, setLoading] = React.useState(false);
     var subErrorArray = []
     var subIsError = []
-
-    var messageUpdate = "";
+    var messageUpdate = ""
 
     const elements = [
         { id: 2, required: true },
@@ -23,7 +31,6 @@ export default function Withdraw() {
         { id: 11, required: true },
         { id: 14, required: false },
         { id: 18, required: true },
-        { id: 19, required: false },
         { id: 22, required: true },
         { id: 23, required: false },
         { id: 25, required: true },
@@ -35,12 +42,10 @@ export default function Withdraw() {
         { id: 42, required: true },
         { id: 43, required: true },
         { id: 45, required: false },
-        { id: 49, required: true },
         { id: 52, required: true },
         { id: 55, required: false },
-        { id: 60, required: false },
+        { id: 105, required: false },
         { id: 128, required: false },
-
     ]
 
     const textFiledStyle = { margin: '10px 30px' }
@@ -137,7 +142,7 @@ export default function Withdraw() {
 
         console.log(console.log(fieldValue))
         setLoading(true)
-        fetch("http://localhost:8080/withdraw/post", {
+        fetch("http://localhost:8080/changePIN/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
@@ -153,7 +158,8 @@ export default function Withdraw() {
 
     return (
         <Container >
-            <h1>WithDraw</h1>
+
+            <h1>Change PIN</h1>
             <Box
                 component="form"
                 sx={{
@@ -162,7 +168,6 @@ export default function Withdraw() {
                 noValidate
                 autoComplete="on"
             >
-
                 {elements.map(element => (
                     <TextField
                         style={textFiledStyle}
@@ -217,10 +222,7 @@ export default function Withdraw() {
                         </DialogActions>
                     </Dialog>
                 </div>
-
             </Box>
-
-
         </Container>
     );
 }

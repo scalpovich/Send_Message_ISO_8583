@@ -35,8 +35,8 @@ const Navbar =() => {
                                     <li><a className="dropdown-item" href="/Balance">Balance</a></li>
                                     <li><a className="dropdown-item" href="/Purchase">Purchase</a></li>
                                     <li><a className="dropdown-item" href="/Withdraw">Withdraw</a></li>
-                                    <li><a className="dropdown-item" href="#">Transfer</a></li>
-                                    <li><a className="dropdown-item" href="#">Change PIN</a></li>
+                                    <li><a className="dropdown-item" href="/Transfer">Transfer</a></li>
+                                    <li><a className="dropdown-item" href="/ChangePIN">Change PIN</a></li>
                                 </ul>
                             </li>
                             <li className="nav-item"><a href="" className="nav-link">ISO-8583</a></li>
