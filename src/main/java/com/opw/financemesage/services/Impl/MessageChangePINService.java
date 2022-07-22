@@ -1,7 +1,6 @@
 package com.opw.financemesage.services.Impl;
 
 import com.opw.financemesage.models.DataReceive;
-import com.opw.financemesage.socket.SocketIO;
 import com.opw.financemesage.util.DataElementType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MessagePurchaseService extends ImplMessageService{
+public class MessageChangePINService extends ImplMessageService{
     @Async
     public CompletableFuture<String> send(List<DataReceive> data){
         Date date = new Date();

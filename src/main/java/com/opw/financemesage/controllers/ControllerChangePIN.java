@@ -1,8 +1,7 @@
 package com.opw.financemesage.controllers;
 
 import com.opw.financemesage.models.DataReceive;
-import com.opw.financemesage.services.Impl.MessagePurchaseService;
-import com.opw.financemesage.services.MessageService;
+import com.opw.financemesage.services.Impl.MessageChangePINService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,19 +9,18 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/purchase")
+@RequestMapping("/changePIN")
 @CrossOrigin
-public class ControllerPurchase {
+public class ControllerChangePIN {
+    private MessageChangePINService messageChangePINService;
 
-    private MessagePurchaseService messagePurchaseService;
     @Autowired
-    public ControllerPurchase(MessagePurchaseService messagePurchaseService){
-        this.messagePurchaseService = messagePurchaseService;
+    public ControllerChangePIN (MessageChangePINService messageChangePINService){
+        this.messageChangePINService = messageChangePINService;
     }
+
     @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data){
-        return messagePurchaseService.send(data);
+        return messageChangePINService.send(data);
     }
-
-
 }

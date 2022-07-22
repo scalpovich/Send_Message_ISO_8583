@@ -5,6 +5,8 @@ import Home from './pages/home/home'
 import Navbar from './components/Navbar';
 import Withdraw from './pages/withdraw/Withdraw';
 import SingleTransaction from './pages/singleTransaction/SingleTransaction';
+import Transfer from "./pages/transfer/Transfer";
+import ChangePIN from "./pages/changePIN/ChangePIN";
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
@@ -19,6 +21,8 @@ function App() {
                     <Route path="/balance" element={<Balance/>}/>
                     <Route path="/withdraw" element={<Withdraw/>}/>
                     <Route path="/singleTransaction" element = {<SingleTransaction/>}/>
+                    <Route path="/transfer" element = {<Transfer/>}/>
+                    <Route path="/changePIN" element = {<ChangePIN/>}/>
                 </Routes>
             </Router>
         </div>
