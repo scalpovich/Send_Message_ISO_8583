@@ -122,10 +122,31 @@ export default function Withdraw() {
                 isValid = false
                 continue
             }
+
+            if(e.value.toString() !== "" && eProp.type === "n" && e.value.toString().match(/^[0-9]+$/) == null){
+                subErrorArray[elements[i].id] = `This field only accepts number`
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)
+                isValid = false
+                continue
+            }
+
+            if(e.value.toString() !== "" && eProp.type === "b" && e.value.toString().match(/^[0-1]+$/) == null){
+                subErrorArray[elements[i].id] = `This field only accepts binary number`
+                setErrorArray(subErrorArray)
+                subIsError[elements[i].id] = true
+                setIsError(subIsError)
+                isValid = false
+                continue
+            }
+
         }
 
         if (!isValid)
             return
+        setErrorArray([])
+        setIsError([])
 
         for (let i = 0; i < 129; i++) {
             let id = "WD-" + i.toString();

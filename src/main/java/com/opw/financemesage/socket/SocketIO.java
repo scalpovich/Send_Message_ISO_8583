@@ -1,5 +1,8 @@
 package com.opw.financemesage.socket;
 
+import com.opw.financemesage.services.Impl.ImplMessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +15,7 @@ public class SocketIO {
     private Socket socket;
     private BufferedReader input;
     private PrintWriter output;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
 
     public SocketIO() {
         try {
@@ -26,7 +30,7 @@ public class SocketIO {
 
     public void sendMessage(String message) {
         try {
-//            System.out.println("Send message");
+            LOGGER.info("Send message");
             if (socket.isConnected()){
                 output.print(message);
                 output.flush();
@@ -46,6 +50,7 @@ public class SocketIO {
             String respond = "";
             char[] result = new char[600];
             input.read(result);
+            LOGGER.info("Get message");
             respond = new String(result);
 
 //            respond = input.readLine();

@@ -20,6 +20,13 @@ public class ScheduleConnectCheck {
             LOGGER.info("Socket is disconnected. Trying to reconnect");
             socketIO = new SocketIO();
         }
+//        socketIO.sendMessage("02390200723C468128E0900016970409628135611101000000001000000007220324020000410324020722270627060210020006970400379704096281356111D300650010604015000002188090002610645064548434          NAPAS Bank             BNV           7047043CF1DC7C821E2BF2");
+//        String receiveMessage = socketIO.getMessage();
+//        LOGGER.info(receiveMessage);
+//        if(receiveMessage == null || receiveMessage.charAt(0)==0){
+//            socketIO = new SocketIO();
+//            LOGGER.info("Reconnect by Schedule task");
+//        }
 //        else
 //            LOGGER.info("Socket is connecting");
     }

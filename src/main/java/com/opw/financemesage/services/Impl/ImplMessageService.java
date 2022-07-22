@@ -54,9 +54,10 @@ public class ImplMessageService implements MessageService {
 
             System.out.println("Message response " + recentNumb + ": " +  messageReceiv);
 
-            if (messageReceiv.charAt(0) == 0) {
+            if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
                 socketIO = new SocketIO();
-                return sendMessage(data);
+                LOGGER.info("Reconnect");
+                return "{\"message\" : \"Something wrong, please check your form and try again\"}";
             }
 
             MessageISO temp = processor.parsMessage(messageReceiv);
