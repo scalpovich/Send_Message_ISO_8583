@@ -30,7 +30,7 @@ export default function SingleTransaction() {
 
     var listOfField = [];
     const handleClickISO = (e) => {
-        for (let i = 0; i < 129; i++) {
+        for (let i = 0; i < 128; i++) {
             let id = i.toString();
             if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
                 let ele = {id: i, value: document.getElementById(id).value.toString()}
@@ -47,18 +47,21 @@ export default function SingleTransaction() {
                     //console.log(result)
                     setResponseISO(result)
                 })
-        listOfField=[]
+        listOfField = []
     }
 
     const handleClickSend = (e) => {
-        if (document.getElementById('iso').value.toString() !== "") {
-            messageRaw = {id: 0, value: document.getElementById('iso').value.toString()};
+        for (let i = 0; i < 128; i++) {
+            let id = i.toString();
+            if (document.body.contains(document.getElementById(id)) && document.getElementById(id).value.toString() !== "") {
+                let ele = {id: i, value: document.getElementById(id).value.toString()}
+                listOfField.push(ele)
+            }
         }
-        console.log(messageRaw);
         fetch("http://localhost:8080/singletransaction/send", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(messageRaw)
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(listOfField)
         }).then(res => res.json())
             .then(
                 (result) => {
@@ -71,14 +74,14 @@ export default function SingleTransaction() {
         <div className="row" style={textFiledStyle}>
             <div className="col-4">
                 <h2>ISO message:</h2>
-                    <TextField
-                            id="iso"
-                            style={{width: "80%"}}
-                            variant="standard"
-                            value={responseISO.value}
-                            onChange = {(e) => setResponseISO({...responseISO, 'value':e.target.value})}
-                            multiline
-                    />
+                <TextField
+                    id="iso"
+                    style={{width: "80%"}}
+                    variant="standard"
+                    value={responseISO.value}
+                    onChange={(e) => setResponseISO({...responseISO, 'value': e.target.value})}
+                    multiline
+                />
             </div>
 
             <div className='col-3' style={{marginTop: "60px"}}>
@@ -115,28 +118,31 @@ export default function SingleTransaction() {
             <div className='col-4'>
                 <h2>ISO message detail:</h2>
                 {responseDetail.length > 0 ? (<box>
-                    {responseDetail.map((obj,index) => (
-                        <TextField
-                            key = {index}
-                            id={obj.id}
-                            style={{width: "100%"}}
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start">{obj.id}</InputAdornment>,
-                            }}
-                            variant="standard"
-                            value = {obj.value}
-                            onChange = {(e) =>
-                            {setResponseDetail(prevState => {
-                                const newState = prevState.map(object => {
-                                    if (object.id === obj.id){
-                                        return {...object, value: e.target.value};
-                                    }
-                                    return object;
-                                });
-                                return newState;
-                            })}}
-                        />
-                    ))}
+                    {responseDetail.map((obj, index) => {
+                            if (obj.id !== 7 && obj.id !== 12 & obj.id !== 13) {
+                                 return <TextField
+                                    key={index}
+                                    id={obj.id}
+                                    style={{width: "100%"}}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">{obj.id}</InputAdornment>,
+                                    }}
+                                    variant="standard"
+                                    value={obj.value}
+                                    onChange={(e) => {
+                                        setResponseDetail(prevState => {
+                                            const newState = prevState.map(object => {
+                                                if (object.id === obj.id) {
+                                                    return {...object, value: e.target.value};
+                                                }
+                                                return object;
+                                            });
+                                            return newState;
+                                        })
+                                    }}
+                                />
+                            }
+                        })}
                 </box>) : (<TextField
                     style={{width: "100%"}}
                     variant="standard"
