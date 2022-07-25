@@ -7,6 +7,7 @@ import Withdraw from './pages/withdraw/Withdraw';
 import SingleTransaction from './pages/singleTransaction/SingleTransaction';
 import Transfer from "./pages/transfer/Transfer";
 import ChangePIN from "./pages/changePIN/ChangePIN";
+import ISOtext from "./pages/ISO8583/ISOtext";
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/singleTransaction" element = {<SingleTransaction/>}/>
                     <Route path="/transfer" element = {<Transfer/>}/>
                     <Route path="/changePIN" element = {<ChangePIN/>}/>
+                    <Route path="/isotext" element = {<ISOtext/>}/>
                 </Routes>
             </Router>
         </div>
