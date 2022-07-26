@@ -69,4 +69,31 @@ public class ImplMessageService implements MessageService {
         }
         return null;
     }
+    @Override
+    public String sendMessageInImpMessageService(String messageSend) throws InterruptedException {
+
+        int recentNumb = count++;
+        LOGGER.info("Processing request {}", recentNumb);
+//        Thread.sleep(2000);
+        processor.getInstance(mapperDataElement);
+        System.out.println("Message receive " + recentNumb + ": " +  messageSend);
+
+
+        socketIO.sendMessage(messageSend);
+        String messageReceiv = socketIO.getMessage();
+
+        System.out.println("Message response " + recentNumb + ": " +  messageReceiv);
+
+        if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
+            socketIO = new SocketIO();
+            LOGGER.info("Reconnect");
+            return "{\"message\" : \"Something wrong, please check your form and try again\"}";
+        }
+
+        MessageISO temp = processor.parsMessage(messageReceiv);
+        String readResponseCode = temp.getDataElementContent().get(39);
+
+        return String.format("Response code: %s %s", readResponseCode, readRespondCode.read(readResponseCode));
+    }
+
 }
