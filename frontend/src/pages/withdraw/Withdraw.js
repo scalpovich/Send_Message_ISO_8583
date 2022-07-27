@@ -15,6 +15,7 @@ export default function Withdraw() {
     var subIsError = []
 
     var messageUpdate = "";
+    var files
 
     const elements = [
         { id: 2, required: true },
@@ -68,9 +69,9 @@ export default function Withdraw() {
 
     const updateMessage = (e) => {
 
-        let files = e.target.files;
+        files = e.target.files[0];
         let reader = new FileReader()
-        reader.readAsText(files[0])
+        reader.readAsText(files)
 
         reader.onload = (e) => {
             if (e.target.result.length > 0) {
@@ -83,13 +84,16 @@ export default function Withdraw() {
         e.preventDefault()
 
         if (messageUpdate.length > 0) {
+            console.log(messageUpdate);
+            const formData = new FormData();
+            formData.append("file",files)
             setLoading(true)
             let rawMessage = { id: -1, value: messageUpdate }
             console.log(rawMessage)
-            fetch("http://localhost:8080/balance/postRawMessage", {
+            fetch("http://localhost:8080/file", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(rawMessage)
+                // headers: { "Content-Type": "multipart/form-data" },
+                body: /*JSON.stringify(rawMessage)*/ formData
             }).then(res => res.json())
                 .then(
                     (result) => {
