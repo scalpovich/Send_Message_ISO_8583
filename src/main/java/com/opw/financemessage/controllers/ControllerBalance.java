@@ -19,7 +19,6 @@ public class ControllerBalance {
         this.messageBalanceService = messageBalanceService;
     }
 
-
    @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
        return messageBalanceService.send(data);
