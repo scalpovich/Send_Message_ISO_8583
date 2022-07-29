@@ -48,7 +48,6 @@ public class ImplMessageService implements MessageService {
             String messageSend = processor.buildMessage(messageISO);
 //            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
 
-
             socketIO.sendMessage(messageSend);
             String messageReceiv = socketIO.getMessage();
 
