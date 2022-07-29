@@ -95,7 +95,7 @@ public class SocketIO {
         output.close();
         this.socket = new Socket("10.145.48.94", 40007);
         this.output = new PrintWriter(socket.getOutputStream(),true);
-        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.input = new BufferedInputStream(socket.getInputStream());
     }
 
     public Socket getSocket() {
