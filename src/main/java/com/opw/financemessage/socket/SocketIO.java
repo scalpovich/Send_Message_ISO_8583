@@ -45,6 +45,7 @@ public class SocketIO {
 
     public String getMessage() {
 
+
 //        String respond = "";
 //        char[] result = new char[600];
 //        try {
@@ -86,6 +87,15 @@ public class SocketIO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void reconnect() throws IOException {
+        socket.close();
+        input.close();
+        output.close();
+        this.socket = new Socket("10.145.48.94", 40007);
+        this.output = new PrintWriter(socket.getOutputStream(),true);
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
     public Socket getSocket() {
