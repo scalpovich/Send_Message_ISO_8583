@@ -5,6 +5,7 @@ import com.opw.financemessage.services.Impl.MessageBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,5 +29,4 @@ public class ControllerBalance {
 //    public String sendMessage(@RequestBody DataReceive data) {
 //        return messageBalanceService.sendRawMessage(data.getValue());
 //    }
-
 }

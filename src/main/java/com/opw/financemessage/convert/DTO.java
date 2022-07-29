@@ -9,12 +9,12 @@ import java.util.List;
 
 @Component
 public class DTO {
-    public MessageISO dataToMessage(List<DataReceive> datas){
+    public MessageISO dataToMessage(List<DataReceive> data){
         MessageISO messageISO = new MessageISO();
-        messageISO.setMti(datas.get(0).getValue());
-        for (int i = 1; i < datas.size(); i++){
-            int number = datas.get(i).getId();
-            String content = datas.get(i).getValue();
+        messageISO.setMti(data.get(0).getValue());
+        for (int i = 1; i < data.size(); i++){
+            int number = data.get(i).getId();
+            String content = data.get(i).getValue();
             messageISO.getDataElementContent().put(number,content);
         }
         return messageISO;

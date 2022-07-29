@@ -2,16 +2,22 @@ package com.opw.financemessage.services.Impl;
 
 import com.opw.financemessage.models.DataReceive;
 import com.opw.financemessage.util.DataElementType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MessageBalanceService extends ImplMessageService {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBalanceService.class);
 //    private int count = 1;
+    @Autowired()
+    private Executor taskExecutor;
+
     @Async
     public CompletableFuture<String> send (List<DataReceive> data) throws Exception{
 //        LOGGER.info("Processing request {}", count++);
@@ -27,6 +33,8 @@ public class MessageBalanceService extends ImplMessageService {
             }
         };
         Collections.sort(data, compareById);
-        return CompletableFuture.completedFuture(this.sendMessage(data));
+//        return CompletableFuture.completedFuture(this.sendMessage(data)).completeOnTimeout("{\"message\" : \"Time out\"}",10, TimeUnit.SECONDS);
+        CompletableFuture<String> result = CompletableFuture.supplyAsync(()->this.sendMessage(data),taskExecutor).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
+        return result;
     }
 }
