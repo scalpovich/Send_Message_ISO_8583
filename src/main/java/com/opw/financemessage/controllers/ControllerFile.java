@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/file")
@@ -46,16 +47,9 @@ public class ControllerFile {
         CompletableFuture<String> future[] = new CompletableFuture[messages.size()];
         String s[] =new String[messages.size()];
         for(int i=0; i<messages.size(); i++){
-            future[i] = messageFileService.sendMessageInMessageFileService(messages.get(i));
+            future[i] = messageFileService.sendMessageInMessageFileService(messages.get(i))/*.completeOnTimeout("null", 5, TimeUnit.SECONDS)*/;
 
-//            s[i] = messageFileService.sendMessageInMessageFileService(messages.get(finalI)).get();
-
-//            CompletableFuture<String> responseCode = messageFileService.sendMessageInMessageFileService(messages.get(i));
-//            responseMessage += String.format("\"message %d\" : %s,", i+1, responseCode.get());
         }
-
-//        CompletableFuture<Void> allFutures = CompletableFuture.allOf(future);
-//        allFutures.get();
 
         for(int i=0; i<messages.size(); i++){
 
