@@ -31,11 +31,10 @@ public class ControllerFile {
         this.messageFileService = messageFileService;
     }
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageBalanceService.class);
-    @RequestMapping (method = RequestMethod.POST)
+    @RequestMapping (method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public @ResponseBody String uploadFile(
             @RequestParam MultipartFile file) throws Exception {
-
-
+        
             return processFile(file.getInputStream());
 
 
@@ -47,8 +46,7 @@ public class ControllerFile {
         CompletableFuture<String> future[] = new CompletableFuture[messages.size()];
         String s[] =new String[messages.size()];
         for(int i=0; i<messages.size(); i++){
-            int finalI = i;
-            future[i] = messageFileService.sendMessageInMessageFileService(messages.get(finalI));
+            future[i] = messageFileService.sendMessageInMessageFileService(messages.get(i));
 
 //            s[i] = messageFileService.sendMessageInMessageFileService(messages.get(finalI)).get();
 
@@ -61,7 +59,7 @@ public class ControllerFile {
 
         for(int i=0; i<messages.size(); i++){
 
-            responseMessage += String.format("essage %d : %s           \\\\m", i+1, future[i].get());
+            responseMessage += String.format("essage %d : %s\\\\m", i+1, future[i].get());
         }
 
             responseMessage = responseMessage.substring(0,responseMessage.length() - 1) + "\"}";

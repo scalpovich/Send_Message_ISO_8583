@@ -28,7 +28,7 @@ public class SocketIO {
 
     public void sendMessage(String message) {
         try {
-            LOGGER.info("Send message");
+//            LOGGER.info("Send message");
             if (socket.isConnected()){
                 output.print(message);
                 output.flush();
@@ -46,7 +46,7 @@ public class SocketIO {
             String respond = "";
             char[] result = new char[600];
             input.read(result);
-            LOGGER.info("Get message");
+//            LOGGER.info("Get message");
             respond = new String(result);
 
 //            respond = input.readLine();
