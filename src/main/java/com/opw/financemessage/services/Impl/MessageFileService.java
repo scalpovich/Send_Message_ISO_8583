@@ -25,7 +25,7 @@ public class MessageFileService extends ImplMessageService {
     @Async
     public CompletableFuture<String> sendMessageInMessageFileService(String s) throws Exception {
         try {
-            System.out.println("hehe");
+//            System.out.println("hehe");
             return CompletableFuture.completedFuture(this.sendMessageInImpMessageService(s));
         }
         catch (Exception e){
