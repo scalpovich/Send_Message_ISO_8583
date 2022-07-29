@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +25,6 @@ public class ControllerBalance {
         this.messageBalanceService = messageBalanceService;
     }
 
-
    @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
 //       LOGGER.info("Processing request hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
@@ -35,5 +35,4 @@ public class ControllerBalance {
 //    public String sendMessage(@RequestBody DataReceive data) {
 //        return messageBalanceService.sendRawMessage(data.getValue());
 //    }
-
 }
