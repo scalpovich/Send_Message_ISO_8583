@@ -8,17 +8,40 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableScheduling
 public class ScheduleConnectCheck {
     @Autowired
     private SocketIO socketIO;
+
+    private int count = 0;
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleConnectCheck.class);
     @Scheduled(fixedRate = 5000)
-    public void checkConnected() {
-        if(!socketIO.getSocket().isConnected()) {
-            LOGGER.info("Socket is disconnected. Trying to reconnect");
-            socketIO = new SocketIO();
+    public void checkConnected() throws Exception {
+        socketIO.sendMessage("0063080082200001000000000400000000000000121616150731000106970409301");
+
+        CompletableFuture<String> completableFutureEchoMessage = CompletableFuture.completedFuture(socketIO.getMessage())
+                .completeOnTimeout("null",5, TimeUnit.SECONDS);
+
+        String responseEchoMessage = completableFutureEchoMessage.get();
+
+//        LOGGER.info(responseEchoMessage);
+        if(responseEchoMessage == "null" || responseEchoMessage == null || responseEchoMessage == "\uFFFF"){
+            count ++;
+            System.out.println("Fail when send echo message");
+        }
+
+        else
+            count = 0;
+
+        if(count == 3){
+            LOGGER.info("Socket disconnect, trying to reconnect ...");
+            socketIO.reconnect();
         }
 //        socketIO.sendMessage("02390200723C468128E0900016970409628135611101000000001000000007220324020000410324020722270627060210020006970400379704096281356111D300650010604015000002188090002610645064548434          NAPAS Bank             BNV           7047043CF1DC7C821E2BF2");
 //        String receiveMessage = socketIO.getMessage();

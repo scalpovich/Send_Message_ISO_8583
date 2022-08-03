@@ -11,7 +11,7 @@ import {
   Backdrop
 } from '@mui/material';
 import { mapField } from '../../components/Field';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Purchase() {
 
@@ -24,33 +24,45 @@ export default function Purchase() {
   var subIsError = []
   var messageUpdate = ""
 
-  const elements = [
-    { id: 2, required: true },
-    { id: 3, required: true },
-    { id: 4, required: true },
-    { id: 5, required: true },
-    { id: 6, required: true },
-    { id: 11, required: true },
-    { id: 14, required: false },
-    { id: 18, required: true },
-    { id: 19, required: false },
-    { id: 22, required: true },
-    { id: 23, required: false },
-    { id: 25, required: true },
-    { id: 32, required: true },
-    { id: 35, required: false },
-    { id: 36, required: false },
-    { id: 37, required: true },
-    { id: 41, required: true },
-    { id: 42, required: true },
-    { id: 43, required: true },
-    { id: 45, required: false },
-    { id: 49, required: true },
-    { id: 52, required: false },
-    { id: 55, required: false },
-    { id: 60, required: false },
-    { id: 128, required: false },
-  ]
+  const [elements, setElements] = useState([])
+  useEffect(() => {
+    fetch("http://localhost:8080/purchase/getfield", {
+      method: "GET"
+    }).then(res => res.json())
+      .then(
+        (result) => {
+          console.log((result));
+          setElements(result);
+        })
+  });
+
+  // const elements = [
+  //   { id: 2, required: true },
+  //   { id: 3, required: true },
+  //   { id: 4, required: true },
+  //   { id: 5, required: true },
+  //   { id: 6, required: true },
+  //   { id: 11, required: true },
+  //   { id: 14, required: false },
+  //   { id: 18, required: true },
+  //   { id: 19, required: false },
+  //   { id: 22, required: true },
+  //   { id: 23, required: false },
+  //   { id: 25, required: true },
+  //   { id: 32, required: true },
+  //   { id: 35, required: false },
+  //   { id: 36, required: false },
+  //   { id: 37, required: true },
+  //   { id: 41, required: true },
+  //   { id: 42, required: true },
+  //   { id: 43, required: true },
+  //   { id: 45, required: false },
+  //   { id: 49, required: true },
+  //   { id: 52, required: false },
+  //   { id: 55, required: false },
+  //   { id: 60, required: false },
+  //   { id: 128, required: false },
+  // ]
 
   const textFiledStyle = { margin: '10px 30px' }
 
@@ -93,19 +105,19 @@ export default function Purchase() {
 
     if (messageUpdate.length > 0) {
       setLoading(true)
-      let rawMessage = { id: -1 ,value: messageUpdate }
+      let rawMessage = { id: -1, value: messageUpdate }
       console.log(rawMessage)
       fetch("http://localhost:8080/balance/postRawMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(rawMessage)
       }).then(res => res.json())
-          .then(
-              (result) => {
-                setLoading(false)
-                setResponse(result.message)
-                setOpen(true);
-              })
+        .then(
+          (result) => {
+            setLoading(false)
+            setResponse(result.message)
+            setOpen(true);
+          })
       return
     }
 
@@ -151,82 +163,82 @@ export default function Purchase() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fieldValue)
     }).then(res => res.json())
-        .then(
-            (result) => {
-              setLoading(false)
-              setResponse(result.message)
-              setOpen(true);
-            })
+      .then(
+        (result) => {
+          setLoading(false)
+          setResponse(result.message)
+          setOpen(true);
+        })
     fieldValue = [{ id: 0, value: "0200" }]
   }
 
   return (
-      <Container >
+    <Container >
 
-        <h1>Purchase</h1>
-        <Box
-            component="form"
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="on"
-        >
-          {elements.map(element => (
-              <TextField
-                  style={textFiledStyle}
-                  key={mapField.get(element.id).id}
-                  id={"WD-" + element.id.toString()}
-                  label={element.id.toString() + mapField.get(element.id).name}
-                  variant="outlined"
-                  inputProps={{ maxLength: mapField.get(element.id).length }}
-                  onKeyPress={event => typeField(event, mapField.get(element.id).type)}
-                  required={element.required}
-                  helperText={errorArray[element.id]}
-                  error={isError[element.id]}
-              />
-          ))
-          }
+      <h1>Purchase</h1>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="on"
+      >
+        {elements.map(element => (
+          <TextField
+            style={textFiledStyle}
+            key={mapField.get(element.id).id}
+            id={"WD-" + element.id.toString()}
+            label={element.id.toString() + mapField.get(element.id).name}
+            variant="outlined"
+            inputProps={{ maxLength: mapField.get(element.id).length }}
+            onKeyPress={event => typeField(event, mapField.get(element.id).type)}
+            required={element.required}
+            helperText={errorArray[element.id]}
+            error={isError[element.id]}
+          />
+        ))
+        }
 
-          <div style={{ textAlign: "left" }}>
-            <h3>Update message</h3>
-            <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
-          </div>
+        <div style={{ textAlign: "left" }}>
+          <h3>Update message</h3>
+          <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
+        </div>
 
-          <div>
-            <Button
-                style={{ margin: '15px 15px', width: '40%' }}
-                type="submit" variant="contained"
-                onClick={handleClick}
-            >
-              Submit
-            </Button>
+        <div>
+          <Button
+            style={{ margin: '15px 15px', width: '40%' }}
+            type="submit" variant="contained"
+            onClick={handleClick}
+          >
+            Submit
+          </Button>
 
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
 
-            <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {response}
-              </DialogTitle>
+          <Dialog
+            open={open}
+            onClose={() => setOpen(false)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {response}
+            </DialogTitle>
 
-              <DialogActions>
-                <Button onClick={() => setOpen(false)} autoFocus>
-                  OK
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        </Box>
-      </Container>
+            <DialogActions>
+              <Button onClick={() => setOpen(false)} autoFocus>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      </Box>
+    </Container>
   );
 }
