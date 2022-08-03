@@ -1,6 +1,8 @@
 package com.opw.financemessage.config;
 
+import com.opw.financemessage.factory.SystemParameters;
 import com.opw.financemessage.socket.SocketIO;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,9 @@ public class ScheduleConnectCheck {
         else
             count = 0;
 
-        if(count == 3){
+        SystemParameters parameters = new SystemParameters();
+//        System.out.println((long)((JSONObject)parameters.getSystemParameters().get("connectCheck")).get("retryCount"));
+        if(count == (int)(long)((JSONObject)parameters.getSystemParameters().get("connectCheck")).get("retryCount")){
             LOGGER.info("Socket disconnect, trying to reconnect ...");
             socketIO.reconnect();
         }

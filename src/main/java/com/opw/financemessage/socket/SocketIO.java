@@ -1,6 +1,8 @@
 package com.opw.financemessage.socket;
 
+import com.opw.financemessage.factory.SystemParameters;
 import org.apache.tomcat.jni.Time;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -18,9 +20,13 @@ public class SocketIO {
     private PrintWriter output;
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
 
+    private SystemParameters parameters = new SystemParameters();
+    private String ip = (String)((JSONObject)parameters.getSystemParameters().get("socket")).get("ip");
+    private int port = (int)(long)((JSONObject)parameters.getSystemParameters().get("socket")).get("port");
+
     public SocketIO() {
         try {
-            this.socket = new Socket("10.145.48.94", 40007);
+            this.socket = new Socket(ip, port);
             this.output = new PrintWriter(socket.getOutputStream(), true);
             this.input = new BufferedInputStream(socket.getInputStream());
         } catch (IOException e) {

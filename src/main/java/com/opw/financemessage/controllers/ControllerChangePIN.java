@@ -36,7 +36,7 @@ public class ControllerChangePIN {
         File file = new File("ControllerBalance.java");
 //        System.out.println(file.getAbsoluteFile().getParent());
 
-        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\ChangePINField.json");
+        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\ChangePINField.json");
         Object obj = jsonParser.parse(reader);
 
         JSONArray fieldList = (JSONArray) obj;
@@ -52,7 +52,7 @@ public class ControllerChangePIN {
         System.out.println(fieldList);
 
         File file = new File("ControllerBalance.java");
-        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\ChangePINField.json");
+        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\ChangePINField.json");
         writer.write(fieldList);
         writer.flush();
     }

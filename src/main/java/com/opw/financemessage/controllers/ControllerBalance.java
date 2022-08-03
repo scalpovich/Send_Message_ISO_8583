@@ -44,7 +44,7 @@ public class ControllerBalance {
         File file = new File("ControllerBalance.java");
 //        System.out.println(file.getAbsoluteFile().getParent());
 
-        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\BalanceField.json");
+        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\BalanceField.json");
         Object obj = jsonParser.parse(reader);
 
         JSONArray fieldList = (JSONArray) obj;
@@ -60,7 +60,7 @@ public class ControllerBalance {
         System.out.println(fieldList);
 
         File file = new File("ControllerBalance.java");
-        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\BalanceField.json");
+        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\BalanceField.json");
         writer.write(fieldList);
         writer.flush();
     }

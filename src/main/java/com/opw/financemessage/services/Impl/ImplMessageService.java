@@ -71,7 +71,7 @@ public class ImplMessageService implements MessageService {
         return null;
     }
     @Override
-    public String sendMessageInImpMessageService(String messageSend) throws InterruptedException {
+    public String sendMessageInImpMessageService(String messageSend) throws Exception {
 
         int recentNumb = count++;
         LOGGER.info("Processing request {}", recentNumb);
@@ -86,7 +86,7 @@ public class ImplMessageService implements MessageService {
         LOGGER.info("Message response " + recentNumb + ": " +  messageReceiv);
 
         if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
-            socketIO = new SocketIO();
+            socketIO.reconnect();
             LOGGER.info("Reconnect");
             return "{\"message\" : \"Something wrong, please check your form and try again\"}";
         }

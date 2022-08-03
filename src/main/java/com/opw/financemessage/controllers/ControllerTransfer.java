@@ -37,7 +37,7 @@ public class ControllerTransfer {
         File file = new File("ControllerBalance.java");
 //        System.out.println(file.getAbsoluteFile().getParent());
 
-        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\TransferField.json");
+        FileReader reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\TransferField.json");
         Object obj = jsonParser.parse(reader);
 
         JSONArray fieldList = (JSONArray) obj;
@@ -53,7 +53,7 @@ public class ControllerTransfer {
         System.out.println(fieldList);
 
         File file = new File("ControllerBalance.java");
-        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\java\\com\\opw\\financemessage\\transactionField\\TransferField.json");
+        FileWriter writer = new FileWriter(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\transactionField\\TransferField.json");
         writer.write(fieldList);
         writer.flush();
     }
