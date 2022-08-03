@@ -1,8 +1,12 @@
 package com.opw.financemessage.socket;
 
+import com.opw.financemessage.factory.SystemParameters;
 import org.apache.tomcat.jni.Time;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.context.Theme;
 
@@ -16,9 +20,13 @@ public class SocketIO {
     private PrintWriter output;
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
 
+    private SystemParameters parameters = new SystemParameters();
+    private String ip = (String)((JSONObject)parameters.getSystemParameters().get("socket")).get("ip");
+    private int port = (int)(long)((JSONObject)parameters.getSystemParameters().get("socket")).get("port");
+
     public SocketIO() {
         try {
-            this.socket = new Socket("10.145.48.94", 40007);
+            this.socket = new Socket(ip, port);
             this.output = new PrintWriter(socket.getOutputStream(), true);
             this.input = new BufferedInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -29,7 +37,7 @@ public class SocketIO {
 
     public void sendMessage(String message) {
         try {
-            LOGGER.info("Send message");
+//            LOGGER.info("Send message");
             if (socket.isConnected()) {
 
                 output.print(message);
@@ -61,7 +69,7 @@ public class SocketIO {
         StringBuilder respond = new StringBuilder();
         try {
             int i ;
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
             do{
                 i = input.read();
                 respond.append((char) i);
@@ -69,12 +77,17 @@ public class SocketIO {
         } catch (IOException e) {
             closeElements(socket, input, output);
             throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        LOGGER.info("Get message");
+//        LOGGER.info(Thread.currentThread().getName());
         return respond.toString();
     }
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void doSomethingAfterStartup() {
+//        System.out.println("hello world, I have just started up");
+//    }
 
     public void closeElements(Socket socket, BufferedInputStream input, PrintWriter output) {
         try {
@@ -90,12 +103,25 @@ public class SocketIO {
     }
 
     public void reconnect() throws IOException {
-        socket.close();
-        input.close();
-        output.close();
-        this.socket = new Socket("10.145.48.94", 40007);
-        this.output = new PrintWriter(socket.getOutputStream(),true);
-        this.input = new BufferedInputStream(socket.getInputStream());
+        try {
+            if (socket != null)
+                socket.close();
+            if (input != null)
+                input.close();
+            if (output != null)
+                output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            this.socket = new Socket("10.145.48.94", 40007);
+            this.output = new PrintWriter(socket.getOutputStream(), true);
+            this.input = new BufferedInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            closeElements(socket, input, output);
+        }
     }
 
     public Socket getSocket() {

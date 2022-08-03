@@ -23,8 +23,13 @@ public class HandleAcquirer implements  Runnable{
     @Override
     public void run() {
         String request;
-        SocketIO socketIO = new SocketIO();
-            try {
+        SocketIO socketIO = null;
+        try {
+            socketIO = new SocketIO();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
                 request = reader.readLine();
                 socketIO.sendMessage(request);
                 writer.println(socketIO.getMessage());

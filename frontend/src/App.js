@@ -8,6 +8,7 @@ import SingleTransaction from './pages/singleTransaction/SingleTransaction';
 import Transfer from "./pages/transfer/Transfer";
 import ChangePIN from "./pages/changePIN/ChangePIN";
 import ISOtext from "./pages/ISO8583/ISOtext";
+import ChangeField from './setupPage/changeField/changeField';
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/transfer" element = {<Transfer/>}/>
                     <Route path="/changePIN" element = {<ChangePIN/>}/>
                     <Route path="/isotext" element = {<ISOtext/>}/>
+                    <Route path="/changeField" element = {<ChangeField/>}/>
                 </Routes>
             </Router>
         </div>
