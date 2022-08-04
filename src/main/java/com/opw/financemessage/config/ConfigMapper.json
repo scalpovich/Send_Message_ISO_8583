@@ -1,0 +1,434 @@
+[
+  {
+    "id": 2,
+    "dataElement": {
+      "number": 2,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id": 3,
+    "dataElement": {
+      "number": 3,
+      "length": 6,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 4,
+    "dataElement": {
+      "number": 4,
+      "length": 12,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+   "id": 5,
+    "dataElement": {
+      "number": 5,
+      "length": 12,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 6,
+    "dataElement": {
+      "number": 6,
+      "length": 12,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 7,
+    "dataElement": {
+      "number": 7,
+      "length": 10,
+      "lengthType": "FIXED",
+      "type": "DATE10"
+    }
+  },
+  {
+    "id": 9,
+    "dataElement": {
+      "number": 9,
+      "length": 8,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 10,
+    "dataElement": {
+      "number": 10,
+      "length": 8,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 11,
+    "dataElement": {
+      "number": 11,
+      "length": 6,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 12,
+    "dataElement": {
+      "number": 12,
+      "length": 6,
+      "lengthType": "FIXED",
+      "type": "DATE6"
+    }
+  },
+  {
+    "id": 13,
+    "dataElement": {
+      "number": 13,
+      "length": 4,
+      "lengthType": "FIXED",
+      "type": "DATE4"
+    }
+  },
+  {
+    "id": 14,
+    "dataElement": {
+      "number": 14,
+      "length": 4,
+      "lengthType": "FIXED",
+      "type": "DATE4"
+    }
+  },
+  {
+    "id": 15,
+    "dataElement": {
+      "number": 15,
+      "length": 4,
+      "lengthType": "FIXED",
+      "type": "DATE4"
+    }
+  },
+  {
+    "id": 18,
+    "dataElement": {
+      "number": 18,
+      "length": 4,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 19,
+    "dataElement": {
+      "number": 19,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 22,
+    "dataElement": {
+      "number": 22,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 23,
+    "dataElement": {
+      "number": 23,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 25,
+    "dataElement": {
+      "number": 25,
+      "length": 2,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id": 26,
+    "dataElement": {
+      "number": 26,
+      "length": 2,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":32,
+    "dataElement": {
+      "number": 32,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":35,
+    "dataElement": {
+      "number": 35,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":36,
+    "dataElement": {
+      "number": 36,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":37,
+    "dataElement": {
+      "number": 37,
+      "length": 12,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":38,
+    "dataElement": {
+      "number": 38,
+      "length": 6,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":39,
+    "dataElement": {
+      "number": 39,
+      "length": 2,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":41,
+    "dataElement": {
+      "number": 41,
+      "length": 8,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":42,
+    "dataElement": {
+      "number": 42,
+      "length": 15,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":43,
+    "dataElement": {
+      "number": 43,
+      "length": 40,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":45,
+    "dataElement": {
+      "number": 45,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":48,
+    "dataElement": {
+      "number": 48,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":49,
+    "dataElement": {
+      "number": 49,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":50,
+    "dataElement": {
+      "number": 50,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":51,
+    "dataElement": {
+      "number": 51,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":52,
+    "dataElement": {
+      "number": 52,
+      "length": 16,
+      "lengthType": "FIXED",
+      "type": "ALPHA"
+    }
+  },
+  {
+    "id":54,
+    "dataElement": {
+      "number": 54,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":55,
+    "dataElement": {
+      "number": 55,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":60,
+    "dataElement": {
+      "number": 60,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":62,
+    "dataElement": {
+      "number": 62,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":63,
+    "dataElement": {
+      "number": 63,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":70,
+    "dataElement": {
+      "number": 70,
+      "length": 3,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":90,
+    "dataElement": {
+      "number": 90,
+      "length": 42,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  },
+  {
+    "id":100,
+    "dataElement": {
+      "number": 100,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":102,
+    "dataElement": {
+      "number": 102,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":103,
+    "dataElement": {
+      "number": 103,
+      "prefixLength": 2,
+      "lengthType": "VARIABLE",
+      "type": "LLVAR"
+    }
+  },
+  {
+    "id":104,
+    "dataElement": {
+      "number": 104,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":105,
+    "dataElement": {
+      "number": 105,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":120,
+    "dataElement": {
+      "number": 120,
+      "prefixLength": 3,
+      "lengthType": "VARIABLE",
+      "type": "LLLVAR"
+    }
+  },
+  {
+    "id":128,
+    "dataElement": {
+      "number": 128,
+      "length": 16,
+      "lengthType": "FIXED",
+      "type": "NUMERIC"
+    }
+  }
+]

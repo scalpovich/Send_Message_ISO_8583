@@ -35,10 +35,7 @@ public class ControllerFile {
     @RequestMapping (method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public @ResponseBody String uploadFile(
             @RequestParam MultipartFile file) throws Exception {
-        
             return processFile(file.getInputStream());
-
-
     }
 
     public String processFile(final InputStream inputStream) throws Exception{

@@ -7,8 +7,8 @@ public class DataElement {
     private Integer number;
     private Integer length = 0;
     private Integer prefixLength = 0;
-    private DataElementType type;
-    private DataElementLength lengthType;
+    private String type;
+    private String lengthType;
 
     public Integer getNumber() {
         return number;
@@ -37,20 +37,20 @@ public class DataElement {
         return this;
     }
 
-    public DataElementType getType() {
+    public String getType() {
         return type;
     }
 
-    public DataElement setType(DataElementType type) {
+    public DataElement setType(String type) {
         this.type = type;
         return this;
     }
 
-    public DataElementLength getLengthType() {
+    public String getLengthType() {
         return lengthType;
     }
 
-    public DataElement setLengthType(DataElementLength lengthType) {
+    public DataElement setLengthType(String lengthType) {
         this.lengthType = lengthType;
         return this;
     }
