@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop} from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { mapField } from '../../components/Field';
 
 export default function Transfer() {
@@ -16,32 +16,44 @@ export default function Transfer() {
 
     var messageUpdate = "";
 
-    const elements = [
-        { id: 2, required: true },
-        { id: 3, required: true },
-        { id: 4, required: true },
-        { id: 11, required: true },
-        { id: 14, required: false },
-        { id: 18, required: true },
-        { id: 22, required: true },
-        { id: 23, required: false },
-        { id: 25, required: true },
-        { id: 32, required: true },
-        { id: 35, required: true },
-        { id: 36, required: false },
-        { id: 37, required: true },
-        { id: 41, required: true },
-        { id: 42, required: true },
-        { id: 43, required: true },
-        { id: 45, required: false },
-        { id: 48, required: false},
-        { id: 49, required: true },
-        { id: 52, required: true },
-        { id: 55, required: false },
-        { id: 103, required: true },
-        { id: 128, required: false },
+    const [elements, setElements] = useState([])
+    useEffect(() => {
+        fetch("http://localhost:8080/transfer/getfield", {
+            method: "GET"
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log((result));
+                    setElements(result);
+                })
+    });
 
-    ]
+    // const elements = [
+    //     { id: 2, required: true },
+    //     { id: 3, required: true },
+    //     { id: 4, required: true },
+    //     { id: 11, required: true },
+    //     { id: 14, required: false },
+    //     { id: 18, required: true },
+    //     { id: 22, required: true },
+    //     { id: 23, required: false },
+    //     { id: 25, required: true },
+    //     { id: 32, required: true },
+    //     { id: 35, required: true },
+    //     { id: 36, required: false },
+    //     { id: 37, required: true },
+    //     { id: 41, required: true },
+    //     { id: 42, required: true },
+    //     { id: 43, required: true },
+    //     { id: 45, required: false },
+    //     { id: 48, required: false},
+    //     { id: 49, required: true },
+    //     { id: 52, required: true },
+    //     { id: 55, required: false },
+    //     { id: 103, required: true },
+    //     { id: 128, required: false },
+
+    // ]
 
     const textFiledStyle = { margin: '10px 30px' }
 

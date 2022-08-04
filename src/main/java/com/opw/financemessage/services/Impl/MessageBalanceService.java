@@ -36,9 +36,11 @@ public class MessageBalanceService extends ImplMessageService {
             }
         };
         Collections.sort(data, compareById);
+
 //        return CompletableFuture.completedFuture(this.sendMessage(data)).completeOnTimeout("{\"message\" : \"Time out\"}",10, TimeUnit.SECONDS);
         CompletableFuture<String> result = CompletableFuture.supplyAsync(()->this.sendMessage(data),executor)
                 .completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
         return result;
+
     }
 }

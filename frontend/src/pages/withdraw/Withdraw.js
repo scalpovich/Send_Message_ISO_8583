@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { mapField } from '../../components/Field';
 
 export default function Withdraw() {
@@ -17,32 +17,42 @@ export default function Withdraw() {
     var messageUpdate = "";
     var files
 
-    const elements = [
-        { id: 2, required: true },
-        { id: 3, required: true },
-        { id: 4, required: true },
-        { id: 11, required: true },
-        { id: 14, required: false },
-        { id: 18, required: true },
-        { id: 19, required: false },
-        { id: 22, required: true },
-        { id: 23, required: false },
-        { id: 25, required: true },
-        { id: 32, required: true },
-        { id: 35, required: true },
-        { id: 36, required: false },
-        { id: 37, required: true },
-        { id: 41, required: true },
-        { id: 42, required: true },
-        { id: 43, required: true },
-        { id: 45, required: false },
-        { id: 49, required: true },
-        { id: 52, required: true },
-        { id: 55, required: false },
-        { id: 60, required: false },
-        { id: 128, required: false },
+    const [elements, setElements] = useState([])
+    useEffect(() => {
+        fetch("http://localhost:8080/withdraw/getfield", {
+            method: "GET"
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log((result));
+                    setElements(result);
+                })
+    });
 
-    ]
+    // var elements = [
+    // { id: 2, required: true },
+    // { id: 3, required: true },
+    // { id: 4, required: true },
+    // { id: 11, required: true },
+    // { id: 14, required: false },
+    // { id: 18, required: true },
+    // { id: 19, required: false },
+    // { id: 22, required: true },
+    // { id: 23, required: false },
+    // { id: 25, required: true },
+    // { id: 32, required: true },
+    // { id: 35, required: true },
+    // { id: 36, required: false },
+    // { id: 37, required: true },
+    // { id: 41, required: true },
+    // { id: 42, required: true },
+    // { id: 43, required: true },
+    // { id: 45, required: false },
+    // { id: 49, required: true },
+    // { id: 52, required: true },
+    // { id: 55, required: false },
+    // { id: 60, required: false },
+    // { id: 128, required: false }]
 
     const textFiledStyle = { margin: '10px 30px' }
 
@@ -86,7 +96,7 @@ export default function Withdraw() {
         if (messageUpdate.length > 0) {
             console.log(messageUpdate);
             const formData = new FormData();
-            formData.append("file",files)
+            formData.append("file", files)
             setLoading(true)
             let rawMessage = { id: -1, value: messageUpdate }
             console.log(rawMessage)
@@ -178,7 +188,7 @@ export default function Withdraw() {
 
     return (
         <Container >
-            <h1 style={{marginTop : "20px"}}>WithDraw</h1>
+            <h1 style={{ marginTop: "20px" }}>WithDraw</h1>
             <Box
                 component="form"
                 // sx={{

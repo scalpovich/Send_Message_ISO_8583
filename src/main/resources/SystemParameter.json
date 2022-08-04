@@ -1,0 +1,18 @@
+{
+  "socket" : {
+    "ip" : "10.145.48.94",
+    "port" : 40007
+  },
+
+  "thread" : {
+    "coreThread" : 3,
+    "maxThread": 10,
+    "queue" : 100
+  },
+
+  "connectCheck": {
+    "retryCount" : 5
+  },
+
+  "timeoutMessage": 10
+}

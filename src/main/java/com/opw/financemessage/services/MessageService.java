@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MessageService {
     String sendMessage(List<DataReceive> data);
-    public String sendMessageInImpMessageService(String messageSend) throws InterruptedException;
+    public String sendMessageInImpMessageService(String messageSend) throws Exception;
 }
