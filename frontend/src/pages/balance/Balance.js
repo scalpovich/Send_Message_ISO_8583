@@ -37,6 +37,7 @@ export default function Balance() {
         { id: 45, required: false },
         { id: 49, required: true },
         { id: 52, required: true },
+        {id: 54, required: true },
         { id: 55, required: false },
         { id: 60, required: false },
         { id: 128, required: false },

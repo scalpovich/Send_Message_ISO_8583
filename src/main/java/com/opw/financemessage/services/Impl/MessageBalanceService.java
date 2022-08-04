@@ -7,21 +7,24 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Service
 public class MessageBalanceService extends ImplMessageService {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBalanceService.class);
 //    private int count = 1;
-    @Autowired()
-    private Executor taskExecutor;
+
+//    private Executor taskExecutor;
+//    @Autowired
+//    public MessageBalanceService (Executor taskExecutor){
+//        this.taskExecutor = taskExecutor;
+//    }
 
     @Async
     public CompletableFuture<String> send (List<DataReceive> data) throws Exception{
 //        LOGGER.info("Processing request {}", count++);
 //        Thread.sleep(5000);
+        ExecutorService executor = Executors.newCachedThreadPool();
         Date date = new Date();
         data.add(new DataReceive(7,DataElementType.DATE10.format(date, TimeZone.getTimeZone("GMT"))));
         data.add(new DataReceive(12,DataElementType.TIME.format(date, TimeZone.getTimeZone("GMT"))));
@@ -34,7 +37,8 @@ public class MessageBalanceService extends ImplMessageService {
         };
         Collections.sort(data, compareById);
 //        return CompletableFuture.completedFuture(this.sendMessage(data)).completeOnTimeout("{\"message\" : \"Time out\"}",10, TimeUnit.SECONDS);
-        CompletableFuture<String> result = CompletableFuture.supplyAsync(()->this.sendMessage(data),taskExecutor).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
+        CompletableFuture<String> result = CompletableFuture.supplyAsync(()->this.sendMessage(data),executor)
+                .completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
         return result;
     }
 }

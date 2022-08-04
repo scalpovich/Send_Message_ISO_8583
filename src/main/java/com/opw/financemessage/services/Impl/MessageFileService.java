@@ -33,5 +33,4 @@ public class MessageFileService extends ImplMessageService {
             return null;
         }
     }
-
 }

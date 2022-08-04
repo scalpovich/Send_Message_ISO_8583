@@ -11,6 +11,7 @@ import com.opw.financemessage.util.ReadRespondCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class ImplMessageService implements MessageService {
     @Autowired
     private DTO dto;
 
+    @Qualifier("testConfigMapper")
     @Autowired
     private MapperDataElement mapperDataElement;
 
@@ -46,7 +48,7 @@ public class ImplMessageService implements MessageService {
             processor.getInstance(mapperDataElement);
 
             String messageSend = processor.buildMessage(messageISO);
-//            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
+            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
 
             socketIO.sendMessage(messageSend);
             String messageReceiv = socketIO.getMessage();

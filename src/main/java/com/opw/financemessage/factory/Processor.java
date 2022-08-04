@@ -47,12 +47,12 @@ public class Processor {
                 continue;
             }
             DataElement de = map.getDataElement().get(i);
-            if (DataElementLength.FIXED.equals(de.getLengthType())){
+            if (de.getLengthType().equals("FIXED")){
                 String data = message.substring(currentPosition, currentPosition+de.getLength());
                 m.getDataElementContent().put(i,data);
                 currentPosition += de.getLength();
             }
-            if (DataElementLength.VARIABLE.equals(de.getLengthType())){
+            if (de.getLengthType().equals("VARIABLE")){
 
                 int length = Integer.parseInt(message.substring(currentPosition, currentPosition+de.getPrefixLength()));
                 currentPosition += de.getPrefixLength();
@@ -76,12 +76,11 @@ public class Processor {
             if(!messageISO.hasField(i-1)){
                 continue;
             }
-
             DataElement de = map.getDataElement().get(i);
-            if(DataElementLength.FIXED.equals(de.getLengthType())){
+            if(de.getLengthType().equals("FIXED")){
                 builder.append(messageISO.getDataElementContent().get(i));
             }
-            if(DataElementLength.VARIABLE.equals(de.getLengthType())){
+            if(de.getLengthType().equals("VARIABLE")){
                 String data = messageISO.getDataElementContent().get(i);
                 String dataLength = DataElementLength.VARIABLE.paddingLength(data.length(),de.getPrefixLength());
                 builder.append(dataLength);

@@ -9,9 +9,8 @@ import com.opw.financemessage.mapper.MapperDataElement;
 import com.opw.financemessage.models.DataReceive;
 import com.opw.financemessage.models.MessageISO;
 import com.opw.financemessage.services.Impl.MessageSingleTransaction;
-import com.opw.financemessage.socket.SocketIO;
-import com.opw.financemessage.util.ReadRespondCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 @CrossOrigin
 public class ControllerSingleTransaction {
     private MessageSingleTransaction messageSingleTransaction;
+    @Qualifier("testConfigMapper")
     @Autowired
     private MapperDataElement mapperDataElement;
     @Autowired
