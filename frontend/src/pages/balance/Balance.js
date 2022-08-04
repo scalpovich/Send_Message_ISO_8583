@@ -189,8 +189,7 @@ export default function Balance() {
                         helperText={errorArray[element.id]}
                         error={isError[element.id]}
                     />
-                ))
-                }
+                ))}
 
                 <div style={{ textAlign: "left" }}>
                     <h3>Update message</h3>
@@ -232,7 +231,6 @@ export default function Balance() {
                 </div>
 
             </Box>
-
 
         </Container>
     );

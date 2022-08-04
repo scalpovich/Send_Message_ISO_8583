@@ -54,18 +54,6 @@ public class SocketIO {
     public String getMessage() {
 
 
-//        String respond = "";
-//        char[] result = new char[600];
-//        try {
-//            input.read(result);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        LOGGER.info("Get message");
-//        respond = new String(result);
-
-
-//            respond = input.readLine();
         StringBuilder respond = new StringBuilder();
         try {
             int i ;

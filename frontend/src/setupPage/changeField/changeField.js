@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Container } from '@mui/system';
 
 export default function ChangeField() {
+    const [systemparam,setSystemParam] = useState('');
+    const [dataelement, setDataElement] = useState('');
     const [balance, setBalance] = useState('');
     const [purchase, setPurchase] = useState('');
     const [withdraw, setWithdraw] = useState('');
@@ -130,12 +132,77 @@ export default function ChangeField() {
             body: JSON.stringify(s.substring(1, s.length - 1).replace(/\\/g, ""))
         })
     }
-    
+
+    //Config DataElement
+
+    useEffect(() => {
+        fetch("http://localhost:8080/manage/configmapper/getfield", {
+            method: "GET"
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    // console.log(typeof(result));
+                    setDataElement(JSON.stringify(result));
+                })
+    });
+    const handleConfigMapper = (e) => {
+        e.preventDefault()
+        const s = JSON.stringify(document.getElementById("ConfigMapperTextfield").value.toString())
+        // console.log(s.substring(1, s.length - 1).replace(/\\/g, ""))
+        fetch("http://localhost:8080/manage/configmapper/postfield", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(s.substring(1, s.length - 1).replace(/\\/g, ""))
+        })
+    }
+
+    // Config socket-thread-timeout
+
+
+    useEffect(() => {
+        fetch("http://localhost:8080/manage/socket/getsocket", {
+            method: "GET"
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    // console.log(typeof(result));
+                    setSystemParam(JSON.stringify(result));
+                })
+    });
+    const handleSocket = (e) => {
+        e.preventDefault()
+        const s = JSON.stringify(document.getElementById("SocketTextfield").value.toString())
+        // console.log(s.substring(1, s.length - 1).replace(/\\/g, ""))
+        fetch("http://localhost:8080/manage/socket/postsocket", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(s.substring(1, s.length - 1).replace(/\\/g, ""))
+        })
+    }
 
     return (
         <Container>
         <Grid container spacing={4} style = {{marginTop : "20px"}}>
-            
+
+            <Grid item xs={6}>
+                <TextField
+                    id="SocketTextfield"
+                    label="socket-thread-timeout"
+                    multiline
+                    fullWidth
+                    focused
+                    rows={8}
+                    defaultValue = {systemparam}
+                />
+                <Button
+                    style={{ margin: '15px 15px', width: '60%' }}
+                    type="submit" variant="contained"
+                    onClick={handleSocket}
+                >
+                    Submit Balance
+                </Button>
+            </Grid>
+
             <Grid item xs={6}>
                 <TextField
                     id="BalanceTextfield"
@@ -228,6 +295,24 @@ export default function ChangeField() {
                         onClick={handleChangePIN}
                     >
                         Submit ChangePIN
+                </Button>
+            </Grid>
+            <Grid item xs={6}>
+                <TextField
+                    id="ConfigMapperTextfield"
+                    label="ConfigDataElement"
+                    multiline
+                    fullWidth
+                    focused
+                    rows={8}
+                    defaultValue = {dataelement}
+                />
+                <Button
+                    style={{ margin: '15px 15px', width: '60%' }}
+                    type="submit" variant="contained"
+                    onClick={handleConfigMapper}
+                >
+                    Submit
                 </Button>
             </Grid>
             
