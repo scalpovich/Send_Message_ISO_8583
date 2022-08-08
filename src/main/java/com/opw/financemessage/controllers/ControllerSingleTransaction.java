@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 @CrossOrigin
 public class ControllerSingleTransaction {
     private MessageSingleTransaction messageSingleTransaction;
-    @Qualifier("testConfigMapper")
+//    @Qualifier("testConfigMapper")
     @Autowired
     private MapperDataElement mapperDataElement;
     @Autowired
@@ -35,7 +35,6 @@ public class ControllerSingleTransaction {
     public ControllerSingleTransaction(MessageSingleTransaction messageSingleTransaction){
         this.messageSingleTransaction = messageSingleTransaction;
     }
-
 
     @PostMapping("/parsemessage")
     public String parseMessage(@RequestBody DataReceive rawMesaage){
