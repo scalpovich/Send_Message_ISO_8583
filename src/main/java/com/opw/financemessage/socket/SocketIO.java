@@ -2,7 +2,10 @@ package com.opw.financemessage.socket;
 
 import com.opw.financemessage.factory.SystemParameters;
 import org.apache.tomcat.jni.Time;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -19,20 +22,27 @@ public class SocketIO {
     private BufferedInputStream input;
     private PrintWriter output;
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
-
     private SystemParameters parameters = new SystemParameters();
-    private String ip = (String)((JSONObject)parameters.getSystemParameters().get("socket")).get("ip");
-    private int port = (int)(long)((JSONObject)parameters.getSystemParameters().get("socket")).get("port");
+    private String ip;
+    private int port;
+    private boolean connected = false;
 
-    public SocketIO() {
+    public void connect(){
         try {
+            JSONObject objSocket = getObjSocket();
+            this.ip =  (String)(objSocket.get("ip"));
+            this.port = (int)(long)objSocket.get("port");
             this.socket = new Socket(ip, port);
+            this.connected = true;
             this.output = new PrintWriter(socket.getOutputStream(), true);
             this.input = new BufferedInputStream(socket.getInputStream());
         } catch (IOException e) {
-            e.printStackTrace();
-            closeElements(socket, input, output);
+            throw new RuntimeException(e);
         }
+    }
+
+    public void disConnect(){
+        closeElements(socket,input,output);
     }
 
     public void sendMessage(String message) {
@@ -53,11 +63,9 @@ public class SocketIO {
 
     public String getMessage() {
 
-
         StringBuilder respond = new StringBuilder();
         try {
             int i ;
-//            Thread.sleep(1000);
             do{
                 i = input.read();
                 respond.append((char) i);
@@ -85,6 +93,7 @@ public class SocketIO {
                 input.close();
             if (output != null)
                 output.close();
+            this.connected = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,8 +111,12 @@ public class SocketIO {
             e.printStackTrace();
         }
 
+        JSONObject objSocket = getObjSocket();
+
         try {
-            this.socket = new Socket("10.145.48.94", 40007);
+            this.ip = (String)(objSocket.get("ip"));
+            this.port = (int)(long)(objSocket.get("port"));
+            this.socket = new Socket(ip, port);
             this.output = new PrintWriter(socket.getOutputStream(), true);
             this.input = new BufferedInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -111,7 +124,31 @@ public class SocketIO {
             closeElements(socket, input, output);
         }
     }
+    public boolean isSocketChange (){
+        JSONObject objSocket = getObjSocket();
+        if(!((String) objSocket.get("ip")).equals(ip) || port != (int)((long)objSocket.get("port"))){
+            closeElements(socket,input, output);
+            return true;
+        }
+        return false;
+    }
 
+    public JSONObject getObjSocket(){
+        JSONParser parser = new JSONParser();
+        try {
+            FileReader reader = new FileReader("src/main/resources/SystemParameter.json");
+            Object obj = parser.parse(reader);
+            JSONObject listObject = (JSONObject) obj;
+            JSONObject objSocket = (JSONObject) listObject.get("socket");
+            return objSocket;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public Socket getSocket() {
         return socket;
     }
@@ -136,4 +173,11 @@ public class SocketIO {
         this.output = output;
     }
 
+    public boolean getConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
 }

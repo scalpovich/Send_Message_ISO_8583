@@ -47,7 +47,7 @@ public class ControllerPurchase {
     public void postField(@RequestBody String fieldList) throws Exception {
 
 
-        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
+//        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
         System.out.println(fieldList);
 
         File file = new File("ControllerBalance.java");

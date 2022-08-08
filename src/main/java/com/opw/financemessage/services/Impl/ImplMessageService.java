@@ -24,7 +24,7 @@ public class ImplMessageService implements MessageService {
     @Autowired
     private DTO dto;
 
-    @Qualifier("testConfigMapper")
+//    @Qualifier("testConfigMapper")
     @Autowired
     private MapperDataElement mapperDataElement;
 
@@ -40,7 +40,10 @@ public class ImplMessageService implements MessageService {
     @Override
     public String sendMessage(List<DataReceive> data) {
         try {
-            System.out.println();
+            if (!socketIO.getConnected() || socketIO.isSocketChange()){
+                System.out.println(socketIO.getConnected());
+                return "{\"message\" : \"You have not connected\"}";
+            }
             int recentNumb = count++;
             LOGGER.info("Processing request {}", recentNumb);
 //            Thread.sleep(5000);
@@ -98,5 +101,4 @@ public class ImplMessageService implements MessageService {
 
         return String.format("Response code: %s %s", readResponseCode, readRespondCode.read(readResponseCode));
     }
-
 }
