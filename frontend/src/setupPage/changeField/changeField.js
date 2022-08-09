@@ -12,6 +12,7 @@ export default function ChangeField() {
     const [withdraw, setWithdraw] = useState('');
     const [transfer, setTransfer] = useState('');
     const [changePIN, setChangePIN] = useState('');
+    const [statement, setStatement] = useState('');
 
     // Balance
     useEffect(() => {
@@ -128,6 +129,28 @@ export default function ChangeField() {
         })
     }
 
+    //Statement
+    useEffect(() => {
+        fetch("http://localhost:8080/statement/getfield", {
+            method: "GET"
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    // console.log(typeof(result));
+                    setStatement(JSON.stringify(result, null, 2));
+                })
+    });
+    const handleStatement = (e) => {
+        e.preventDefault()
+        const s = JSON.parse(document.getElementById("StatementTextfield").value)
+        // console.log(s.substring(1, s.length - 1).replace(/\\/g, ""))
+        fetch("http://localhost:8080/statement/postfield", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(s, null, 2)
+        })
+    }
+
     //Config DataElement
 
     useEffect(() => {
@@ -174,13 +197,13 @@ export default function ChangeField() {
     }
 
     // Switch
-    const handleSwitch = () =>{
-        toggle ? setToggle(false): setToggle(true);
+    const handleSwitch = () => {
+        toggle ? setToggle(false) : setToggle(true);
         console.log(toggle)
-        fetch("http://localhost:8080/manage/switch",{
+        fetch("http://localhost:8080/manage/switch", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body:JSON.stringify(toggle)
+            body: JSON.stringify(toggle)
         })
     }
     const handleChangeSocket = () => {
@@ -190,8 +213,9 @@ export default function ChangeField() {
 
     return (
         <div className="row">
-            <div className="col-1" style={{margin:"20px"}}>
-                <FormControlLabel control={<Switch id="ConnectSwitch" checked={toggle} onClick={handleSwitch}/>} label="Connect"/>
+            <div className="col-1" style={{margin: "20px"}}>
+                <FormControlLabel control={<Switch id="ConnectSwitch" checked={toggle} onClick={handleSwitch}/>}
+                                  label="Connect"/>
             </div>
             <div className="col-10">
                 <Grid style={{marginTop: "50px"}}>
@@ -313,25 +337,44 @@ export default function ChangeField() {
                             </Button>
                         </Grid>
                     </div>
-
-                    <Grid item xs={6} className="col-6">
-                        <TextField
-                            id="ConfigMapperTextfield"
-                            label="ConfigDataElement"
-                            multiline
-                            fullWidth
-                            focused
-                            rows={8}
-                            defaultValue={dataelement}
-                        />
-                        <Button
-                            style={{margin: '15px 15px', width: '60%'}}
-                            type="submit" variant="contained"
-                            onClick={handleConfigMapper}
-                        >
-                            Submit
-                        </Button>
-                    </Grid>
+                    <div className="row">
+                        <Grid item xs={6} className="col-6">
+                            <TextField
+                                id="StatementTextfield"
+                                label="Statement"
+                                multiline
+                                fullWidth
+                                focused
+                                rows={8}
+                                defaultValue={statement}
+                            />
+                            <Button
+                                style={{margin: '15px 15px', width: '60%'}}
+                                type="submit" variant="contained"
+                                onClick={handleStatement}
+                            >
+                                Submit Statement
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6} className="col-6">
+                            <TextField
+                                id="ConfigMapperTextfield"
+                                label="ConfigDataElement"
+                                multiline
+                                fullWidth
+                                focused
+                                rows={8}
+                                defaultValue={dataelement}
+                            />
+                            <Button
+                                style={{margin: '15px 15px', width: '60%'}}
+                                type="submit" variant="contained"
+                                onClick={handleConfigMapper}
+                            >
+                                Submit
+                            </Button>
+                        </Grid>
+                    </div>
                 </Grid>
             </div>
         </div>
