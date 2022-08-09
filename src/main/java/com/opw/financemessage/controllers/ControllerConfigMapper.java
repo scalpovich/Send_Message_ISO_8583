@@ -67,14 +67,14 @@ public class ControllerConfigMapper {
     }
 
     @PostMapping("/switch")
-    public void postSwitch (@RequestBody boolean turnOff){
-        if (!turnOff) {
+    public void postSwitch (@RequestBody boolean connect){
+        if (connect) {
             socketIO.connect();
             System.out.println("connected");
         }
         else {
-            socketIO.disConnect();
             System.out.println("disconnected");
+            socketIO.disConnect();
         }
     }
 }

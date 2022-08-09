@@ -23,12 +23,12 @@ public class ScheduleConnectCheck {
 
     private int count = 0;
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleConnectCheck.class);
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 300000)
     public void checkConnected() throws Exception {
         socketIO.sendMessage("0063080082200001000000000400000000000000121616150731000106970409301");
 
         CompletableFuture<String> completableFutureEchoMessage = CompletableFuture.completedFuture(socketIO.getMessage())
-                .completeOnTimeout("null",5, TimeUnit.SECONDS);
+                .completeOnTimeout("null",300, TimeUnit.SECONDS);
 
         String responseEchoMessage = completableFutureEchoMessage.get();
 

@@ -13,7 +13,7 @@ export default function ChangeField() {
     const [transfer, setTransfer] = useState('');
     const [changePIN, setChangePIN] = useState('');
     const [statement, setStatement] = useState('');
-
+    var swt = false;
     // Balance
     useEffect(() => {
         fetch("http://localhost:8080/balance/getfield", {
@@ -193,22 +193,23 @@ export default function ChangeField() {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(s, null, 2)
-        })
+        }).then(setToggle(false))
+            .then(
+            fetch("http://localhost:8080/manage/switch", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(false)
+        }))
     }
 
     // Switch
     const handleSwitch = () => {
-        toggle ? setToggle(false) : setToggle(true);
-        console.log(toggle)
+        toggle ? setToggle(false):setToggle(true);
         fetch("http://localhost:8080/manage/switch", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(toggle)
-        })
-    }
-    const handleChangeSocket = () => {
-        handleSocket()
-        handleSwitch();
+            body: JSON.stringify(!toggle)
+        });
     }
 
     return (
