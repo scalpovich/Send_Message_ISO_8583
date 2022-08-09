@@ -7,6 +7,7 @@ import Withdraw from './pages/withdraw/Withdraw';
 import SingleTransaction from './pages/singleTransaction/SingleTransaction';
 import Transfer from "./pages/transfer/Transfer";
 import ChangePIN from "./pages/changePIN/ChangePIN";
+import Statement from "./pages/statement/Statement"
 import ISOtext from "./pages/ISO8583/ISOtext";
 import ChangeField from './setupPage/changeField/changeField';
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/singleTransaction" element = {<SingleTransaction/>}/>
                     <Route path="/transfer" element = {<Transfer/>}/>
                     <Route path="/changePIN" element = {<ChangePIN/>}/>
+                    <Route path="/statement" element = {<Statement/>}/>
                     <Route path="/isotext" element = {<ISOtext/>}/>
                     <Route path="/changeField" element = {<ChangeField/>}/>
                 </Routes>

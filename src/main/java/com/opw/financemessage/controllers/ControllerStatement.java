@@ -20,28 +20,28 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/balance")
+@RequestMapping("/statement")
 @CrossOrigin
-public class ControllerBalance {
+public class ControllerStatement {
 
     private MessageBalanceService messageBalanceService;
-//    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerBalance.class);
+    //    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerBalance.class);
     @Autowired
-    public ControllerBalance (MessageBalanceService messageBalanceService){
+    public ControllerStatement (MessageBalanceService messageBalanceService){
         this.messageBalanceService = messageBalanceService;
     }
 
-   @PostMapping("/post")
+    @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
 //       LOGGER.info("Processing request hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-       return messageBalanceService.send(data).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
+        return messageBalanceService.send(data).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
     }
 
     @GetMapping("/getfield")
     public JSONArray getField() throws Exception {
         JSONParser jsonParser = new JSONParser();
 //        System.out.println(file.getAbsoluteFile().getParent());
-        FileReader reader = new FileReader("src/main/resources/transactionField/BalanceField.json");
+        FileReader reader = new FileReader("src/main/resources/transactionField/Statement.json");
         Object obj = jsonParser.parse(reader);
         JSONArray fieldList = (JSONArray) obj;
 //        System.out.println(fieldList);
@@ -50,12 +50,10 @@ public class ControllerBalance {
 
     @PostMapping("/postfield")
     public void postField(@RequestBody String fieldList) throws Exception {
-
-
 //        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
         System.out.println(fieldList);
 
-        FileWriter writer = new FileWriter("src/main/resources/transactionField/BalanceField.json");
+        FileWriter writer = new FileWriter("src/main/resources/transactionField/Statement.json");
         writer.write(fieldList);
         writer.flush();
     }
