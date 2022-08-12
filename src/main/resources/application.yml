@@ -1,4 +1,5 @@
 spring:
-  mvc:
-    async:
-      request-timeout: -1
+  datasource:
+    url: jdbc:oracle:thin:@10.145.48.113:1521/orcl
+    username: SIM
+    password: a123456

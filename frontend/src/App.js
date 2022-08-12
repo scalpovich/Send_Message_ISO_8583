@@ -5,6 +5,7 @@ import Home from './pages/home/home'
 import Navbar from './components/Navbar';
 import Withdraw from './pages/withdraw/Withdraw';
 import SingleTransaction from './pages/singleTransaction/SingleTransaction';
+import BatchTransaction from "./pages/batchTransaction/BatchTransaction";
 import Transfer from "./pages/transfer/Transfer";
 import ChangePIN from "./pages/changePIN/ChangePIN";
 import Statement from "./pages/statement/Statement";
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/balance" element={<Balance/>}/>
                     <Route path="/withdraw" element={<Withdraw/>}/>
                     <Route path="/singleTransaction" element = {<SingleTransaction/>}/>
+                    <Route path="/batchTransaction" element = {<BatchTransaction/>}/>
                     <Route path="/transfer" element = {<Transfer/>}/>
                     <Route path="/changePIN" element = {<ChangePIN/>}/>
                     <Route path="/statement" element = {<Statement/>}/>

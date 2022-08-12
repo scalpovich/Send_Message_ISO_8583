@@ -21,8 +21,8 @@ const Navbar =() => {
                                     Transaction
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="/SingleTransaction">Single Transaction</a></li>
-                                    <li><a className="dropdown-item" href="/BatchTransaction">Batch Transaction</a></li>
+                                    <li><a className="dropdown-item" href="/singleTransaction">Single Transaction</a></li>
+                                    <li><a className="dropdown-item" href="/batchTransaction">Batch Transaction</a></li>
                                     <li><a className="dropdown-item" href="#">Something else</a></li>
                                 </ul>
                             </li>
@@ -32,15 +32,15 @@ const Navbar =() => {
                                     Quick Transaction
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="/Balance">Balance</a></li>
-                                    <li><a className="dropdown-item" href="/Purchase">Purchase</a></li>
-                                    <li><a className="dropdown-item" href="/Withdraw">Withdraw</a></li>
-                                    <li><a className="dropdown-item" href="/Transfer">Transfer</a></li>
-                                    <li><a className="dropdown-item" href="/ChangePIN">Change PIN</a></li>
-                                    <li><a className="dropdown-item" href="/Statement">Statement</a></li>
+                                    <li><a className="dropdown-item" href="/balance">Balance</a></li>
+                                    <li><a className="dropdown-item" href="/purchase">Purchase</a></li>
+                                    <li><a className="dropdown-item" href="/withdraw">Withdraw</a></li>
+                                    <li><a className="dropdown-item" href="/transfer">Transfer</a></li>
+                                    <li><a className="dropdown-item" href="/changePIN">Change PIN</a></li>
+                                    <li><a className="dropdown-item" href="/statement">Statement</a></li>
                                 </ul>
                             </li>
-                            <li className="nav-item"><a href="/ISOtext" className="nav-link">ISO-8583</a></li>
+                            <li className="nav-item"><a href="/isotext" className="nav-link">ISO-8583</a></li>
                             {/*<li className="nav-item"><a href="#" className="nav-link">EN</a></li>*/}
                         </ul>
                     </div>

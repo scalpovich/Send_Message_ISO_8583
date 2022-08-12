@@ -28,7 +28,7 @@ public class ScheduleConnectCheck {
         socketIO.sendMessage("0063080082200001000000000400000000000000121616150731000106970409301");
 
         CompletableFuture<String> completableFutureEchoMessage = CompletableFuture.completedFuture(socketIO.getMessage())
-                .completeOnTimeout("null",300, TimeUnit.SECONDS);
+                .completeOnTimeout("null",5, TimeUnit.SECONDS);
 
         String responseEchoMessage = completableFutureEchoMessage.get();
 

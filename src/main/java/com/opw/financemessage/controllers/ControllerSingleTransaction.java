@@ -37,9 +37,9 @@ public class ControllerSingleTransaction {
     }
 
     @PostMapping("/parsemessage")
-    public String parseMessage(@RequestBody DataReceive rawMesaage){
+    public String parseMessage(@RequestBody DataReceive rawMessage){
         processor.getInstance(mapperDataElement);
-        MessageISO messageISO = processor.parsMessage(rawMesaage.getValue());
+        MessageISO messageISO = processor.parsMessage(rawMessage.getValue());
         List <DataReceive> resp = new ArrayList<>();
         resp.add(new DataReceive(1,messageISO.getMti()));
         TreeMap<Integer, String> tm = new TreeMap<Integer, String>(messageISO.getDataElementContent());

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
-import {TextField, Button, DialogTitle, DialogActions, Dialog} from "@mui/material";
+import {TextField, Button, DialogTitle, DialogActions, Dialog, CircularProgress, Backdrop} from "@mui/material";
 import {useState} from 'react';
 
 export default function SingleTransaction() {
     const [responseDetail, setResponseDetail] = useState({})
     const [responseISO, setResponseISO] = useState({value: ''})
     const [response, setResponse] = useState();
+    const [loading, setLoading] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const textFiledStyle = {marginTop: '30px'}
 
@@ -58,6 +59,7 @@ export default function SingleTransaction() {
                 listOfField.push(ele)
             }
         }
+        setLoading(true)
         fetch("http://localhost:8080/singletransaction/send", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -65,6 +67,7 @@ export default function SingleTransaction() {
         }).then(res => res.json())
             .then(
                 (result) => {
+                    setLoading(false)
                     setResponse(result.message)
                     setOpen(true);
                 })
@@ -112,6 +115,12 @@ export default function SingleTransaction() {
                     >
                         Send Message
                     </Button>
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={loading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </div>
             </div>
 

@@ -26,7 +26,7 @@ public class ControllerConfigMapper {
     public JSONArray getField(){
         JSONParser parser = new JSONParser();
         try {
-            FileReader fileReader = new FileReader("src/main/java/com/opw/financemessage/config/ConfigMapper.json");
+            FileReader fileReader = new FileReader("src/main/resources/transactionConfig/ConfigMapper.json");
             JSONArray obj = (JSONArray) parser.parse(fileReader);
             return obj;
         } catch (FileNotFoundException e) {
@@ -43,7 +43,7 @@ public class ControllerConfigMapper {
 //        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
         System.out.println(fieldList);
 
-        FileWriter writer = new FileWriter("src/main/java/com/opw/financemessage/config/ConfigMapper.json");
+        FileWriter writer = new FileWriter("src/main/resources/transactionConfig/ConfigMapper.json");
         writer.write(fieldList);
         writer.flush();
         mapperDataElement.loadDataElement();

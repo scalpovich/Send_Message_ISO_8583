@@ -36,13 +36,13 @@ public class MapperDataElement {
             dataElement.clear();
         }
         JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("src/main/java/com/opw/financemessage/config/ConfigMapper.json")){
+        try (FileReader reader = new FileReader("src/main/resources/transactionConfig/ConfigMapper.json")){
             Object obj = parser.parse(reader);
 
             JSONArray dataElementList = (JSONArray) obj;
 
-            dataElementList.forEach(Elemnent -> {
-                JSONObject emp = (JSONObject) Elemnent;
+            dataElementList.forEach(elemnent -> {
+                JSONObject emp = (JSONObject) elemnent;
                 DataElement dataElemnt = new DataElement();
 
                 int id = Math.toIntExact((Long) emp.get("id"));

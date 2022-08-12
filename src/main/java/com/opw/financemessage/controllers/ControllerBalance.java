@@ -51,7 +51,6 @@ public class ControllerBalance {
     @PostMapping("/postfield")
     public void postField(@RequestBody String fieldList) throws Exception {
 
-
 //        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
         System.out.println(fieldList);
 

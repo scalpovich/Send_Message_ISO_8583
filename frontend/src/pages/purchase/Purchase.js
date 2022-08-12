@@ -1,15 +1,6 @@
 import * as React from 'react';
 import {
-  Container,
-  TextField,
-  Button,
-  Box,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  CircularProgress,
-  Backdrop
-} from '@mui/material';
+  Container, TextField, Button, Box, Dialog, DialogActions, DialogTitle, CircularProgress, Backdrop} from '@mui/material';
 import { mapField } from '../../components/Field';
 import { useState, useEffect } from 'react';
 
@@ -36,33 +27,6 @@ export default function Purchase() {
         })
   });
 
-  // const elements = [
-  //   { id: 2, required: true },
-  //   { id: 3, required: true },
-  //   { id: 4, required: true },
-  //   { id: 5, required: true },
-  //   { id: 6, required: true },
-  //   { id: 11, required: true },
-  //   { id: 14, required: false },
-  //   { id: 18, required: true },
-  //   { id: 19, required: false },
-  //   { id: 22, required: true },
-  //   { id: 23, required: false },
-  //   { id: 25, required: true },
-  //   { id: 32, required: true },
-  //   { id: 35, required: false },
-  //   { id: 36, required: false },
-  //   { id: 37, required: true },
-  //   { id: 41, required: true },
-  //   { id: 42, required: true },
-  //   { id: 43, required: true },
-  //   { id: 45, required: false },
-  //   { id: 49, required: true },
-  //   { id: 52, required: false },
-  //   { id: 55, required: false },
-  //   { id: 60, required: false },
-  //   { id: 128, required: false },
-  // ]
 
   const textFiledStyle = { margin: '10px 30px' }
 
