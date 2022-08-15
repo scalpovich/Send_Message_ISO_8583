@@ -122,17 +122,27 @@ export default function Purchase() {
 
     console.log(console.log(fieldValue))
     setLoading(true)
-    fetch("http://localhost:8080/balance/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(fieldValue)
-    }).then(res => res.json())
-      .then(
-        (result) => {
-          setLoading(false)
-          setResponse(result.message)
-          setOpen(true);
-        })
+    fetch("http://localhost:8080/purchase/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(fieldValue)
+        }).then(res => res.json())
+            .then(res => ('http://localhost:8080/purchase/get/' + res.message))
+            .then(
+                (result) => {
+                    console.log(result)
+                    fetch(result, {
+                        method: "GET"
+                        // headers: { "Content-Type": "application/json" },
+                        // body: JSON.stringify(fieldValue)
+                    }).then(res => res.json())
+                    .then(
+                        (result) => {
+                            setLoading(false)
+                            setResponse(result.message)
+                            setOpen(true);
+                        })
+                })
     fieldValue = [{ id: 0, value: "0200" }]
   }
 

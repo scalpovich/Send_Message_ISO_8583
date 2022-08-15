@@ -36,6 +36,12 @@ public class ControllerBalance {
 //       LOGGER.info("Processing request hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
        return messageBalanceService.send(data).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
     }
+    @GetMapping(path = "/get/{ID}")
+    public CompletableFuture<String> getAllCoursesForStudent(
+            @PathVariable("ID") String field63) {
+        long startTime = System.nanoTime();
+        return messageBalanceService.getMessageByField63(field63, startTime);
+    }
 
     @GetMapping("/getfield")
     public JSONArray getField() throws Exception {

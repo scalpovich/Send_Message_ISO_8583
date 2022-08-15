@@ -4,9 +4,14 @@
     "port": 40007,
     "ip": "10.145.48.94"
   },
-  "thread": {
+  "sendThread": {
     "maxThread": 10,
-    "coreThread": 3,
+    "coreThread": 2,
+    "queue": 100
+  },
+  "getThread": {
+    "maxThread": 10,
+    "coreThread": 2,
     "queue": 100
   },
   "connectCheck": {

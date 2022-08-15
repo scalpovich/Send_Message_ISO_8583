@@ -28,6 +28,12 @@ public class ControllerChangePIN {
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data){
         return messageChangePINService.send(data);
     }
+    @GetMapping(path = "/get/{ID}")
+    public CompletableFuture<String> getAllCoursesForStudent(
+            @PathVariable("ID") String field63) {
+        long startTime = System.nanoTime();
+        return messageChangePINService.getMessageByField63(field63, startTime);
+    }
 
     @GetMapping("/getfield")
     public JSONArray getField() throws Exception {

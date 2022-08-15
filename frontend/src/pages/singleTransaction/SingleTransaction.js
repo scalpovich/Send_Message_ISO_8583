@@ -60,16 +60,38 @@ export default function SingleTransaction() {
             }
         }
         setLoading(true)
-        fetch("http://localhost:8080/singletransaction/send", {
+        
+        // fetch("http://localhost:8080/singletransaction/send", {
+        //     method: "POST",
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify(listOfField)
+        // }).then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             setLoading(false)
+        //             setResponse(result.message)
+        //             setOpen(true);
+        //         })
+        fetch("http://localhost:8080/singletransaction/post", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(listOfField)
         }).then(res => res.json())
+            .then(res => ('http://localhost:8080/singletransaction/get/' + res.message))
             .then(
                 (result) => {
-                    setLoading(false)
-                    setResponse(result.message)
-                    setOpen(true);
+                    console.log(result)
+                    fetch(result, {
+                        method: "GET"
+                        // headers: { "Content-Type": "application/json" },
+                        // body: JSON.stringify(fieldValue)
+                    }).then(res => res.json())
+                    .then(
+                        (result) => {
+                            setLoading(false)
+                            setResponse(result.message)
+                            setOpen(true);
+                        })
                 })
     }
 

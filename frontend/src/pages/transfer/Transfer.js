@@ -128,11 +128,21 @@ export default function Transfer() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
         }).then(res => res.json())
+            .then(res => ('http://localhost:8080/transfer/get/' + res.message))
             .then(
                 (result) => {
-                    setLoading(false)
-                    setResponse(result.message)
-                    setOpen(true);
+                    console.log(result)
+                    fetch(result, {
+                        method: "GET"
+                        // headers: { "Content-Type": "application/json" },
+                        // body: JSON.stringify(fieldValue)
+                    }).then(res => res.json())
+                    .then(
+                        (result) => {
+                            setLoading(false)
+                            setResponse(result.message)
+                            setOpen(true);
+                        })
                 })
         fieldValue = [{ id: 0, value: "0200" }]
     }
