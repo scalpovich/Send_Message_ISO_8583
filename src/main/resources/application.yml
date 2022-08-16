@@ -3,3 +3,7 @@ spring:
     url: jdbc:oracle:thin:@10.145.48.113:1521/orcl
     username: SIM
     password: a123456
+
+  mvc:
+    async:
+      request-timeout: -1
