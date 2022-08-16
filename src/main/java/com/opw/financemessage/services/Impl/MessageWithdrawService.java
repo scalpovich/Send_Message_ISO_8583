@@ -30,6 +30,9 @@ public class MessageWithdrawService extends ImplMessageService {
             }
         };
         Collections.sort(data, compareById);
+//        for(int i =0; i<data.size(); i++){
+//            System.out.println(data.get(i).getId() + " : " +data.get(i).getValue());
+//        }
         return CompletableFuture.completedFuture(this.sendMessage(data,Field63));
     }
     @Async("getTaskExecutor")
