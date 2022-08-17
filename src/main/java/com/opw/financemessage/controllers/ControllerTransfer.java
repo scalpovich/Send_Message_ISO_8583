@@ -30,6 +30,13 @@ public class ControllerTransfer {
         return messageTransferService.send(data);
     }
 
+    @GetMapping(path = "/get/{ID}")
+    public CompletableFuture<String> getAllCoursesForStudent(
+            @PathVariable("ID") String field63) {
+        long startTime = System.nanoTime();
+        return messageTransferService.getMessageByField63(field63, startTime);
+    }
+
     @GetMapping("/getfield")
     public JSONArray getField() throws Exception {
         JSONParser jsonParser = new JSONParser();

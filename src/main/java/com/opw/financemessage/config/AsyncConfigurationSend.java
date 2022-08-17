@@ -10,26 +10,25 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 
 @Configuration
 @EnableAsync(proxyTargetClass = true)
-public class AsyncConfiguration {
+public class AsyncConfigurationSend {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncConfigurationSend.class);
 
-    @Bean(name = "taskExecutor")
+    @Bean(name = "sendTaskExecutor")
     public Executor taskExecutor() {
         LOGGER.debug("Creating Async Task Executor");
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         SystemParameters parameters = new SystemParameters();
-        int coreThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("thread")).get("coreThread");
-        int maxThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("thread")).get("maxThread");
-        int queue = (int)(long)((JSONObject)parameters.getSystemParameters().get("thread")).get("queue");
+        int coreThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("coreThread");
+        int maxThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("maxThread");
+        int queue = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("queue");
         executor.setCorePoolSize(coreThread);
         executor.setMaxPoolSize(maxThread);
         executor.setQueueCapacity(queue);
-        executor.setThreadNamePrefix("MessageThread-");
+        executor.setThreadNamePrefix("SendThread-");
         executor.initialize();
         return executor;
     }

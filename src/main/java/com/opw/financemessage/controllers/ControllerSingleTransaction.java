@@ -78,4 +78,10 @@ public class ControllerSingleTransaction {
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> listElement) throws Exception {
         return messageSingleTransaction.send(listElement);
     }
+    @GetMapping(path = "/get/{ID}")
+    public CompletableFuture<String> getAllCoursesForStudent(
+            @PathVariable("ID") String field63) {
+        long startTime = System.nanoTime();
+        return messageSingleTransaction.getMessageByField63(field63, startTime);
+    }
 }

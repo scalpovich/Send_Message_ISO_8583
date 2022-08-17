@@ -1,6 +1,7 @@
 package com.opw.financemessage.socket;
 
 import com.opw.financemessage.factory.SystemParameters;
+import com.opw.financemessage.services.Impl.ImplMessageService;
 import org.apache.tomcat.jni.Time;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,22 @@ public class SocketIO {
     private int port;
     private boolean connected = false;
 
+
     public void connect(){
+        try {
+            JSONObject objSocket = getObjSocket();
+            this.ip =  (String)(objSocket.get("ip"));
+            this.port = (int)(long)objSocket.get("port");
+            this.socket = new Socket(ip, port);
+            this.connected = true;
+            this.output = new PrintWriter(socket.getOutputStream(), true);
+            this.input = new BufferedInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public SocketIO(){
         try {
             JSONObject objSocket = getObjSocket();
             this.ip =  (String)(objSocket.get("ip"));
@@ -81,8 +98,24 @@ public class SocketIO {
     }
 
 //    @EventListener(ApplicationReadyEvent.class)
-//    public void doSomethingAfterStartup() {
-//        System.out.println("hello world, I have just started up");
+//    public void getMessageAuto() {
+//        while(true){
+//            StringBuilder respond = new StringBuilder();
+//            try {
+//                int i ;
+//                do{
+//                    i = input.read();
+//                    respond.append((char) i);
+//                }while (input.available() !=0);
+//            } catch (IOException e) {
+//                closeElements(socket, input, output);
+//                throw new RuntimeException(e);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        }
+//
 //    }
 
     public void closeElements(Socket socket, BufferedInputStream input, PrintWriter output) {

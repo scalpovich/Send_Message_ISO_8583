@@ -27,7 +27,22 @@ public class ControllerWithdraw {
 
     @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) {
+//        long startTime = System.nanoTime();
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        long stopTime = System.nanoTime();
+//        System.out.println(stopTime - startTime);
         return messageWithdrawService.send(data);
+    }
+
+    @GetMapping(path = "/get/{ID}")
+    public CompletableFuture<String> getAllCoursesForStudent(
+            @PathVariable("ID") String field63) {
+        long startTime = System.nanoTime();
+        return messageWithdrawService.getMessageByField63(field63, startTime);
     }
 
     @GetMapping("/getfield")
@@ -57,4 +72,5 @@ public class ControllerWithdraw {
         writer.write(fieldList);
         writer.flush();
     }
+
 }

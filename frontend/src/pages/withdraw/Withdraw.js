@@ -11,6 +11,7 @@ export default function Withdraw() {
     const [errorArray, setErrorArray] = useState([])
     const [isError, setIsError] = useState([])
     const [loading, setLoading] = React.useState(false);
+    // var getAPIHttp = ''
     var subErrorArray = []
     var subIsError = []
 
@@ -24,7 +25,7 @@ export default function Withdraw() {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    console.log((result));
+                    // console.log((result));
                     setElements(result);
                 })
     });
@@ -67,6 +68,21 @@ export default function Withdraw() {
 
     const handleClick = (e) => {
         e.preventDefault()
+        // var rara = "http://localhost:8080/withdraw/get/2208150904275988"
+        // // fetch(rara, {
+        // //     method: "GET"
+        // //     // headers: { "Content-Type": "application/json" },
+        // //     // body: JSON.stringify(fieldValue)
+        // // })
+        // //     .then(res => res.json())
+        // //     .then(
+        // //         (result) => {
+        // //             console.log("sdjfsdh")
+        // //             setLoading(false)
+        // //             setResponse(result.message)
+        // //             setOpen(true);
+        // //         })
+
 
         if (messageUpdate.length > 0) {
             console.log(messageUpdate);
@@ -145,19 +161,31 @@ export default function Withdraw() {
             }
         }
 
-        console.log(console.log(fieldValue))
         setLoading(true)
         fetch("http://localhost:8080/withdraw/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
         }).then(res => res.json())
+            .then(res => ('http://localhost:8080/withdraw/get/' + res.message))
             .then(
                 (result) => {
-                    setLoading(false)
-                    setResponse(result.message)
-                    setOpen(true);
+                    console.log(result)
+                    fetch(result, {
+                        method: "GET"
+                        // headers: { "Content-Type": "application/json" },
+                        // body: JSON.stringify(fieldValue)
+                    }).then(res => res.json())
+                    .then(
+                        (result) => {
+                            setLoading(false)
+                            setResponse(result.message)
+                            setOpen(true);
+                        })
                 })
+            
+
+
         fieldValue = [{ id: 0, value: "0200" }]
     }
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Grid, TextField, Button, Switch, FormControlLabel} from '@mui/material';
 import {useState, useEffect} from 'react';
-import {Container} from '@mui/system';
 
 export default function ChangeField() {
     const [toggle, setToggle] = useState(false);
@@ -13,7 +12,7 @@ export default function ChangeField() {
     const [transfer, setTransfer] = useState('');
     const [changePIN, setChangePIN] = useState('');
     const [statement, setStatement] = useState('');
-    var swt = false;
+    // var swt = false;
     // Balance
     useEffect(() => {
         fetch("http://localhost:8080/balance/getfield", {
