@@ -8,13 +8,17 @@ import com.opw.financemessage.services.Impl.MessageBatchTransaction;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -31,7 +35,7 @@ public class ControllerBatchTransaction {
         this.messageBatchTransaction = messageBatchTransaction;
     }
     @PostMapping("/post")
-    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
+    public String sendMessage(@RequestBody List<DataReceive> data) throws Exception {
         int numberTransaction = Integer.parseInt(data.get(0).getValue());
         int transaction = Integer.parseInt(data.get(1).getValue());
         String contentTransaction = data.get(2).getValue();
@@ -53,17 +57,21 @@ public class ControllerBatchTransaction {
         fileWriter.flush();
         List<CardInfor> listCardInfor = cardInfoRepository.findAll();
         List<CompletableFuture<String>> response = new ArrayList<>();
-//        for (int i = 0; i < numberTransaction ; i++){
-//            response.add(messageBatchTransaction.send(data, listCardInfor.get(i)));
-//        }
-//        System.out.println(response.get(0));
-//        if (response.size()== numberTransaction){
-//            String res= "{\"message\" : \"Done\"}";
-//            return res;
-//        }
-        CompletableFuture<String> res = messageBatchTransaction.send(transaction, contentTransaction, listCardInfor.get(0));
-        CompletableFuture.allOf(res).join();
-        return res;
+        for (int i = 0; i < numberTransaction ; i++){
+            CardInfor cardInfor = listCardInfor.get((int)(Math.random()*10));
+            response.add(messageBatchTransaction.send(transaction,contentTransaction,cardInfor));
+        }
+//        Thread.sleep(3000);
+
+        messageBatchTransaction.get(numberTransaction);
+
+//        messageBatchTransaction.get(numberTransaction);
+        if (response.size() == numberTransaction){
+            return "{\"message\" : \"Done\"}";
+        }
+//        CompletableFuture<String> res = messageBatchTransaction.send(transaction, contentTransaction, listCardInfor.get(0));
+//        CompletableFuture.allOf(res).join();
+        return "{\"message\" : \"false\"}";
     }
 
     @PostMapping("/gettransaction")

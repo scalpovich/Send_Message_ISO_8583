@@ -41,7 +41,6 @@ const Navbar =() => {
                                 </ul>
                             </li>
                             <li className="nav-item"><a href="/isotext" className="nav-link">ISO-8583</a></li>
-                            {/*<li className="nav-item"><a href="#" className="nav-link">EN</a></li>*/}
                         </ul>
                     </div>
                 </div>

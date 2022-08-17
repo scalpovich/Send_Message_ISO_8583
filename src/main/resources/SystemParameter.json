@@ -5,9 +5,9 @@
     "ip": "10.145.48.94"
   },
   "thread": {
-    "maxThread": 10,
-    "coreThread": 3,
-    "queue": 100
+    "maxThread": 25,
+    "coreThread": 20,
+    "queue": 500
   },
   "connectCheck": {
     "retryCount": 300
