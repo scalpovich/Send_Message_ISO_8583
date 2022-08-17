@@ -1,45 +1,36 @@
 import * as React from 'react';
-import {
-    Box,
-    Button,
-    Typography,
-    Grid,
-    Card,
-    CardContent,
-    TextField,
-    DialogTitle,
-    DialogActions,
-    Dialog
-} from '@mui/material';
+import {Box, Button, Typography, Grid, Card, CardContent, TextField, DialogTitle, DialogActions, Dialog} from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import {useState} from "react";
 
 
 export default function BatchTransaction() {
     const [transaction, setTransaction] = useState('');
     const [config, setConfig] = useState('');
-    const [response, setResponse] = useState()
-    const [open, setOpen] = React.useState(false    );
+    const [response, setResponse] = useState('')
+    const [open, setOpen] = React.useState(false);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        let value = event.target.value;
+    let value = "";
+    const handleChange = (event) => {
+        value = event.target.value;
         setTransaction(value);
         fetch('http://localhost:8080/batchmessage/gettransaction',{
-            method:"POST",
-            headers: {"Content-Type": "application/json"},
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(value)
         }).then(res => res.json())
             .then(
                 (result) => {
                     // console.log(typeof(result));
                     setConfig(JSON.stringify(result, null, 2));
-                });
+                })
+        value = ""
     };
 
-    var data =[]
+    let data =[]
     const handleBatchTransaction = () => {
         console.log(transaction);
         if (document.getElementById('number-of-transaction').value.toString() !== "" && transaction !== "") {
@@ -107,7 +98,7 @@ export default function BatchTransaction() {
                                 <Grid item xs={12}>
                                     <TextField id = "content-transaction"
                                                placeholder="config transaction"
-                                               label="Config Transaction"
+                                               label="Config Message"
                                                variant="outlined"
                                                fullWidth
                                                multiline

@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MessageBatchTransaction extends ImplMessageService {
+public class MessageBatchTransaction extends ImplMessageBatchService {
 
     @Async
     public CompletableFuture<String> send(int transaction, String contentTransaction, CardInfor cardInfor) throws Exception {
@@ -40,13 +40,14 @@ public class MessageBatchTransaction extends ImplMessageService {
             listConfig.add(new DataReceive(12, DataElementType.TIME.format(date, TimeZone.getTimeZone("GMT+7"))));
             listConfig.add(new DataReceive(13, DataElementType.DATE4.format(date, TimeZone.getTimeZone("GMT+7"))));
         }
-
+        Random random = new Random();
+        listConfig.add(new DataReceive(37,"123456"+ String.valueOf(random.nextInt(900) + 100) + String.valueOf(random.nextInt(900) + 100)));
         if (!cardInfor.getF2().isEmpty())
             listConfig.add(new DataReceive(2, cardInfor.getF2()));
-        if (!cardInfor.getF14().isEmpty())
-            listConfig.add(new DataReceive(14, cardInfor.getF14()));
-        if (!cardInfor.getF23().isEmpty())
-            listConfig.add(new DataReceive(23, cardInfor.getF23()));
+//        if (!cardInfor.getF14().isEmpty())
+//            listConfig.add(new DataReceive(14, cardInfor.getF14()));
+//        if (!cardInfor.getF23().isEmpty())
+//            listConfig.add(new DataReceive(23, cardInfor.getF23()));
         if (!cardInfor.getF35().isEmpty())
             listConfig.add(new DataReceive(35, cardInfor.getF35()));
         if (!cardInfor.getF52().isEmpty())
@@ -63,7 +64,11 @@ public class MessageBatchTransaction extends ImplMessageService {
             }
         };
         Collections.sort(listConfig, compareById);
-        return CompletableFuture.completedFuture(this.sendMessage(listConfig));
+        return CompletableFuture.completedFuture(sendMessage(listConfig));
+    }
 
+    @Async
+    public CompletableFuture<String> get(int numberTransaction){
+        return CompletableFuture.completedFuture(getMessage(numberTransaction));
     }
 }
