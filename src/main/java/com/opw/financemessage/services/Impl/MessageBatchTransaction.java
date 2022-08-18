@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class MessageBatchTransaction extends ImplMessageBatchService {
 
-    @Async
+    @Async("sendTaskExecutor")
     public CompletableFuture<String> send(int transaction, String contentTransaction, CardInfor cardInfor) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray array = (JSONArray) parser.parse(contentTransaction);
@@ -67,7 +67,7 @@ public class MessageBatchTransaction extends ImplMessageBatchService {
         return CompletableFuture.completedFuture(sendMessage(listConfig));
     }
 
-    @Async
+    @Async("getTaskExecutor")
     public CompletableFuture<String> get(int numberTransaction){
         return CompletableFuture.completedFuture(getMessage(numberTransaction));
     }

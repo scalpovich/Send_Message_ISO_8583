@@ -30,19 +30,19 @@ public class SocketIO {
     private boolean connected = false;
 
 
-    public void connect(){
-        try {
-            JSONObject objSocket = getObjSocket();
-            this.ip =  (String)(objSocket.get("ip"));
-            this.port = (int)(long)objSocket.get("port");
-            this.socket = new Socket(ip, port);
-            this.connected = true;
-            this.output = new PrintWriter(socket.getOutputStream(), true);
-            this.input = new BufferedInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public void connect(){
+//        try {
+//            JSONObject objSocket = getObjSocket();
+//            this.ip =  (String)(objSocket.get("ip"));
+//            this.port = (int)(long)objSocket.get("port");
+//            this.socket = new Socket(ip, port);
+//            this.connected = true;
+//            this.output = new PrintWriter(socket.getOutputStream(), true);
+//            this.input = new BufferedInputStream(socket.getInputStream());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public SocketIO(){
         try {

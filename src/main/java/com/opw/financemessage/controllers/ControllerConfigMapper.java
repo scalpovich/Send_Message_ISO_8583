@@ -66,15 +66,15 @@ public class ControllerConfigMapper {
         socketIO.setConnected(false);
     }
 
-    @PostMapping("/switch")
-    public void postSwitch (@RequestBody boolean connect){
-        if (connect) {
-            socketIO.connect();
-            System.out.println("connected");
-        }
-        else {
-            System.out.println("disconnected");
-            socketIO.disConnect();
-        }
-    }
+//    @PostMapping("/switch")
+//    public void postSwitch (@RequestBody boolean connect){
+//        if (connect) {
+//            socketIO.connect();
+//            System.out.println("connected");
+//        }
+//        else {
+//            System.out.println("disconnected");
+//            socketIO.disConnect();
+//        }
+//    }
 }

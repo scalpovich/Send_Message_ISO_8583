@@ -74,7 +74,7 @@ public class ControllerSingleTransaction {
         return jsonResp;
     }
 
-    @PostMapping("/send")
+    @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> listElement) throws Exception {
         return messageSingleTransaction.send(listElement);
     }
