@@ -18,7 +18,7 @@ public class SystemParameters {
         File file = new File("SystemParameters.java");
         FileReader reader = null;
         try {
-            reader = new FileReader(file.getAbsoluteFile().getParent() + "\\src\\main\\resources\\SystemParameter.json");
+            reader = new FileReader(("src/main/resources/SystemParameter.json"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

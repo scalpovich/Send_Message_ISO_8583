@@ -1,7 +1,10 @@
 //package com.opw.financemessage.config;
 //
 //import com.opw.financemessage.factory.SystemParameters;
+//import com.opw.financemessage.models.DataReceive;
+//import com.opw.financemessage.services.Impl.ImplMessageService;
 //import com.opw.financemessage.socket.SocketIO;
+//import com.opw.financemessage.util.DataElementType;
 //import org.json.simple.JSONObject;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -11,6 +14,10 @@
 //import org.springframework.scheduling.annotation.Scheduled;
 //
 //import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.List;
+//import java.util.TimeZone;
 //import java.util.concurrent.CompletableFuture;
 //import java.util.concurrent.ExecutionException;
 //import java.util.concurrent.TimeUnit;
@@ -20,41 +27,46 @@
 //public class ScheduleConnectCheck {
 //    @Autowired
 //    private SocketIO socketIO;
+//    @Autowired
+//    private ImplMessageService implMessageService;
 //
 //    private int count = 0;
 //    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleConnectCheck.class);
-//    @Scheduled(fixedRate = 300000)
+//    @Scheduled(fixedRate = 5000)
 //    public void checkConnected() throws Exception {
-//        socketIO.sendMessage("0063080082200001000000000400000000000000121616150731000106970409301");
+////        socketIO.sendMessage("0063080082200001000000000400000000000000121616150731000106970409301");
+//        List<DataReceive> data = new ArrayList<DataReceive>();
+//        data.add(new DataReceive(0, "0800"));
+//        data.add(new DataReceive(7, DataElementType.DATE10.format(new Date(), TimeZone.getTimeZone("GMT"))));
+//        data.add(new DataReceive(11, "310001"));
+//        data.add(new DataReceive(32, "970409"));
+//        data.add(new DataReceive(70, "301"));
+//        String Field63 = DataElementType.DATE12.format(new Date(), TimeZone.getTimeZone("GMT"))
+//                + String.valueOf((int) (Math.random() * (9999 - 1000)) + 1000) ;
+//        data.add(new DataReceive(63, Field63));
+//        Field63 = implMessageService.sendMessage(data, Field63);
+//        String responseEchoMessage = implMessageService.getMessage(Field63, System.nanoTime());
 //
-//        CompletableFuture<String> completableFutureEchoMessage = CompletableFuture.completedFuture(socketIO.getMessage())
-//                .completeOnTimeout("null",5, TimeUnit.SECONDS);
-//
-//        String responseEchoMessage = completableFutureEchoMessage.get();
 //
 ////        LOGGER.info(responseEchoMessage);
-//        if(responseEchoMessage == "null" || responseEchoMessage == null || responseEchoMessage == "\uFFFF"){
+//        if(responseEchoMessage == "{\"message\" : \"Response code: %s %s\"}" ||
+//                responseEchoMessage == "null" ||
+//                responseEchoMessage == null ||
+//                responseEchoMessage == "\uFFFF"){
 //            count ++;
 //            System.out.println("Fail when send echo message");
 //        }
 //
-//        else
+//        else {
 //            count = 0;
+//            LOGGER.info("Everything is ok");
+//        }
 //
 //        SystemParameters parameters = new SystemParameters();
 ////        System.out.println((long)((JSONObject)parameters.getSystemParameters().get("connectCheck")).get("retryCount"));
-//        if(count == (int)(long)((JSONObject)parameters.getSystemParameters().get("connectCheck")).get("retryCount")){
+//        if(count >= (int)(long)((JSONObject)parameters.getSystemParameters().get("connectCheck")).get("retryCount")){
 //            LOGGER.info("Socket disconnect, trying to reconnect ...");
 //            socketIO.reconnect();
 //        }
-////        socketIO.sendMessage("02390200723C468128E0900016970409628135611101000000001000000007220324020000410324020722270627060210020006970400379704096281356111D300650010604015000002188090002610645064548434          NAPAS Bank             BNV           7047043CF1DC7C821E2BF2");
-////        String receiveMessage = socketIO.getMessage();
-////        LOGGER.info(receiveMessage);
-////        if(receiveMessage == null || receiveMessage.charAt(0)==0){
-////            socketIO = new SocketIO();
-////            LOGGER.info("Reconnect by Schedule task");
-////        }
-////        else
-////            LOGGER.info("Socket is connecting");
 //    }
 //}
