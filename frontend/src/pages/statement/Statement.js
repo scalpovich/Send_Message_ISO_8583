@@ -176,10 +176,10 @@ export default function Statement() {
                     />
                 ))}
 
-                <div style={{ textAlign: "left" }}>
+                {/* <div style={{ textAlign: "left" }}>
                     <h3>Update message</h3>
                     <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
-                </div>
+                </div> */}
 
                 <div>
                     <Button

@@ -106,11 +106,15 @@ public class ImplMessageService implements MessageService {
             for(int i=0; i<data.size(); i++){
                 mapData.put(data.get(i).getId(),data.get(i).getValue());
             }
+            if(mapData.containsKey(4)){
+                data.add(new DataReceive(5, mapData.get(4)));
+                mapData.put(5,mapData.get(4));
+            }
+            if(mapData.containsKey(49)){
+                data.add(new DataReceive(50, mapData.get(49)));
+                mapData.put(50,mapData.get(49));
+            }
 
-            data.add(new DataReceive(5, mapData.get(4)));
-            data.add(new DataReceive(50, mapData.get(49)));
-            mapData.put(5,mapData.get(4));
-            mapData.put(50,mapData.get(49));
 
             long id = transLogRepository.addTransLog(mapData);
             idStorage.put(filed63, id);

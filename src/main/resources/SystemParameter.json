@@ -15,6 +15,6 @@
     "queue": 100
   },
   "connectCheck": {
-    "retryCount": 300
+    "retryCount": 5
   }
 }
