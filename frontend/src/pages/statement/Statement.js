@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop} from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Container, CircularProgress, Backdrop } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import { mapField } from '../../components/Field';
@@ -15,7 +15,7 @@ export default function Statement() {
     var subErrorArray = []
     var subIsError = []
 
-    var messageUpdate = "";
+    // var messageUpdate = "";
 
     useEffect(() => {
         fetch("http://localhost:8080/statement/getfield", {
@@ -54,39 +54,39 @@ export default function Statement() {
             onlyBinaryKey(event)
     }
 
-    const updateMessage = (e) => {
+    // const updateMessage = (e) => {
 
-        let files = e.target.files;
-        let reader = new FileReader()
-        reader.readAsText(files[0])
+    //     let files = e.target.files;
+    //     let reader = new FileReader()
+    //     reader.readAsText(files[0])
 
-        reader.onload = (e) => {
-            if (e.target.result.length > 0) {
-                messageUpdate = e.target.result
-            }
-        }
-    }
+    //     reader.onload = (e) => {
+    //         if (e.target.result.length > 0) {
+    //             messageUpdate = e.target.result
+    //         }
+    //     }
+    // }
 
     const handleClick = (e) => {
         e.preventDefault()
 
-        if (messageUpdate.length > 0) {
-            setLoading(true)
-            let rawMessage = { id: -1 ,value: messageUpdate }
-            console.log(rawMessage)
-            fetch("http://localhost:8080/balance/postRawMessage", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(rawMessage)
-            }).then(res => res.json())
-                .then(
-                    (result) => {
-                        setLoading(false)
-                        setResponse(result.message)
-                        setOpen(true);
-                    })
-            return
-        }
+        // if (messageUpdate.length > 0) {
+        //     setLoading(true)
+        //     let rawMessage = { id: -1, value: messageUpdate }
+        //     console.log(rawMessage)
+        //     fetch("http://localhost:8080/balance/postRawMessage", {
+        //         method: "POST",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(rawMessage)
+        //     }).then(res => res.json())
+        //         .then(
+        //             (result) => {
+        //                 setLoading(false)
+        //                 setResponse(result.message)
+        //                 setOpen(true);
+        //             })
+        //     return
+        // }
 
         let isValid = true
 
@@ -130,21 +130,11 @@ export default function Statement() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
         }).then(res => res.json())
-            .then(res => ('http://localhost:8080/statement/get/' + res.message))
             .then(
                 (result) => {
-                    console.log(result)
-                    fetch(result, {
-                        method: "GET"
-                        // headers: { "Content-Type": "application/json" },
-                        // body: JSON.stringify(fieldValue)
-                    }).then(res => res.json())
-                    .then(
-                        (result) => {
-                            setLoading(false)
-                            setResponse(result.message)
-                            setOpen(true);
-                        })
+                    setLoading(false)
+                    setResponse(result.message)
+                    setOpen(true);
                 })
         fieldValue = [{ id: 0, value: "0200" }]
     }

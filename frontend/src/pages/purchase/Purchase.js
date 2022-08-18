@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
-  Container, TextField, Button, Box, Dialog, DialogActions, DialogTitle, CircularProgress, Backdrop} from '@mui/material';
+  Container, TextField, Button, Box, Dialog, DialogActions, DialogTitle, CircularProgress, Backdrop
+} from '@mui/material';
 import { mapField } from '../../components/Field';
 import { useState, useEffect } from 'react';
 
@@ -13,7 +14,7 @@ export default function Purchase() {
   const [loading, setLoading] = React.useState(false);
   var subErrorArray = []
   var subIsError = []
-  var messageUpdate = ""
+  // var messageUpdate = ""
 
   const [elements, setElements] = useState([])
   useEffect(() => {
@@ -51,39 +52,39 @@ export default function Purchase() {
       onlyBinaryKey(event)
   }
 
-  const updateMessage = (e) => {
+  // const updateMessage = (e) => {
 
-    let files = e.target.files;
-    let reader = new FileReader()
-    reader.readAsText(files[0])
+  //   let files = e.target.files;
+  //   let reader = new FileReader()
+  //   reader.readAsText(files[0])
 
-    reader.onload = (e) => {
-      if (e.target.result.length > 0) {
-        messageUpdate = e.target.result
-      }
-    }
-  }
+  //   reader.onload = (e) => {
+  //     if (e.target.result.length > 0) {
+  //       messageUpdate = e.target.result
+  //     }
+  //   }
+  // }
 
   const handleClick = (e) => {
     e.preventDefault()
 
-    if (messageUpdate.length > 0) {
-      setLoading(true)
-      let rawMessage = { id: -1, value: messageUpdate }
-      console.log(rawMessage)
-      fetch("http://localhost:8080/balance/postRawMessage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(rawMessage)
-      }).then(res => res.json())
-        .then(
-          (result) => {
-            setLoading(false)
-            setResponse(result.message)
-            setOpen(true);
-          })
-      return
-    }
+    // if (messageUpdate.length > 0) {
+    //   setLoading(true)
+    //   let rawMessage = { id: -1, value: messageUpdate }
+    //   console.log(rawMessage)
+    //   fetch("http://localhost:8080/balance/postRawMessage", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(rawMessage)
+    //   }).then(res => res.json())
+    //     .then(
+    //       (result) => {
+    //         setLoading(false)
+    //         setResponse(result.message)
+    //         setOpen(true);
+    //       })
+    //   return
+    // }
 
     let isValid = true
 
@@ -123,26 +124,16 @@ export default function Purchase() {
     console.log(console.log(fieldValue))
     setLoading(true)
     fetch("http://localhost:8080/purchase/post", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(fieldValue)
-        }).then(res => res.json())
-            .then(res => ('http://localhost:8080/purchase/get/' + res.message))
-            .then(
-                (result) => {
-                    console.log(result)
-                    fetch(result, {
-                        method: "GET"
-                        // headers: { "Content-Type": "application/json" },
-                        // body: JSON.stringify(fieldValue)
-                    }).then(res => res.json())
-                    .then(
-                        (result) => {
-                            setLoading(false)
-                            setResponse(result.message)
-                            setOpen(true);
-                        })
-                })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fieldValue)
+    }).then(res => res.json())
+      .then(
+        (result) => {
+          setLoading(false)
+          setResponse(result.message)
+          setOpen(true);
+        })
     fieldValue = [{ id: 0, value: "0200" }]
   }
 

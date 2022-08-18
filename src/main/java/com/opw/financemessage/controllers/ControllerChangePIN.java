@@ -25,8 +25,10 @@ public class ControllerChangePIN {
     }
 
     @PostMapping("/post")
-    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data){
-        return messageChangePINService.send(data);
+    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception{
+        String f63 = messageChangePINService.send(data).get();
+
+        return messageChangePINService.getMessageByField63(f63, System.nanoTime());
     }
     @GetMapping(path = "/get/{ID}")
     public CompletableFuture<String> getAllCoursesForStudent(

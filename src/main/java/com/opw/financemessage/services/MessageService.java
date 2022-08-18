@@ -6,8 +6,7 @@ import java.util.List;
 
 
 public interface MessageService {
-    String sendMessage(List<DataReceive> data);
-    public String sendMessageInImpMessageService(String messageSend) throws Exception;
+//    public String sendMessageInImpMessageService(String messageSend) throws Exception;
 
     String sendMessage(List<DataReceive> data, String filed63);
 

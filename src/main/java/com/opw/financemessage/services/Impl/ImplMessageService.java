@@ -54,53 +54,15 @@ public class ImplMessageService implements MessageService {
     private static Map<String, Long> idStorage = new HashMap<String, Long>();
 
     @Override
-    public String sendMessage(List<DataReceive> data) {
-        try {
-            if (!socketIO.getConnected() || socketIO.isSocketChange()){
-                System.out.println(socketIO.getConnected());
-                return "{\"message\" : \"You have not connected\"}";
-            }
-            int recentNumb = count++;
-            LOGGER.info("Processing request {}", recentNumb);
-            Thread.sleep(5000);
-            MessageISO messageISO = dto.dataToMessage(data);
-            processor.getInstance(mapperDataElement);
-
-            String messageSend = processor.buildMessage(messageISO);
-            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
-
-//            SocketIO socketIO = new SocketIO();
-
-            socketIO.sendMessage(messageSend);
-            String messageReceiv = socketIO.getMessage();
-
-            LOGGER.info("Message response " + recentNumb + ": " +  messageReceiv);
-
-            if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
-                socketIO = new SocketIO();
-                LOGGER.info("Reconnect");
-                return "{\"message\" : \"Something wrong, please check your form and try again\"}";
-            }
-
-            MessageISO temp = processor.parsMessage(messageReceiv);
-            String readResponseCode = temp.getDataElementContent().get(39);
-
-            return String.format("{\"message\" : \"Response code: %s %s\"}", readResponseCode, readRespondCode.read(readResponseCode));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public String sendMessage(List<DataReceive> data, String filed63) {
         try {
-            if (!socketIO.getConnected() || socketIO.isSocketChange()){
+            if (!socketIO.getConnected() /*|| socketIO.isSocketChange()*/){
                 System.out.println(socketIO.getConnected());
                 return "{\"message\" : \"You have not connected\"}";
             }
             int recentNumb = count++;
-            LOGGER.info("Processing request {}", recentNumb);
+            LOGGER.info("Processing request {}", filed63);
+
 
             Map<Integer, String> mapData = new HashMap<Integer, String>();
             for(int i=0; i<data.size(); i++){
@@ -119,19 +81,17 @@ public class ImplMessageService implements MessageService {
             long id = transLogRepository.addTransLog(mapData);
             idStorage.put(filed63, id);
 
-//            Thread.sleep(10000);
+//            Thread.sleep(5000);
             MessageISO messageISO = dto.dataToMessage(data);
             processor.getInstance(mapperDataElement);
 
             String messageSend = processor.buildMessage(messageISO);
 
             onlineLogRepository.addOnlineLog(filed63,true, mapData.get(0), messageSend, null);
-            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
+//            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
             socketIO.sendMessage(messageSend);
 
-
-
-            return String.format("{\"message\" : \"%s\"}", filed63);
+            return String.format(filed63);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,6 +101,11 @@ public class ImplMessageService implements MessageService {
 
     public  String getMessage(String field63, long startTime){
         LOGGER.info(field63);
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         SystemParameters parameters = new SystemParameters();
         long timeOut = (long)(parameters.getSystemParameters().get("timeoutMessage")) * (long)Math.pow(10,9);
         while (!rcStorage.containsKey(field63)){
@@ -155,10 +120,17 @@ public class ImplMessageService implements MessageService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void getMessageAuto() throws Exception {
-        while(socketIO.getConnected()){
+//        socketIO.sendMessage("027302007A3C468128E0D00216970409628135611101000000001000000000001000000008180641020000410641020818270627060210020006970400379704096281356111D300650010604015000002188090002610645064548434          NAPAS Bank             BNV           7047047043CF1DC7C821E2BF20162208180641024210");
+//        socketIO.sendMessage("027302007A3C468128E0D00216970409628135611101000000001000000000001000000008180641020000410641020818270627060210020006970400379704096281356111D300650010604015000002188090002610645064548434          NAPAS Bank             BNV           7047047043CF1DC7C821E2BF20162208180641024210");
+//        LOGGER.info(socketIO.getMessage());
+//        System.out.println("What's the heck?");
+//        LOGGER.info(socketIO.getMessage());
+//        System.out.println("\n");
+        while(true){
 //            System.out.println("Hello");
             String messageReceive = socketIO.getMessage();
             LOGGER.info(messageReceive);
+//            System.out.println(messageReceive);
             processor.getInstance(mapperDataElement);
 
             if (messageReceive == null || messageReceive.charAt(0) == 0) {
@@ -169,6 +141,7 @@ public class ImplMessageService implements MessageService {
 
             MessageISO temp = processor.parsMessage(messageReceive);
             String f63 = temp.getDataElementContent().get(63);
+//            LOGGER.info(f63);
             String f39 = temp.getDataElementContent().get(39);
             onlineLogRepository.addOnlineLog(f63,false, temp.getDataElementContent().get(0), messageReceive, f39);
             rcStorage.put(f63 , f39);
@@ -182,38 +155,75 @@ public class ImplMessageService implements MessageService {
             }
 //            Set<String> set = rcStorage.keySet();
 //            for (String key : set) {
-//                System.out.println(key + " lua " + temporaryStorage.get(key));
+//                System.out.println(key + " lua " + rcStorage.get(key));
 //            }
 //            System.out.println(temp.getDataElementContent().get(63) + "--" + temp.getDataElementContent().get(39));
         }
 
     }
-    @Override
-    public String sendMessageInImpMessageService(String messageSend) throws Exception {
+//    @Override
+//    public String sendMessageInImpMessageService(String messageSend) throws Exception {
+//
+//        int recentNumb = count++;
+//        LOGGER.info("Processing request {}", recentNumb);
+////        Thread.sleep(2000);
+//        processor.getInstance(mapperDataElement);
+//        LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
+//
+////        SocketIO socketIO = new SocketIO();
+//        socketIO.sendMessage(messageSend);
+//        String messageReceiv = socketIO.getMessage();
+//
+//        LOGGER.info("Message response " + recentNumb + ": " +  messageReceiv);
+//
+//        if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
+//            socketIO.reconnect();
+//            LOGGER.info("Reconnect");
+//            return "{\"message\" : \"Something wrong, please check your form and try again\"}";
+//        }
+//
+//        MessageISO temp = processor.parsMessage(messageReceiv);
+//        String readResponseCode = temp.getDataElementContent().get(39);
+//
+//        return String.format("Response code: %s %s", readResponseCode, readRespondCode.read(readResponseCode));
+//    }
 
-        int recentNumb = count++;
-        LOGGER.info("Processing request {}", recentNumb);
-//        Thread.sleep(2000);
-        processor.getInstance(mapperDataElement);
-        LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
-
-//        SocketIO socketIO = new SocketIO();
-        socketIO.sendMessage(messageSend);
-        String messageReceiv = socketIO.getMessage();
-
-        LOGGER.info("Message response " + recentNumb + ": " +  messageReceiv);
-
-        if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
-            socketIO.reconnect();
-            LOGGER.info("Reconnect");
-            return "{\"message\" : \"Something wrong, please check your form and try again\"}";
-        }
-
-        MessageISO temp = processor.parsMessage(messageReceiv);
-        String readResponseCode = temp.getDataElementContent().get(39);
-
-        return String.format("Response code: %s %s", readResponseCode, readRespondCode.read(readResponseCode));
-    }
-
-
+    //    @Override
+//    public String sendMessage(List<DataReceive> data) {
+//        try {
+//            if (!socketIO.getConnected() || socketIO.isSocketChange()){
+//                System.out.println(socketIO.getConnected());
+//                return "{\"message\" : \"You have not connected\"}";
+//            }
+//            int recentNumb = count++;
+//            LOGGER.info("Processing request {}", recentNumb);
+//            Thread.sleep(5000);
+//            MessageISO messageISO = dto.dataToMessage(data);
+//            processor.getInstance(mapperDataElement);
+//
+//            String messageSend = processor.buildMessage(messageISO);
+//            LOGGER.info("Message receive " + recentNumb + ": " +  messageSend);
+//
+////            SocketIO socketIO = new SocketIO();
+//
+//            socketIO.sendMessage(messageSend);
+//            String messageReceiv = socketIO.getMessage();
+//
+//            LOGGER.info("Message response " + recentNumb + ": " +  messageReceiv);
+//
+//            if (messageReceiv == null || messageReceiv.charAt(0) == 0) {
+//                socketIO = new SocketIO();
+//                LOGGER.info("Reconnect");
+//                return "{\"message\" : \"Something wrong, please check your form and try again\"}";
+//            }
+//
+//            MessageISO temp = processor.parsMessage(messageReceiv);
+//            String readResponseCode = temp.getDataElementContent().get(39);
+//
+//            return String.format("{\"message\" : \"Response code: %s %s\"}", readResponseCode, readRespondCode.read(readResponseCode));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

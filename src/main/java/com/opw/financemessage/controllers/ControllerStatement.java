@@ -33,8 +33,9 @@ public class ControllerStatement {
 
     @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
-//       LOGGER.info("Processing request hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-        return messageBalanceService.send(data).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
+        String f63 = messageBalanceService.send(data).get();
+
+        return messageBalanceService.getMessageByField63(f63, System.nanoTime());
     }
 
     @GetMapping(path = "/get/{ID}")

@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MessageBatchTransaction extends ImplMessageBatchService {
+public class MessageBatchTransaction extends ImplMessageService {
 
     @Async("sendTaskExecutor")
     public CompletableFuture<String> send(int transaction, String contentTransaction, CardInfor cardInfor) throws Exception {
@@ -56,6 +56,11 @@ public class MessageBatchTransaction extends ImplMessageBatchService {
 //                listConfig.add(new DataReceive(102,cardInfor.getF102()));
         if (!cardInfor.getF105().isEmpty() && transaction == 5)
             listConfig.add(new DataReceive(105, cardInfor.getF105()));
+        String Field63 = DataElementType.DATE12.format(date, TimeZone.getTimeZone("GMT"))
+                + String.valueOf((int) (Math.random() * (9999 - 1000)) + 1000) ;
+//        System.out.println();
+//        System.out.println(Field63);
+        listConfig.add(new DataReceive(63, Field63));
 
         Comparator<DataReceive> compareById = new Comparator<DataReceive>() {
             @Override
@@ -64,11 +69,15 @@ public class MessageBatchTransaction extends ImplMessageBatchService {
             }
         };
         Collections.sort(listConfig, compareById);
-        return CompletableFuture.completedFuture(sendMessage(listConfig));
+        return CompletableFuture.completedFuture(sendMessage(listConfig, Field63));
     }
 
+//    @Async("getTaskExecutor")
+//    public CompletableFuture<String> get(int numberTransaction){
+//        return CompletableFuture.completedFuture(getMessage(numberTransaction));
+//    }
     @Async("getTaskExecutor")
-    public CompletableFuture<String> get(int numberTransaction){
-        return CompletableFuture.completedFuture(getMessage(numberTransaction));
+    public CompletableFuture<String> getMessageByField63(String field63, long startTime) {
+        return CompletableFuture.completedFuture(this.getMessage(field63, startTime));
     }
 }

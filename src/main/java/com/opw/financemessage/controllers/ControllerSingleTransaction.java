@@ -76,7 +76,9 @@ public class ControllerSingleTransaction {
 
     @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> listElement) throws Exception {
-        return messageSingleTransaction.send(listElement);
+        String f63 = messageSingleTransaction.send(listElement).get();
+
+        return messageSingleTransaction.getMessageByField63(f63, System.nanoTime());
     }
     @GetMapping(path = "/get/{ID}")
     public CompletableFuture<String> getAllCoursesForStudent(
