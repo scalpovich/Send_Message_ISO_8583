@@ -26,8 +26,10 @@ public class ControllerTransfer {
     }
 
     @PostMapping("/post")
-    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data){
-        return messageTransferService.send(data);
+    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception{
+        String f63 = messageTransferService.send(data).get();
+
+        return messageTransferService.getMessageByField63(f63, System.nanoTime());
     }
 
     @GetMapping(path = "/get/{ID}")

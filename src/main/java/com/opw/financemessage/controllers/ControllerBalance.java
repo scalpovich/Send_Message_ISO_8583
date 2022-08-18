@@ -23,18 +23,20 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/balance")
 @CrossOrigin
 public class ControllerBalance {
-
+    @Autowired
     private MessageBalanceService messageBalanceService;
 //    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerBalance.class);
-    @Autowired
-    public ControllerBalance (MessageBalanceService messageBalanceService){
-        this.messageBalanceService = messageBalanceService;
-    }
+//    @Autowired
+//    public ControllerBalance (MessageBalanceService messageBalanceService){
+//        this.messageBalanceService = messageBalanceService;
+//    }
 
    @PostMapping("/post")
     public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception {
 //       LOGGER.info("Processing request hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-       return messageBalanceService.send(data).completeOnTimeout("{\"message\" : \"Time out\"}",5, TimeUnit.SECONDS);
+       String f63 = messageBalanceService.send(data).get();
+
+       return messageBalanceService.getMessageByField63(f63, System.nanoTime());
     }
     @GetMapping(path = "/get/{ID}")
     public CompletableFuture<String> getAllCoursesForStudent(

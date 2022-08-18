@@ -12,21 +12,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/withdraw")
 @CrossOrigin
 public class ControllerWithdraw {
-
+    @Autowired
     private MessageWithdrawService messageWithdrawService;
 
-    @Autowired
-    public ControllerWithdraw(MessageWithdrawService messageWithdrawService) {
-        this.messageWithdrawService = messageWithdrawService;
-    }
+//    @Autowired
+//    public ControllerWithdraw(MessageWithdrawService messageWithdrawService) {
+//        this.messageWithdrawService = messageWithdrawService;
+//    }
 
     @PostMapping("/post")
-    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) {
+    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception{
 //        long startTime = System.nanoTime();
 //        try {
 //            Thread.sleep(10000);
@@ -35,7 +36,10 @@ public class ControllerWithdraw {
 //        }
 //        long stopTime = System.nanoTime();
 //        System.out.println(stopTime - startTime);
-        return messageWithdrawService.send(data);
+
+        String f63 = messageWithdrawService.send(data).get();
+
+        return messageWithdrawService.getMessageByField63(f63, System.nanoTime());
     }
 
     @GetMapping(path = "/get/{ID}")
