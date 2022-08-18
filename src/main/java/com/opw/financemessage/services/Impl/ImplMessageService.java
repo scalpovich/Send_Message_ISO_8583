@@ -148,12 +148,13 @@ public class ImplMessageService implements MessageService {
 
         return String.format("{\"message\" : \"Response code: %s %s\"}", readResponseCode, readRespondCode.read(readResponseCode));
     }
+
     @EventListener(ApplicationReadyEvent.class)
     public void getMessageAuto() throws Exception {
-        while(true){
+        while(socketIO.getConnected()){
 //            System.out.println("Hello");
             String messageReceive = socketIO.getMessage();
-//            LOGGER.info(messageReceive);
+            LOGGER.info(messageReceive);
             processor.getInstance(mapperDataElement);
 
             if (messageReceive == null || messageReceive.charAt(0) == 0) {

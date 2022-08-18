@@ -16,6 +16,7 @@ export default function BatchTransaction() {
     let value = "";
     const handleChange = (event) => {
         value = event.target.value;
+        console.log(value);
         setTransaction(value);
         fetch('http://localhost:8080/batchmessage/gettransaction',{
             method: "POST",
