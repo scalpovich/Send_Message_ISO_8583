@@ -69,7 +69,6 @@ public class SocketIO {
         try {
 //            LOGGER.info("Send message");
             if (socket.isConnected()) {
-
                 output.print(message);
                 output.flush();
             } else {
@@ -80,24 +79,20 @@ public class SocketIO {
             closeElements(socket, input, output);
         }
     }
-
     public String getMessage() {
-
-        StringBuilder respond = new StringBuilder();
         try {
-            int i ;
-            do{
-                i = input.read();
-                respond.append((char) i);
-            }while (input.available() !=0);
+            String respond = "";
+            byte[] lent = new byte[4];
+            input.read(lent);
+            String lengt = new String(lent);
+            byte[] message = new byte[Integer.parseInt(lengt)];
+            input.read(message);
+            String messageContent = new String(message);
+            respond = lengt + messageContent;
+            return respond;
         } catch (IOException e) {
-            closeElements(socket, input, output);
-            throw new RuntimeException(e);
-        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        LOGGER.info(Thread.currentThread().getName());
-        return respond.toString();
     }
 
     public void closeElements(Socket socket, BufferedInputStream input, PrintWriter output) {
