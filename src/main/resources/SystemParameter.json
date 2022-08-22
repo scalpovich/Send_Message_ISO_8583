@@ -1,20 +1,23 @@
 {
   "timeoutMessage": 10,
+  "socket": {
+      "name": "Way4",
+      "id": "970409",
+      "port": 40007,
+      "ip": "10.145.48.94"
+    }
+  ,
   "sendThread": {
-    "maxThread": 10,
+    "maxThread": 100,
     "coreThread": 2,
-    "queue": 1000
+    "queue": 10000
   },
   "getThread": {
-    "maxThread": 10,
+    "maxThread": 100,
     "coreThread": 2,
-    "queue": 1000
-  },
-  "socket": {
-    "port": 40007,
-    "ip": "10.145.48.94"
+    "queue": 10000
   },
   "connectCheck": {
-    "retryCount": 300
+    "retryCount": 5
   }
 }
