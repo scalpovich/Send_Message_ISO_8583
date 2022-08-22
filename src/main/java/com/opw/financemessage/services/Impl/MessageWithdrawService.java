@@ -19,8 +19,8 @@ public class MessageWithdrawService extends ImplMessageService {
         data.add(new DataReceive(13, DataElementType.DATE4.format(date,TimeZone.getTimeZone("GMT"))));
         String Field63 = DataElementType.DATE12.format(date, TimeZone.getTimeZone("GMT"))
                 + String.valueOf((int) (Math.random() * (9999 - 1000)) + 1000) ;
-        System.out.println();
-        System.out.println(Field63);
+//        System.out.println();
+//        System.out.println(Field63);
         data.add(new DataReceive(63, Field63));
 
         Comparator<DataReceive> compareById = new Comparator<DataReceive>() {

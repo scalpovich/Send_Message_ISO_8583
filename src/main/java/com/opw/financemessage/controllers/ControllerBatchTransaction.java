@@ -62,8 +62,16 @@ public class ControllerBatchTransaction {
             response.add(messageBatchTransaction.send(transaction,contentTransaction,cardInfor));
         }
 //        Thread.sleep(3000);
+        // Cai nay de get field 63
+        List<String> f63List = new ArrayList<>();
+        for (int i = 0; i < numberTransaction ; i++){
+            f63List.add(response.get(i).get());
+        }
+        System.out.println("-------------------------\n"+ f63List.size()+ "\n--------------------------------");
+        for (int i = 0; i < numberTransaction ; i++){
+            messageBatchTransaction.getMessageByField63(f63List.get(i), System.nanoTime());
+        }
 
-//        messageBatchTransaction.get(numberTransaction);
 
 //        messageBatchTransaction.get(numberTransaction);
         if (response.size() == numberTransaction){
@@ -73,6 +81,8 @@ public class ControllerBatchTransaction {
 //        CompletableFuture.allOf(res).join();
         return "{\"message\" : \"false\"}";
     }
+
+
 
     @PostMapping("/gettransaction")
     public JSONArray getTransaction(@RequestBody int transaction) throws Exception {

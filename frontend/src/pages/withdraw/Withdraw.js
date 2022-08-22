@@ -15,8 +15,8 @@ export default function Withdraw() {
     var subErrorArray = []
     var subIsError = []
 
-    var messageUpdate = "";
-    var files
+    // var messageUpdate = "";
+    // var files
 
     const [elements, setElements] = useState([])
     useEffect(() => {
@@ -53,18 +53,18 @@ export default function Withdraw() {
             onlyBinaryKey(event)
     }
 
-    const updateMessage = (e) => {
+    // const updateMessage = (e) => {
 
-        files = e.target.files[0];
-        let reader = new FileReader()
-        reader.readAsText(files)
+    //     files = e.target.files[0];
+    //     let reader = new FileReader()
+    //     reader.readAsText(files)
 
-        reader.onload = (e) => {
-            if (e.target.result.length > 0) {
-                messageUpdate = e.target.result
-            }
-        }
-    }
+    //     reader.onload = (e) => {
+    //         if (e.target.result.length > 0) {
+    //             messageUpdate = e.target.result
+    //         }
+    //     }
+    // }
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -84,26 +84,26 @@ export default function Withdraw() {
         // //         })
 
 
-        if (messageUpdate.length > 0) {
-            console.log(messageUpdate);
-            const formData = new FormData();
-            formData.append("file", files)
-            setLoading(true)
-            let rawMessage = { id: -1, value: messageUpdate }
-            console.log(rawMessage)
-            fetch("http://localhost:8080/file", {
-                method: "POST",
-                // headers: { "Content-Type": "multipart/form-data" },
-                body: /*JSON.stringify(rawMessage)*/ formData
-            }).then(res => res.json())
-                .then(
-                    (result) => {
-                        setLoading(false)
-                        setResponse(result.message)
-                        setOpen(true);
-                    })
-            return
-        }
+        // if (messageUpdate.length > 0) {
+        //     console.log(messageUpdate);
+        //     const formData = new FormData();
+        //     formData.append("file", files)
+        //     setLoading(true)
+        //     let rawMessage = { id: -1, value: messageUpdate }
+        //     console.log(rawMessage)
+        //     fetch("http://localhost:8080/file", {
+        //         method: "POST",
+        //         // headers: { "Content-Type": "multipart/form-data" },
+        //         body: /*JSON.stringify(rawMessage)*/ formData
+        //     }).then(res => res.json())
+        //         .then(
+        //             (result) => {
+        //                 setLoading(false)
+        //                 setResponse(result.message)
+        //                 setOpen(true);
+        //             })
+        //     return
+        // }
 
         let isValid = true
 
@@ -167,24 +167,12 @@ export default function Withdraw() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fieldValue)
         }).then(res => res.json())
-            .then(res => ('http://localhost:8080/withdraw/get/' + res.message))
             .then(
                 (result) => {
-                    console.log(result)
-                    fetch(result, {
-                        method: "GET"
-                        // headers: { "Content-Type": "application/json" },
-                        // body: JSON.stringify(fieldValue)
-                    }).then(res => res.json())
-                    .then(
-                        (result) => {
-                            setLoading(false)
-                            setResponse(result.message)
-                            setOpen(true);
-                        })
+                    setLoading(false)
+                    setResponse(result.message)
+                    setOpen(true);
                 })
-            
-
 
         fieldValue = [{ id: 0, value: "0200" }]
     }
@@ -223,10 +211,10 @@ export default function Withdraw() {
                     }
                 </Grid>
 
-                <div style={{ textAlign: "left" }}>
+                {/* <div style={{ textAlign: "left" }}>
                     <h3>Update message</h3>
                     <input type="file" name="message" accept="txt" onChange={(e) => updateMessage(e)} />
-                </div>
+                </div> */}
 
                 <div>
                     <Button

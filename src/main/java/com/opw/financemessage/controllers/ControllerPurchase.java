@@ -24,8 +24,10 @@ public class ControllerPurchase {
         this.messagePurchaseService = messagePurchaseService;
     }
     @PostMapping("/post")
-    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data){
-        return messagePurchaseService.send(data);
+    public CompletableFuture<String> sendMessage(@RequestBody List<DataReceive> data) throws Exception{
+        String f63 = messagePurchaseService.send(data).get();
+
+        return messagePurchaseService.getMessageByField63(f63, System.nanoTime());
     }
     @GetMapping(path = "/get/{ID}")
     public CompletableFuture<String> getAllCoursesForStudent(

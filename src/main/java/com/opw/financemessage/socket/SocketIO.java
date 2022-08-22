@@ -17,6 +17,8 @@ import org.springframework.ui.context.Theme;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class SocketIO {
@@ -25,6 +27,7 @@ public class SocketIO {
     private PrintWriter output;
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
     private SystemParameters parameters = new SystemParameters();
+    private Map<String,Socket> mapSocket = new HashMap<String,Socket>();
     private String ip;
     private int port;
     private boolean connected = false;
@@ -92,27 +95,6 @@ public class SocketIO {
         }
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void getMessageAuto() {
-//        while(true){
-//            StringBuilder respond = new StringBuilder();
-//            try {
-//                int i ;
-//                do{
-//                    i = input.read();
-//                    respond.append((char) i);
-//                }while (input.available() !=0);
-//            } catch (IOException e) {
-//                closeElements(socket, input, output);
-//                throw new RuntimeException(e);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        }
-//
-//    }
-
     public void closeElements(Socket socket, BufferedInputStream input, PrintWriter output) {
         try {
             if (socket != null)
@@ -177,6 +159,21 @@ public class SocketIO {
             throw new RuntimeException(e);
         }
     }
+
+//    public void buildMapSocket(){
+//        JSONObject obj = getObjSocket();
+//        JSONArray arrIssuer = (JSONArray) obj;
+//        arrIssuer.forEach(i -> {
+//            String id = (String) ((JSONObject) i).get("id");
+//            int port = (int)(long) ((JSONObject) i).get("port");
+//            String ip = (String) ((JSONObject) i).get("ip");
+//            try {
+//                mapSocket.put(id,new Socket(ip, port));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//    }
     public Socket getSocket() {
         return socket;
     }
