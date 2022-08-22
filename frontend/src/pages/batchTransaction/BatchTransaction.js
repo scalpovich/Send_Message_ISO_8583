@@ -32,7 +32,8 @@ export default function BatchTransaction() {
     };
 
     let data =[]
-    const handleBatchTransaction = () => {
+    const handleBatchTransaction = (e) => {
+        e.preventDefault();
         console.log(transaction);
         if (document.getElementById('number-of-transaction').value.toString() !== "" && transaction !== "") {
             data.push({id: 0, value: document.getElementById("number-of-transaction").value.toString()});
@@ -46,7 +47,8 @@ export default function BatchTransaction() {
             }).then(res => res.json())
                 .then(
                     (result) => {
-                        setResponse(result)
+                        console.log(result)
+                        setResponse(result.message)
                         setOpen(true)
                     })
             data = [];
@@ -61,7 +63,7 @@ export default function BatchTransaction() {
                         <Typography gutterBottom variant="h5">
                             Batch Transaction
                         </Typography>
-                        <form>
+
                             <Grid container spacing={5}>
                                 <Grid item xs={12}>
                                     <TextField id = "number-of-transaction"
@@ -109,7 +111,7 @@ export default function BatchTransaction() {
                                                />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Button type="submit"
+                                    <Button
                                             variant="contained"
                                             color="primary"
                                             fullWidth
@@ -117,7 +119,7 @@ export default function BatchTransaction() {
                                     >Submit</Button>
                                 </Grid>
                             </Grid>
-                        </form>
+
                     </CardContent>
                 </Card>
             </Grid>

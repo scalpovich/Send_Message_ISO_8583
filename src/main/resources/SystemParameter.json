@@ -1,18 +1,18 @@
 {
   "timeoutMessage": 10,
-  "socket": {
-    "port": 40007,
-    "ip": "10.145.48.94"
-  },
   "sendThread": {
     "maxThread": 10,
     "coreThread": 2,
-    "queue": 100
+    "queue": 1000
   },
   "getThread": {
     "maxThread": 10,
     "coreThread": 2,
-    "queue": 100
+    "queue": 1000
+  },
+  "socket": {
+    "port": 40007,
+    "ip": "10.145.48.94"
   },
   "connectCheck": {
     "retryCount": 300

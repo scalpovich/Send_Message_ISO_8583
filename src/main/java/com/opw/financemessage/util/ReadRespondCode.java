@@ -12,7 +12,7 @@ public class ReadRespondCode {
                 case "01":
                     return "Chủ thẻ nên liên hệ với Ngân hàng phát hành thẻ";
                 case "03":
-                    return "Mã đại lý không hợp lê";
+                    return "Mã đại lý không hợp lệ";
                 case "04":
                     return "Thẻ của bạn đã bị thu hồi";
                 case "05":
@@ -48,7 +48,7 @@ public class ReadRespondCode {
                 case "55":
                     return "Sai PIN/TOP";
                 case "57":
-                    return "thẻ không thể thực hiện giao dịch này";
+                    return "Thẻ không thể thực hiện giao dịch này";
                 case "58":
                     return "Ngân hàng phát hành không cho phép thẻ này được thực hiện tại thiết bị hiện tại";
                 case "59":

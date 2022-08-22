@@ -53,7 +53,6 @@ public class Processor {
                 currentPosition += de.getLength();
             }
             if (de.getLengthType().equals("VARIABLE")){
-
                 int length = Integer.parseInt(message.substring(currentPosition, currentPosition+de.getPrefixLength()));
                 currentPosition += de.getPrefixLength();
                 String data = message.substring(currentPosition, currentPosition+length);
@@ -78,6 +77,10 @@ public class Processor {
             }
             DataElement de = map.getDataElement().get(i);
             if(de.getLengthType().equals("FIXED")){
+                if (i == 4 || i == 5 || i == 6){
+                    builder.append(DataElementLength.FIXED.processAmount(messageISO.getDataElementContent().get(i),de.getLength()));
+                    continue;
+                }
                 builder.append(messageISO.getDataElementContent().get(i));
             }
             if(de.getLengthType().equals("VARIABLE")){

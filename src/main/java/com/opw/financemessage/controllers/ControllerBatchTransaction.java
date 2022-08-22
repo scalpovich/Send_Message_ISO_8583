@@ -63,7 +63,7 @@ public class ControllerBatchTransaction {
         }
 //        Thread.sleep(3000);
 
-        messageBatchTransaction.get(numberTransaction);
+//        messageBatchTransaction.get(numberTransaction);
 
 //        messageBatchTransaction.get(numberTransaction);
         if (response.size() == numberTransaction){
