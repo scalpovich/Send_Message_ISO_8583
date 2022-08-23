@@ -4,6 +4,7 @@ import com.opw.financemessage.factory.SystemParameters;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,15 +17,16 @@ import java.util.concurrent.Executor;
 public class AsyncConfigurationSend {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncConfigurationSend.class);
+    @Autowired
+    private SystemParameters parameters;
 
     @Bean(name = "sendTaskExecutor")
     public Executor taskExecutor() {
         LOGGER.debug("Creating Async Task Executor");
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        SystemParameters parameters = new SystemParameters();
-        int coreThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("coreThread");
-        int maxThread = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("maxThread");
-        int queue = (int)(long)((JSONObject)parameters.getSystemParameters().get("sendThread")).get("queue");
+        int coreThread = parameters.getCoreSendThread();
+        int maxThread = parameters.getMaxSendThread();
+        int queue = parameters.getQueueSendThread();
         executor.setCorePoolSize(coreThread);
         executor.setMaxPoolSize(maxThread);
         executor.setQueueCapacity(queue);
