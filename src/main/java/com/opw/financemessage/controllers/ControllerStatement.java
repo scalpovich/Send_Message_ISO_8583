@@ -49,7 +49,7 @@ public class ControllerStatement {
     public JSONArray getField() throws Exception {
         JSONParser jsonParser = new JSONParser();
 //        System.out.println(file.getAbsoluteFile().getParent());
-        FileReader reader = new FileReader("src/main/resources/transactionField/Statement.json");
+        FileReader reader = new FileReader("src/main/resources/transactionField/StatementField.json");
         Object obj = jsonParser.parse(reader);
         JSONArray fieldList = (JSONArray) obj;
 //        System.out.println(fieldList);
@@ -61,13 +61,9 @@ public class ControllerStatement {
 //        fieldList = fieldList.substring(1, fieldList.length()-1).replace("\\", "");
         System.out.println(fieldList);
 
-        FileWriter writer = new FileWriter("src/main/resources/transactionField/Statement.json");
+        FileWriter writer = new FileWriter("src/main/resources/transactionField/StatementField.json");
         writer.write(fieldList);
         writer.flush();
     }
 
-//    @PostMapping("/postRawMessage")
-//    public String sendMessage(@RequestBody DataReceive data) {
-//        return messageBalanceService.sendRawMessage(data.getValue());
-//    }
 }

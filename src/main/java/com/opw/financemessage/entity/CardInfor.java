@@ -15,6 +15,7 @@ public class CardInfor {
     private String F52;
     private String F102;
     private String F105;
+    private String F103;
     private String card_note;
 
     public Long getId() {
@@ -79,6 +80,14 @@ public class CardInfor {
 
     public void setF102(String f102) {
         F102 = f102;
+    }
+
+    public String getF103() {
+        return F103;
+    }
+
+    public void setF103(String f103) {
+        F103 = f103;
     }
 
     public String getCard_note() {
