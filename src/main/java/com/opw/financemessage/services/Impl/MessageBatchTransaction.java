@@ -54,6 +54,8 @@ public class MessageBatchTransaction extends ImplMessageService {
             listConfig.add(new DataReceive(52, cardInfor.getF52()));
 //            if(!cardInfor.getF102().isEmpty())
 //                listConfig.add(new DataReceive(102,cardInfor.getF102()));
+        if (!cardInfor.getF103().isEmpty() && transaction == 4)
+            listConfig.add(new DataReceive(103, cardInfor.getF103()));
         if (!cardInfor.getF105().isEmpty() && transaction == 5)
             listConfig.add(new DataReceive(105, cardInfor.getF105()));
         String Field63 = DataElementType.DATE12.format(date, TimeZone.getTimeZone("GMT"))

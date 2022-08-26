@@ -63,7 +63,6 @@ public class ImplMessageService implements MessageService {
             int recentNumb = count++;
             LOGGER.info("Processing request {}", filed63);
 
-
             Map<Integer, String> mapData = new HashMap<Integer, String>();
             for(int i=0; i<data.size(); i++){
                 mapData.put(data.get(i).getId(),data.get(i).getValue());
@@ -76,7 +75,6 @@ public class ImplMessageService implements MessageService {
                 data.add(new DataReceive(50, mapData.get(49)));
                 mapData.put(50,mapData.get(49));
             }
-
 
             long id = transLogRepository.addTransLog(mapData);
             idStorage.put(filed63, id);
