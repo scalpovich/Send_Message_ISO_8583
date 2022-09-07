@@ -1,36 +1,30 @@
 package com.opw.financemessage.socket;
 
-import com.opw.financemessage.factory.SystemParameters;
-import com.opw.financemessage.services.Impl.ImplMessageService;
-import org.apache.tomcat.jni.Time;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.opw.financemessage.entity.MessageEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.context.Theme;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
-@Component
+@EnableScheduling
 public class SocketIO {
     private Socket socket;
     private BufferedInputStream input;
     private PrintWriter output;
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketIO.class);
-    private SystemParameters parameters = new SystemParameters();
-    private Map<String,Socket> mapSocket = new HashMap<String,Socket>();
+
+    private String id;
     private String ip;
     private int port;
     private boolean connected = false;
+
+    private MessageEntity messageEntity = new MessageEntity();
 
 
 //    public void connect(){
@@ -47,11 +41,11 @@ public class SocketIO {
 //        }
 //    }
 
-    public SocketIO(){
+    public SocketIO(String id, String ip, int port ){
         try {
-            JSONObject objSocket = getObjSocket();
-            this.ip =  (String)(objSocket.get("ip"));
-            this.port = (int)(long)objSocket.get("port");
+            this.id = id;
+            this.ip =  ip;
+            this.port = port;
             this.socket = new Socket(ip, port);
             this.connected = true;
             this.output = new PrintWriter(socket.getOutputStream(), true);
@@ -109,6 +103,19 @@ public class SocketIO {
         }
     }
 
+//    @Scheduled(fixedDelay = 1)
+    @EventListener(ApplicationReadyEvent.class)
+    private void getMessageAuto(){
+        if(input == null && output == null)
+            return;
+        while (true) {
+            String messageReceive = getMessage();
+            LOGGER.info(messageReceive);
+            messageEntity.addMessage(messageReceive);
+        }
+    }
+
+
     public void reconnect() throws IOException {
         try {
             if (socket != null)
@@ -121,11 +128,11 @@ public class SocketIO {
             e.printStackTrace();
         }
 
-        JSONObject objSocket = getObjSocket();
+//        JSONObject objSocket = getObjSocket();
 
         try {
-            this.ip = (String)(objSocket.get("ip"));
-            this.port = (int)(long)(objSocket.get("port"));
+//            this.ip = (String)(objSocket.get("ip"));
+//            this.port = (int)(long)(objSocket.get("port"));
             this.socket = new Socket(ip, port);
             this.output = new PrintWriter(socket.getOutputStream(), true);
             this.input = new BufferedInputStream(socket.getInputStream());
@@ -134,31 +141,31 @@ public class SocketIO {
             closeElements(socket, input, output);
         }
     }
-    public boolean isSocketChange (){
-        JSONObject objSocket = getObjSocket();
-        if(!((String) objSocket.get("ip")).equals(ip) || port != (int)((long)objSocket.get("port"))){
-            closeElements(socket,input, output);
-            return true;
-        }
-        return false;
-    }
+//    public boolean isSocketChange (){
+//        JSONObject objSocket = getObjSocket();
+//        if(!((String) objSocket.get("ip")).equals(ip) || port != (int)((long)objSocket.get("port"))){
+//            closeElements(socket,input, output);
+//            return true;
+//        }
+//        return false;
+//    }
 
-    public JSONObject getObjSocket(){
-        JSONParser parser = new JSONParser();
-        try {
-            FileReader reader = new FileReader("src/main/resources/SystemParameter.json");
-            Object obj = parser.parse(reader);
-            JSONObject listObject = (JSONObject) obj;
-            JSONObject objSocket = (JSONObject) listObject.get("socket");
-            return objSocket;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public JSONObject getObjSocket(){
+//        JSONParser parser = new JSONParser();
+//        try {
+//            FileReader reader = new FileReader("src/main/resources/SystemParameter.json");
+//            Object obj = parser.parse(reader);
+//            JSONObject listObject = (JSONObject) obj;
+//            JSONObject objSocket = (JSONObject) listObject.get("socket");
+//            return objSocket;
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 //    public void buildMapSocket(){
 //        JSONObject obj = getObjSocket();
@@ -204,5 +211,17 @@ public class SocketIO {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public int getPort() {
+        return port;
     }
 }
