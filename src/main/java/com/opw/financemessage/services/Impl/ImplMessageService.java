@@ -71,7 +71,6 @@ public class ImplMessageService implements MessageService {
             System.out.println();
             LOGGER.info("Processing request {}", filed63);
 
-
             Map<Integer, String> mapData = new HashMap<Integer, String>();
             for (int i = 0; i < data.size(); i++) {
                 mapData.put(data.get(i).getId(), data.get(i).getValue());
@@ -85,12 +84,14 @@ public class ImplMessageService implements MessageService {
                 mapData.put(50, mapData.get(49));
             }
 
+
             SocketIO socketIO = manageSocket.getSocketByID(mapData.get(2).substring(0, 6));
 //            SocketIO socketIO = manageSocket.getSocketByID("970409");
 
             if (socketIO == null) {
                 LOGGER.info("Not contain socket");
             }
+
 
             long id = transLogRepository.addTransLog(mapData);
             idStorage.put(filed63, id);

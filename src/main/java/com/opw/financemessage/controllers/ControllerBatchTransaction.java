@@ -51,7 +51,7 @@ public class ControllerBatchTransaction {
         } else if (transaction == 5) {
             fileWriter = new FileWriter("src/main/resources/transactionConfig/ChangePINConfig.json");
         } else {
-            fileWriter = new FileWriter("src/main/resources/transactionConfig/Statement.json");
+            fileWriter = new FileWriter("src/main/resources/transactionConfig/StatementConfig.json");
         }
         fileWriter.write(contentTransaction);
         fileWriter.flush();
@@ -99,7 +99,7 @@ public class ControllerBatchTransaction {
         }else if (transaction == 5){
             reader = new FileReader("src/main/resources/transactionConfig/ChangePINConfig.json");
         }else{
-            reader = new FileReader("src/main/resources/transactionConfig/Statement.json");
+            reader = new FileReader("src/main/resources/transactionConfig/StatementConfig.json");
         }
         Object obj = jsonParser.parse(reader);
         JSONArray fieldList = (JSONArray) obj;

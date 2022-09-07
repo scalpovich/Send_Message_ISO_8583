@@ -16,14 +16,6 @@
     "required": true
   },
   {
-    "id": 12,
-    "required": true
-  },
-  {
-    "id": 13,
-    "required": true
-  },
-  {
     "id": 14,
     "required": false
   },
