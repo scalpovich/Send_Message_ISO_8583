@@ -85,8 +85,8 @@ public class ImplMessageService implements MessageService {
                 mapData.put(50, mapData.get(49));
             }
 
-//            SocketIO socketIO = manageSocket.getSocketByID(mapData.get(2).substring(0, 6));
-            SocketIO socketIO = manageSocket.getSocketByID("970409");
+            SocketIO socketIO = manageSocket.getSocketByID(mapData.get(2).substring(0, 6));
+//            SocketIO socketIO = manageSocket.getSocketByID("970409");
 
             if (socketIO == null) {
                 LOGGER.info("Not contain socket");

@@ -13,14 +13,19 @@ import java.util.Map;
 public class ManageSocket {
     private Map<String, SocketIO> socketMap = new HashMap<String, SocketIO>();
 //    @Autowired
-//    private List<SocketIO> socketIOList;
+    private List<SocketIO> socketIOList;
     @Autowired
     public ManageSocket(List<SocketIO> socketIOList){
+        this.socketIOList = socketIOList;
 //        System.out.println(socketIOList.size());
         for (int i = 0; i < socketIOList.size(); i++) {
             SocketIO socketIO = socketIOList.get(i);
             socketMap.put(socketIO.getId(), socketIO);
         }
+    }
+
+    public List<SocketIO> getSocketIOList() {
+        return socketIOList;
     }
 
     public SocketIO getSocketByID(String id){

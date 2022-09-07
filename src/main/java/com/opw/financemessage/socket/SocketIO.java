@@ -40,7 +40,6 @@ public class SocketIO {
 //            throw new RuntimeException(e);
 //        }
 //    }
-    public SocketIO(){}
 
     public SocketIO(String id, String ip, int port ){
         try {
@@ -117,31 +116,31 @@ public class SocketIO {
     }
 
 
-//    public void reconnect() throws IOException {
-//        try {
-//            if (socket != null)
-//                socket.close();
-//            if (input != null)
-//                input.close();
-//            if (output != null)
-//                output.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
+    public void reconnect() throws IOException {
+        try {
+            if (socket != null)
+                socket.close();
+            if (input != null)
+                input.close();
+            if (output != null)
+                output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 //        JSONObject objSocket = getObjSocket();
-//
-//        try {
+
+        try {
 //            this.ip = (String)(objSocket.get("ip"));
 //            this.port = (int)(long)(objSocket.get("port"));
-//            this.socket = new Socket(ip, port);
-//            this.output = new PrintWriter(socket.getOutputStream(), true);
-//            this.input = new BufferedInputStream(socket.getInputStream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            closeElements(socket, input, output);
-//        }
-//    }
+            this.socket = new Socket(ip, port);
+            this.output = new PrintWriter(socket.getOutputStream(), true);
+            this.input = new BufferedInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            closeElements(socket, input, output);
+        }
+    }
 //    public boolean isSocketChange (){
 //        JSONObject objSocket = getObjSocket();
 //        if(!((String) objSocket.get("ip")).equals(ip) || port != (int)((long)objSocket.get("port"))){
