@@ -2,8 +2,8 @@
   "timeoutMessage": 10,
   "socket": [{
       "name": "Way4",
-      "id": "970409",
-      "port": 40007,
+      "id": "",
+      "port": "",
       "ip": "10.145.48.94"
     }]
   ,
